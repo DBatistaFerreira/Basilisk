@@ -8,3 +8,6 @@ Team Members
 * Gregory Cao
 * Cristian Aldea
 * Michael Shuhaibar
+* Cong Vinh Vu
+* Nick Eliopoulos
+* Najim Ghafourzadeh
