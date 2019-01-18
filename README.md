@@ -11,3 +11,5 @@ Team Members
 * Cong Vinh Vu
 * Nick Eliopoulos
 * Najim Ghafourzadeh
+* Michael Teolis
+* Luigi Besani Urena
