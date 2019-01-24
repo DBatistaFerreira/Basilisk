@@ -7,7 +7,7 @@ public class Tweet {
 
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column
@@ -19,7 +19,7 @@ public class Tweet {
     @Column
     private int retweets;
 
-    @OneToOne(cascade = CascadeType.ALL, targetEntity = User.class)
+    @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "USER")
     private User user;
 

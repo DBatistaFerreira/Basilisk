@@ -8,17 +8,17 @@ public class FriendList {
 
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column
     private int numberOfFriends;
 
-    @OneToOne(cascade = CascadeType.ALL, targetEntity = User.class)
+    @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "USER")
     private User user;
 
-    @OneToOne(cascade = CascadeType.ALL, targetEntity = User.class)
+    @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "FRIENDS")
     private List<User> friendList;
 
