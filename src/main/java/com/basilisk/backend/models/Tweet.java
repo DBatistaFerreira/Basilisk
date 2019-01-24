@@ -3,11 +3,11 @@ package com.basilisk.backend.models;
 import javax.persistence.*;
 
 @Entity
-public class Tweet
-{
+public class Tweet {
+
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @Column
@@ -20,13 +20,13 @@ public class Tweet
     private int retweets;
 
     @OneToOne(cascade = CascadeType.ALL, targetEntity = User.class)
-    @JoinColumn(name="USER")
+    @JoinColumn(name = "USER")
     private User user;
 
-    public Tweet(){}
+    public Tweet() {
+    }
 
-    public Tweet(String text, int likes, int retweets, User user)
-    {
+    public Tweet(String text, int likes, int retweets, User user) {
         this.text = text;
         this.likes = likes;
         this.retweets = retweets;

@@ -4,28 +4,28 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class FriendList
-{
+public class FriendList {
+
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @Column
     private int numberOfFriends;
 
     @OneToOne(cascade = CascadeType.ALL, targetEntity = User.class)
-    @JoinColumn(name="USER")
+    @JoinColumn(name = "USER")
     private User user;
 
     @OneToOne(cascade = CascadeType.ALL, targetEntity = User.class)
-    @JoinColumn(name="FRIENDS")
+    @JoinColumn(name = "FRIENDS")
     private List<User> friendList;
 
-    public FriendList(){}
+    public FriendList() {
+    }
 
-    public FriendList(long id,int numberOfFriends,User user,List<User> friendList)
-    {
+    public FriendList(long id, int numberOfFriends, User user, List<User> friendList) {
         this.numberOfFriends = numberOfFriends;
         this.user = user;
         this.friendList = friendList;

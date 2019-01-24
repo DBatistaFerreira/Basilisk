@@ -7,7 +7,7 @@ public class User {
 
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @Column
@@ -19,10 +19,10 @@ public class User {
     @Column
     private String password;
 
-    public User(){}
+    public User() {
+    }
 
-    public User (long id, String name, String username, String password)
-    {
+    public User(long id, String name, String username, String password) {
         this.id = id;
         this.name = name;
         this.username = username;
