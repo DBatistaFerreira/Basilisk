@@ -25,11 +25,10 @@ public class FriendList {
     public FriendList() {
     }
 
-    public FriendList(long id, int numberOfFriends, User user, List<User> friendList) {
+    public FriendList(int numberOfFriends, User user, List<User> friendList) {
         this.numberOfFriends = numberOfFriends;
         this.user = user;
         this.friendList = friendList;
-        this.id = id;
     }
 
     public long getId() {
