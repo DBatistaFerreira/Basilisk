@@ -6,7 +6,7 @@ SOEN 341 - Project
 ### 1 - Daniel Batista-Ferreira
 * Role: Team Lead
 * Github: Pwnagebird
-* Email: 
+* Email: Danielbatfer@hotmail.com
 ### 2 - Jake Bedard
 * Role: Technical Lead
 * Github: Clearedkinkajou
@@ -14,7 +14,7 @@ SOEN 341 - Project
 ### 3 - Gregory Cao
 * Role: Back End Developer
 * Github: CaoGreg
-* Email: 
+* Email: Cao.gregory@gmail.com
 ### 4 - Cristian Aldea
 * Role: QA/General Developer
 * Github: TheGreatMarkus
@@ -30,11 +30,11 @@ SOEN 341 - Project
 ### 7 - Nick Eliopoulos
 * Role: Back End Developer
 * Github: Debnam
-* Email: 
+* Email: Nicolas_7979@yahoo.ca
 ### 8 - Najim Ghafourzadeh
 * Role: Front End Developer
 * Github: najimgh
-* Email: 
+* Email: Najimg1@hotmail.com
 ### 9 - Michael Teolis
 * Role: Back End Developer
 * Github: mteolis
