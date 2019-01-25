@@ -1,5 +1,4 @@
 language: java
 jdk: oraclejdk11
 
-install: true
-script: ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+script: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
