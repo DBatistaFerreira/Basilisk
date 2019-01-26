@@ -10,7 +10,7 @@ SOEN 341 - Project
 ### 2 - Jake Bedard
 * Role: Technical Lead
 * Github: Clearedkinkajou
-* Email:  
+* Email: bedardjake@gmail.com
 ### 3 - Gregory Cao
 * Role: Back End Developer
 * Github: CaoGreg
@@ -18,11 +18,11 @@ SOEN 341 - Project
 ### 4 - Cristian Aldea
 * Role: QA/General Developer
 * Github: TheGreatMarkus
-* Email: 
+* Email: a.crist8@live.com
 ### 5 - Michael Shuhaibar
 * Role: QA/General Developer
 * Github: Cottonswab
-* Email: 
+* Email: tmshuhaibar@gmail.com
 ### 6 - Cong Vinh Vu
 * Role: Front End Developer
 * Github: Cvu1998
@@ -45,8 +45,25 @@ SOEN 341 - Project
 * Email: 
 
 ## Languages
+Java 11
 
 ## Techniques
+
+### IDE
+* IntelliJ
+
+### Frameworks
+* Java Spring Boot
+* Java Vaadin
+
+### Architectural Patterns
+* MODEL-VIEW-PRESENTER 
+
+### Other
+* Built with Spring Initializr
+* Communcations through Discord
+* Project Management with Github and Git
+* Built on Maven
 
 ## Description
 
