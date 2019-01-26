@@ -71,4 +71,14 @@ Java 11
 
 ## Core Features
 
+### Required
+* Like a tweet
+* Follow a user
+* Posting tweets
+
+### Extra
+* Retweet
+* Profile page (with bio and images)
+* Comment on a tweet
+* Like and Dislike a tweet 
 
