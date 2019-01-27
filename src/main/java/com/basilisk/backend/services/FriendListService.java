@@ -16,22 +16,28 @@ public class FriendListService {
         this.friendListRepository = friendListRepository;
     }
 
+    //CRUD OPERATIONS
+    //Save FriendList to DB
     public void createFriendList(FriendList friendList) {
         friendListRepository.save(friendList);
     }
 
+    //Get FriendList from the DB by user
     public FriendList retrieveFriendListByUser(User user) {
         return friendListRepository.findByUser(user);
     }
 
+    //Get FriendList from the DB by ID
     public FriendList retrieveFriendList(long id) {
         return friendListRepository.getOne(id);
     }
 
+    //Update FriendList into the DB
     public void updateFriendList(FriendList friendList) {
         friendListRepository.save(friendList);
     }
 
+    //Delete FriendList from the DB
     public void deleteFriendList(FriendList friendList) {
         friendListRepository.delete(friendList);
     }
