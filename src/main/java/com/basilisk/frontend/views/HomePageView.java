@@ -11,15 +11,17 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
 @Route("Home")
-
 public class HomePageView extends VerticalLayout {
     Integer textAreaCounter = 10;
     String hexTurquoise = "#40E0D0";
 
+    private HorizontalLayout navigationBar;
     private Tab home;
     private Tab profile;
-    private Tab logout;
     private Tabs tabs;
+
+    private Button logout;
+    private Button reload;
 
     private HorizontalLayout searchBar;
     private TextField searchTxt;
@@ -40,18 +42,27 @@ public class HomePageView extends VerticalLayout {
         //Vertical layout in teh center
         this.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
 
-        //Tabs to navigate
+        //Tabs and buttons to navigate
+        navigationBar = new HorizontalLayout();
+
         home = new Tab("Home");
         profile = new Tab("Profile");
-        logout = new Tab("Logout");
         home.getStyle().set("border", hexTurquoise);
         profile.getStyle().set("border", hexTurquoise);
-        logout.getStyle().set("border", hexTurquoise);
 
-        tabs = new Tabs(home, profile, logout);
+        tabs = new Tabs(home, profile);
         tabs.setFlexGrowForEnclosedTabs(1);
 
-        add(tabs);
+        logout = new Button("Logout");
+        reload = new Button("Reload");
+        logout.getStyle().set("border", hexTurquoise);
+        reload.getStyle().set("border", hexTurquoise);
+
+        navigationBar.add(tabs, logout, reload);
+        navigationBar.setPadding(false);
+        navigationBar.setMargin(true);
+        navigationBar.setSpacing(true);
+        add(navigationBar);
 
         //Search bar
         searchTxt = new TextField();
