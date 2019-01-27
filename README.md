@@ -26,7 +26,7 @@ SOEN 341 - Project
 ### 6 - Cong Vinh Vu
 * Role: Front End Developer
 * Github: Cvu1998
-* Email: 
+* Email: congvinhvu98@gmail.com
 ### 7 - Nick Eliopoulos
 * Role: Back End Developer
 * Github: Debnam
