@@ -27,7 +27,7 @@ public class HomePageView extends VerticalLayout {
     private TextField searchTxt;
     private Button searchButton;
 
-    String fill140Char() {
+    private String fill140Char() {
         String oString = "Char140";
         for (int i = 0; i < 140; ++i) {
             oString += "a";
