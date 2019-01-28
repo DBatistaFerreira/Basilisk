@@ -42,7 +42,7 @@ SOEN 341 - Project
 ### 10 - Luigi Besani Urena
 * Role: Front End Developer 
 * Github: LuigiBU
-* Email: 
+* Email: luigi.besani@gmail.com
 
 ## Languages
 Java 11
