@@ -65,9 +65,11 @@ Java 11
 * Project Management with Github and Git
 * Built on Maven
 
-## Description
-
 ## Objective
+To create a "twitter like" web application that allows a user to post, reply, follow, share, comment, and like/dislike.
+
+## Description
+Each feature in the Objective section will come together to create a social space over the web for users. They will be able to interact with other users through the 6 previously mentioned features. After a user posts anyone following that user will also get the post on their feed. Next, a user who see's a post through the follow feature will be given the opportunity to like/dislike a post aswell as share the post by "retweeting" it onto their own feed. THis will restart the loop where any users following the user who "retweets" will get that post on their own feed and will be given the same opportunity. Users will also have their own accounts protected by being able to sign-in and logout of sessions. 
 
 ## Core Features
 
