@@ -14,8 +14,8 @@ import com.vaadin.flow.router.Route;
 @Route("Profile")
 public class ProfilePageView extends VerticalLayout {
 
-    Integer textAreaCounter = 10;
-    String hexTurquoise = "#40E0D0";
+    private final Integer textAreaCounter = 10;
+    private final String hexTurquoise = "#40E0D0";
 
     private HorizontalLayout navigationBar;
     private Tab home;
