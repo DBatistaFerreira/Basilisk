@@ -18,7 +18,7 @@ public class FriendList {
     @JoinColumn(name = "USER")
     private User user;
 
-    @OneToOne(targetEntity = User.class)
+    @OneToMany(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "FRIENDS")
     private List<User> friendList;
 
