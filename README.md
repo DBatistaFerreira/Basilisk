@@ -73,14 +73,29 @@ Each feature in the Objective section will come together to create a social spac
 
 ## Core Features
 
-### Required
-* Like a tweet
-* Follow a user
-* Posting tweets
+### Required Features
+* Posting tweets:
+   * The user should be able to post a tweet, which is a short message.
+   * The UI should show a list with all a user's posted tweets.
+* Like a tweet:
+   * The user should be able like a tweet, showing appreciation for the tweet.
+   * The UI should show the number of likes that a given tweet has.
+* Follow a user: 
+   * The user should be able to follow a user.
+   * Following a user makes it so that their tweets with show up on the user's home page.
 
-### Extra
-* Retweet
-* Profile page (with bio and images)
-* Comment on a tweet
-* Like and Dislike a tweet 
+### Additional Features Proposed to Client
+* Retweet:
+   * The user should be able to repost someone else's tweet as your own.
+   * Someone who is following you should be able to see your reposted tweets on their dashboard just like with a regular tweet.
+* Extra information on the profile page:
+   * This page would contain additional, nonessential things:
+      * Profile picture
+      * Biography
+      * ...
+* Comment/reply on a tweet:
+   * The user should be able to leave public replies to tweets which could be seen by other users
+* Dislike a tweet:
+   * The user should be able to dislike a tweet, being able to show discontent with a tweet.
+   * The UI should show the number of dislikes that a given tweet has.
 
