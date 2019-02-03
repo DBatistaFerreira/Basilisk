@@ -1,0 +1,36 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/vaadin-ordered-layout/src/vaadin-vertical-layout.html">
+<link rel="import" href="../bower_components/vaadin-button/src/vaadin-button.html">
+<link rel="import" href="../bower_components/vaadin-text-field/src/vaadin-text-field.html">
+
+<dom-module id="login-view">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+            }
+        </style>
+        <vaadin-vertical-layout id="vaadinVerticalLayout" style="width: 100%; height: 100%;">
+            <vaadin-text-field id="vaadinTextField"></vaadin-text-field>
+            <vaadin-button id="vaadinButton">
+                Click Me!
+            </vaadin-button>
+        </vaadin-vertical-layout>
+    </template>
+
+    <script>
+        class LoginView extends Polymer.Element {
+            static get is() {
+                return 'login-view';
+            }
+
+            static get properties() {
+                return {
+                    // Declare your properties here.
+                };
+            }
+        }
+
+        customElements.define(LoginView.is, LoginView);
+    </script>
+</dom-module>
