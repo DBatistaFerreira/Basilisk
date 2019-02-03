@@ -8,11 +8,12 @@ import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.templatemodel.TemplateModel;
 
 @Tag("login-view")
 @HtmlImport("frontend://login-view.html")
-@Route("login")
+@Route("")
 public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> {
 
     @Id("vaadinTextField")
@@ -28,6 +29,9 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> {
         vaadinButton.addClickListener(buttonClickEvent -> {
             vaadinTextField.setValue("Clicked!");
         });
+
+        //todo: add this line of code to the login presenter login method if user is found
+        //VaadinSession.getCurrent().setAttribute("currentUser", user);
     }
 
     public interface LoginViewModel extends TemplateModel {
