@@ -17,13 +17,13 @@ import com.vaadin.flow.templatemodel.TemplateModel;
 public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> {
 
     private LoginPresenter loginPresenter;
-    @Id("vaadinButton")
+    @Id("singUpButton")
     private Button singUpButton;
     @Id("username")
     private TextField username;
     @Id("password")
     private PasswordField password;
-    @Id("vaadinButton1")
+    @Id("loginButton")
     private Button loginButton;
 
     public LoginView(LoginPresenter loginPresenter) {
