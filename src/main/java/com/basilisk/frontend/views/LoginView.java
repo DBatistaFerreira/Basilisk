@@ -7,6 +7,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
+import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
@@ -21,28 +22,29 @@ import java.util.Objects;
 @Route("")
 public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> implements BeforeEnterObserver {
 
-    @Id("vaadinTextField")
-    private TextField vaadinTextField;
-
-    @Id("vaadinButton")
-    private Button vaadinButton;
-
     private LoginPresenter loginPresenter;
+    @Id("signUpButton")
+    private Button signUpButton;
+    @Id("usernameTextField")
+    private TextField usernameTextField;
+    @Id("passwordTextField")
+    private PasswordField passwordTextField;
+    @Id("loginButton")
+    private Button loginButton;
 
     public LoginView(LoginPresenter loginPresenter) {
         this.loginPresenter = loginPresenter;
         // You can initialise any data required for the connected UI components here.
-        vaadinButton.addClickListener(buttonClickEvent -> {
+        loginButton.addClickListener(buttonClickEvent -> {
 
             // TODO Retrieve username/password from text fields
             String userName = "Admin";
             String password = "password";
 
             if (loginPresenter.loginUser(userName, password)) {
-                vaadinTextField.setLabel("Login Successful");
+
             } else {
                 // TODO set behavior for wrong login
-                vaadinTextField.setLabel("Login Unsuccessful");
             }
         });
 
