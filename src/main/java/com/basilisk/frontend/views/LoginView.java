@@ -17,8 +17,8 @@ import com.vaadin.flow.templatemodel.TemplateModel;
 public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> {
 
     private LoginPresenter loginPresenter;
-    @Id("singUpButton")
-    private Button singUpButton;
+    @Id("signUpButton")
+    private Button signUpButton;
     @Id("username")
     private TextField username;
     @Id("password")
