@@ -8,7 +8,6 @@ import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.templatemodel.TemplateModel;
 
 @Tag("login-view")
@@ -18,6 +17,7 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> {
 
     @Id("vaadinTextField")
     private TextField vaadinTextField;
+
     @Id("vaadinButton")
     private Button vaadinButton;
 
@@ -27,11 +27,19 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> {
         this.loginPresenter = loginPresenter;
         // You can initialise any data required for the connected UI components here.
         vaadinButton.addClickListener(buttonClickEvent -> {
-            vaadinTextField.setValue("Clicked!");
+
+            // TODO Retrieve username/password from text fields
+            String userName = "Adminn";
+            String password = "password";
+
+            if (loginPresenter.loginUser(userName, password)) {
+                vaadinTextField.setLabel("Login Successful");
+            } else {
+                // TODO set behavior for wrong login
+                vaadinTextField.setLabel("Login Unsuccessful");
+            }
         });
 
-        //todo: add this line of code to the login presenter login method if user is found
-        //VaadinSession.getCurrent().setAttribute("currentUser", user);
     }
 
     public interface LoginViewModel extends TemplateModel {
