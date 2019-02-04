@@ -39,10 +39,6 @@
                 border-bottom-left-radius: 15px;
                 border-top-left-radius: 15px;
                 box-shadow: 5px 10px 18px #888888;
-                /*padding-left: 30px;*/
-                /*background-size: cover;
-                background-position-x: left;*/
-
             }
 
             .info__header {
@@ -63,13 +59,6 @@
                 color: whitesmoke;
             }
 
-            /*.info__text {
-                font-size: var(--lumo-font-size-s);
-                color: var(--lumo-tint-70pct);
-                font-weight: 500;
-                margin: 0;
-            }*/
-
             .login__wrapper {
                 float: left;
                 background-color: #314654;
@@ -77,11 +66,9 @@
                 border-bottom-right-radius: 15px;
                 border-top-right-radius: 15px;
                 box-shadow: 5px 10px 18px #888888;
-                /*padding-left: 30px;*/
             }
 
             .login {
-                /*background-color: var(--lumo-base-color);*/
             }
 
             .login__header {
@@ -130,42 +117,6 @@
                 max-width: 35em;
             }
 
-            /*
-               @media (max-height: 450px) {
-                   .info__header {
-                       margin-top: 0;
-                   }
-
-                   .login__header {
-                       display: none;
-                   }
-               }
-
-               @media (min-width: 750px) and (min-height: 450px) {
-                   .container {
-                       display: block;
-                       border-radius: 4px;
-                       max-width: 800px;
-                       max-height: 900px
-                       overflow: hidden;
-                   }
-               }
-
-               @media (min-width: 550px) {
-                   .login__layout {
-                       flex-direction: row;
-                       align-items: flex-end;
-                   }
-
-                   .login__layout > *:not(:first-child) {
-                       margin-left: var(--lumo-space-m);
-                   }
-
-                   .login__button {
-                       max-width: 7em;
-                   }
-               }
-           */
         </style>
         <div class="container" id="div">
             <div class="info" id="div1">
@@ -181,21 +132,15 @@
                     <form method="post" action="login">
                         <h2 class="login__header" id="h21">Sign in</h2>
                         <div class="login__layout" id="div4">
-                            <vaadin-text-field id="username" name="username" label="Email" class="input__field"
+                            <vaadin-text-field id="usernameTextField" name="username" label="Email" class="input__field"
                                                autofocus required></vaadin-text-field>
-                            <vaadin-password-field id="password" name="password" label="Password" class="input__field"
+                            <vaadin-password-field id="passwordTextField" name="password" label="Password"
+                                                   class="input__field"
                                                    required on-keydown="_onPasswordKeydown"></vaadin-password-field>
                             <vaadin-button class="login__button" id="loginButton">
                                 Sign in
                             </vaadin-button>
                         </div>
-                        <!--<template is="dom-if" if="[[error]]">
-                         <div class="error" id="div5">
-                          <iron-icon icon="vaadin:exclamation-circle-o" class="error__icon" id="ironIcon"></iron-icon>
-                          <p class="error__text" id="p"> The username and password you entered do not match our records. Please double-check and try again. </p>
-                         </div>
-                        </template>
-                        -->
                     </form>
                 </iron-form>
             </div>

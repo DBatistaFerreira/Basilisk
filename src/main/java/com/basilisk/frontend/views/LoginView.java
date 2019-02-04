@@ -19,10 +19,10 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> {
     private LoginPresenter loginPresenter;
     @Id("signUpButton")
     private Button signUpButton;
-    @Id("username")
-    private TextField username;
-    @Id("password")
-    private PasswordField password;
+    @Id("usernameTextField")
+    private TextField usernameTextField;
+    @Id("passwordTextField")
+    private PasswordField passwordTextField;
     @Id("loginButton")
     private Button loginButton;
 
