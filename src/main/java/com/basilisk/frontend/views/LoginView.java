@@ -37,14 +37,15 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> impleme
         // You can initialise any data required for the connected UI components here.
         loginButton.addClickListener(buttonClickEvent -> {
 
-            // TODO Retrieve username/password from text fields
-            String userName = "Admin";
-            String password = "password";
+            String userName = usernameTextField.getValue(); // Valid value: Admin
+            String password = passwordTextField.getValue(); // Valid value: password
 
             if (loginPresenter.loginUser(userName, password)) {
-
+                passwordTextField.setInvalid(false);
             } else {
                 // TODO set behavior for wrong login
+                passwordTextField.setInvalid(true);
+                passwordTextField.setErrorMessage("The username and password you entered do not match our records. Please double-check and try again.");
             }
         });
 
