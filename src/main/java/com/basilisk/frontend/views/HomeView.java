@@ -1,7 +1,7 @@
 package com.basilisk.frontend.views;
 
 import com.basilisk.backend.presenters.HomePresenter;
-import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.Tag;;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.router.Route;
