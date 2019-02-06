@@ -1,6 +1,5 @@
 package com.basilisk.backend.presenters;
 
-import com.basilisk.backend.models.User;
 import com.basilisk.backend.services.FriendListService;
 import com.basilisk.backend.services.TweetService;
 import com.basilisk.backend.services.UserService;
@@ -21,11 +20,5 @@ public class ProfilePresenter {
         this.userService = userService;
         this.tweetService = tweetService;
         this.friendListService = friendLisService;
-    }
-
-    public void updateUser(User user) {
-        LOGGER.info("Creating user: " + user.getUsername());
-        userService.updateUser(user);
-        LOGGER.info("User created: " + user.getUsername());
     }
 }

@@ -1,0 +1,28 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+
+<dom-module id="home-view">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+            }
+        </style>
+
+    </template>
+
+    <script>
+        class HomeView extends Polymer.Element {
+            static get is() {
+                return 'home-view';
+            }
+
+            static get properties() {
+                return {
+                    // Declare your properties here.
+                };
+            }
+        }
+
+        customElements.define(HomeView.is, HomeView);
+    </script>
+</dom-module>
