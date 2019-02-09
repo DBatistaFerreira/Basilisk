@@ -6,7 +6,7 @@
 <link rel="import" href="bower_components/vaadin-ordered-layout/src/vaadin-vertical-layout.html">
 <link rel="import" href="bower_components/vaadin-ordered-layout/src/vaadin-horizontal-layout.html">
 
-<dom-module id="tweet-component">
+<dom-module id="tweet-component-display">
     <template>
         <style include="shared-styles">
             :host {
@@ -35,30 +35,32 @@
                 border-radius: 0px;
                 background: #314654;
                 color: whitesmoke;
+                margin-left: 10px;
             }
+
         </style>
         <vaadin-vertical-layout class="userPost">
             <vaadin-text-area class="userPostArea" id="tweetMessage"></vaadin-text-area>
             <vaadin-horizontal-layout>
-                <vaadin-button class="postButton" id="likeButton" on-click="likeTweet">
+                <vaadin-button class="postButton" id="likeButton" on-click="likeButtonClicked">
                     Like
                 </vaadin-button>
-                <vaadin-button class="postButton" id="dislikeButton">
+                <vaadin-button class="postButton" id="dislikeButton" on-click="dislikeButtonClicked">
                     Dislike
                 </vaadin-button>
-                <vaadin-button class="postButton" id="commentButton">
+                <vaadin-button class="postButton" id="commentButton" on-click="commentButtonClicked">
                     Comment
                 </vaadin-button>
-                <vaadin-button class="postButton" id="retweetButton">
+                <vaadin-button class="postButton" id="retweetButton" on-click="retweetButtonClicked">
                     Retweet
                 </vaadin-button>
             </vaadin-horizontal-layout>
         </vaadin-vertical-layout>
     </template>
     <script>
-        class TweetComponent extends Polymer.Element {
+        class TweetComponentDisplay extends Polymer.Element {
             static get is() {
-                return 'tweet-component';
+                return 'tweet-component-display';
             }
 
             static get properties() {
@@ -68,6 +70,6 @@
             }
         }
 
-        customElements.define(TweetComponent.is, TweetComponent);
+        customElements.define(TweetComponentDisplay.is, TweetComponentDisplay);
     </script>
 </dom-module>
