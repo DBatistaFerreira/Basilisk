@@ -1,9 +1,13 @@
 package com.basilisk.frontend.views;
 
 import com.basilisk.backend.presenters.ProfilePresenter;
+import com.basilisk.frontend.components.TweetDisplayComponent;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.dependency.Uses;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
@@ -16,7 +20,11 @@ import java.util.Objects;
 @Tag("profile-view")
 @HtmlImport("profile-view.html")
 @Route("profile")
+@Uses(TweetDisplayComponent.class)
 public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> implements BeforeEnterObserver {
+
+    @Id("tweetDisplaySpot")
+    private VerticalLayout verticalLayout;
 
     private ProfilePresenter profilePresenter;
 

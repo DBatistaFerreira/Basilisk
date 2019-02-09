@@ -1,4 +1,6 @@
 <link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="tweet-display-component.html">
+<link rel="import" href="bower_components/vaadin-ordered-layout/src/vaadin-vertical-layout.html">
 
 <dom-module id="profile-view">
     <template>
@@ -7,7 +9,7 @@
                 display: block;
             }
         </style>
-
+        <vaadin-vertical-layout id="tweetDisplaySpot" style="width: 100%; height: 100%;"></vaadin-vertical-layout>
     </template>
 
     <script>
