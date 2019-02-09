@@ -1,11 +1,18 @@
 package com.basilisk.backend.presenters;
 
+import com.basilisk.backend.models.Tweet;
+import com.basilisk.backend.models.User;
 import com.basilisk.backend.services.FriendListService;
 import com.basilisk.backend.services.TweetService;
 import com.basilisk.backend.services.UserService;
+import com.basilisk.frontend.components.TweetComponentDisplay;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 @Service
 public class ProfilePresenter {
@@ -20,5 +27,17 @@ public class ProfilePresenter {
         this.userService = userService;
         this.tweetService = tweetService;
         this.friendListService = friendLisService;
+    }
+
+    public List<TweetComponentDisplay> getAllUserTweets(User user) {
+        List<Tweet> tweetList = tweetService.retrieveAllTweets(user);
+        Collections.reverse(tweetList); //Switch list to have highest id on the top
+
+        List<TweetComponentDisplay> tweetComponentDisplayList = new LinkedList<>();
+
+        for (Tweet e : tweetList) {
+            tweetComponentDisplayList.add(new TweetComponentDisplay(e));
+        }
+        return tweetComponentDisplayList;
     }
 }
