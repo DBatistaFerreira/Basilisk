@@ -6,6 +6,7 @@ import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.polymertemplate.EventHandler;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
+import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.templatemodel.TemplateModel;
 
 @Tag("tweet-create-component")
@@ -14,6 +15,8 @@ public class TweetCreateComponent extends PolymerTemplate<TweetCreateComponent.T
 
     @Id("createButton")
     private Button likeButton;
+    @Id("tweetMessage")
+    private TextArea tweetMessage;
 
     //private TweetCreatePresenter tweetCreatePresenter;
 

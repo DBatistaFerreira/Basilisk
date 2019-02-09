@@ -1,6 +1,7 @@
 package com.basilisk.frontend.components;
 
 import com.basilisk.backend.models.Tweet;
+import com.basilisk.backend.models.User;
 import com.basilisk.backend.presenters.TweetDisplayPresenter;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
@@ -9,6 +10,7 @@ import com.vaadin.flow.component.polymertemplate.EventHandler;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.templatemodel.TemplateModel;
 
 @Tag("tweet-display-component")
@@ -32,29 +34,33 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     public TweetDisplayComponent(TweetDisplayPresenter tweetDisplayPresenter) {
         // You can initialise any data required for the connected UI components here.
         this.tweetDisplayPresenter = tweetDisplayPresenter;
+        tweetMessage.setReadOnly(true);
     }
 
     public void setTweet(Tweet tweet) {
         this.tweet = tweet;
+        tweetMessage.setValue(tweet.getText() + "\n-" + ((User) VaadinSession.getCurrent().getAttribute("currentUser")).getUsername());
+        likeButton.setText("Like " + tweet.getLikes());
+        dislikeButton.setText("Dislike " + 0);
     }
 
     @EventHandler
     private void likeButtonClicked() {
         // Called from the template click handler
-        if (likeButton.getText().equals("Like")) {
-            likeButton.setText("Un-Like");
+        if (!likeButton.getText().contains("-")) {
+            likeButton.setText("Un-Like " + tweet.getLikes());
         } else {
-            likeButton.setText("Like");
+            likeButton.setText("Like " + tweet.getLikes());
         }
     }
 
     @EventHandler
     private void dislikeButtonClicked() {
         // Called from the template click handler
-        if (likeButton.getText().equals("Dislike")) {
-            likeButton.setText("Un-Dislike");
+        if (!dislikeButton.getText().contains("-")) {
+            dislikeButton.setText("Un-Dislike " + 0);
         } else {
-            likeButton.setText("Dislike");
+            dislikeButton.setText("Dislike " + 0);
         }
     }
 
