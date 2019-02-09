@@ -34,7 +34,6 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     public TweetDisplayComponent(TweetPresenter tweetPresenter) {
         // You can initialise any data required for the connected UI components here.
         this.tweetPresenter = tweetPresenter;
-        tweetMessage.setReadOnly(true);
     }
 
     public void setTweet(Tweet tweet) {

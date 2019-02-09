@@ -3,8 +3,8 @@
 <link rel="import" href="bower_components/vaadin-tabs/src/vaadin-tab.html">
 <link rel="import" href="bower_components/vaadin-text-field/src/vaadin-text-area.html">
 <link rel="import" href="bower_components/vaadin-button/src/vaadin-button.html">
-<link rel="import" href="bower_components/vaadin-ordered-layout/src/vaadin-vertical-layout.html">
 <link rel="import" href="bower_components/vaadin-ordered-layout/src/vaadin-horizontal-layout.html">
+<link rel="import" href="bower_components/vaadin-ordered-layout/src/vaadin-vertical-layout.html">
 
 <dom-module id="tweet-display-component">
     <template>
@@ -14,7 +14,8 @@
             }
 
             .userPost {
-                width: 600px;
+                min-width: 600px;
+                max-width: 600px;
                 height: 125px;
                 background: whitesmoke;
                 border-radius: 7px;
@@ -39,8 +40,8 @@
             }
 
         </style>
-        <vaadin-vertical-layout class="userPost">
-            <vaadin-text-area class="userPostArea" id="tweetMessage"></vaadin-text-area>
+        <div style="width: 100%; height: 100%;" class="userPost">
+            <vaadin-text-area class="userPostArea" id="tweetMessage" readonly></vaadin-text-area>
             <vaadin-horizontal-layout>
                 <vaadin-button class="postButton" id="likeButton" on-click="likeButtonClicked"></vaadin-button>
                 <vaadin-button class="postButton" id="dislikeButton" on-click="dislikeButtonClicked"></vaadin-button>
@@ -51,7 +52,7 @@
                     Retweet
                 </vaadin-button>
             </vaadin-horizontal-layout>
-        </vaadin-vertical-layout>
+        </div>
     </template>
     <script>
         class TweetDisplayComponent extends Polymer.Element {
