@@ -17,9 +17,6 @@ public class Tweet {
     private int likes;
 
     @Column
-    private int dislikes;
-
-    @Column
     private int retweets;
 
     @OneToOne(targetEntity = User.class)
@@ -29,10 +26,9 @@ public class Tweet {
     public Tweet() {
     }
 
-    public Tweet(String text, int likes, int dislikes, int retweets, User user) {
+    public Tweet(String text, int likes, int retweets, User user) {
         this.text = text;
         this.likes = likes;
-        this.dislikes = dislikes;
         this.retweets = retweets;
         this.user = user;
     }
@@ -49,10 +45,6 @@ public class Tweet {
         return likes;
     }
 
-    public int getDislikes() {
-        return dislikes;
-    }
-
     public int getRetweets() {
         return retweets;
     }
@@ -67,10 +59,6 @@ public class Tweet {
 
     public void setLikes(int likes) {
         this.likes = likes;
-    }
-
-    public void setDislikes(int dislikes) {
-        this.dislikes = dislikes;
     }
 
     public void setRetweets(int retweets) {
