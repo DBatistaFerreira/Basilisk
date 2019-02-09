@@ -9,6 +9,7 @@ import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
+import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
@@ -27,6 +28,8 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
 
     @Id("tweetDisplaySpot")
     private VerticalLayout verticalLayout;
+    @Id("tweetFeed")
+    private Element tweetFeed;
 
     public ProfileView(ProfilePresenter profilePresenter) {
         this.profilePresenter = profilePresenter;
