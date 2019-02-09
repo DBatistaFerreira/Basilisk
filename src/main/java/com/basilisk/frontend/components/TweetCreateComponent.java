@@ -2,6 +2,7 @@ package com.basilisk.frontend.components;
 
 import com.basilisk.backend.presenters.TweetPresenter;
 import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.polymertemplate.EventHandler;
@@ -30,6 +31,7 @@ public class TweetCreateComponent extends PolymerTemplate<TweetCreateComponent.T
     private void createButtonClicked() {
         // Called from the template click handler
         tweetPresenter.createAndSaveTweet(tweetMessage.getValue());
+        UI.getCurrent().getPage().reload();
     }
 
 
