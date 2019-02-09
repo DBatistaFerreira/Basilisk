@@ -6,7 +6,7 @@
 <link rel="import" href="bower_components/vaadin-ordered-layout/src/vaadin-vertical-layout.html">
 <link rel="import" href="bower_components/vaadin-ordered-layout/src/vaadin-horizontal-layout.html">
 
-<dom-module id="tweet-component-display">
+<dom-module id="tweet-display-component">
     <template>
         <style include="shared-styles">
             :host {
@@ -58,9 +58,9 @@
         </vaadin-vertical-layout>
     </template>
     <script>
-        class TweetComponentDisplay extends Polymer.Element {
+        class TweetDisplayComponent extends Polymer.Element {
             static get is() {
-                return 'tweet-component-display';
+                return 'tweet-display-component';
             }
 
             static get properties() {
@@ -70,6 +70,6 @@
             }
         }
 
-        customElements.define(TweetComponentDisplay.is, TweetComponentDisplay);
+        customElements.define(TweetDisplayComponent.is, TweetDisplayComponent);
     </script>
 </dom-module>

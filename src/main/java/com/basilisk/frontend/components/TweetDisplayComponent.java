@@ -11,9 +11,9 @@ import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.templatemodel.TemplateModel;
 
-@Tag("tweet-component-display")
-@HtmlImport("tweet-component-display.html")
-public class TweetComponentDisplay extends PolymerTemplate<TweetComponentDisplay.TweetComponentDsiplayModel> {
+@Tag("tweet-display-component")
+@HtmlImport("tweet-display-component.html")
+public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent.TweetDisplayComponentModel> {
 
     @Id("likeButton")
     private Button likeButton;
@@ -29,7 +29,7 @@ public class TweetComponentDisplay extends PolymerTemplate<TweetComponentDisplay
     private TweetDisplayPresenter tweetDisplayPresenter;
     private Tweet tweet;
 
-    public TweetComponentDisplay(TweetDisplayPresenter tweetDisplayPresenter) {
+    public TweetDisplayComponent(TweetDisplayPresenter tweetDisplayPresenter) {
         // You can initialise any data required for the connected UI components here.
         this.tweetDisplayPresenter = tweetDisplayPresenter;
     }
@@ -70,7 +70,7 @@ public class TweetComponentDisplay extends PolymerTemplate<TweetComponentDisplay
         System.out.println("Retweet");
     }
 
-    public interface TweetComponentDsiplayModel extends TemplateModel {
+    public interface TweetDisplayComponentModel extends TemplateModel {
         // Add setters and getters for template properties here.
     }
 }
