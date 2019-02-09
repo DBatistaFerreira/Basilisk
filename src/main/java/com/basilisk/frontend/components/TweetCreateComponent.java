@@ -1,5 +1,6 @@
 package com.basilisk.frontend.components;
 
+import com.basilisk.backend.presenters.TweetPresenter;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
@@ -18,17 +19,17 @@ public class TweetCreateComponent extends PolymerTemplate<TweetCreateComponent.T
     @Id("tweetMessage")
     private TextArea tweetMessage;
 
-    //private TweetCreatePresenter tweetCreatePresenter;
+    private TweetPresenter tweetPresenter;
 
-    public TweetCreateComponent(/*TweetCreatePresenter tweetCreatePresenter*/) {
+    public TweetCreateComponent(TweetPresenter tweetPresenter) {
         // You can initialise any data required for the connected UI components here.
-        //this.tweetCreatePresenter = tweetCreatePresenter;
+        this.tweetPresenter = tweetPresenter;
     }
 
     @EventHandler
     private void createButtonClicked() {
         // Called from the template click handler
-        System.out.println("CREATE");
+        tweetPresenter.createAndSaveTweet(tweetMessage.getValue());
     }
 
 

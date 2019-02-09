@@ -19,15 +19,15 @@ public class ProfilePresenter {
     private UserService userService;
     private TweetService tweetService;
     private FriendListService friendListService;
-    private TweetDisplayPresenter tweetDisplayPresenter;
+    private TweetPresenter tweetPresenter;
     private static Logger LOGGER = Logger.getLogger(ProfilePresenter.class);
 
     @Autowired
-    public ProfilePresenter(UserService userService, TweetService tweetService, FriendListService friendLisService, TweetDisplayPresenter tweetDisplayPresenter) {
+    public ProfilePresenter(UserService userService, TweetService tweetService, FriendListService friendLisService, TweetPresenter tweetPresenter) {
         this.userService = userService;
         this.tweetService = tweetService;
         this.friendListService = friendLisService;
-        this.tweetDisplayPresenter = tweetDisplayPresenter;
+        this.tweetPresenter = tweetPresenter;
     }
 
     public List<TweetDisplayComponent> getAllUserTweets(User user) {
@@ -35,7 +35,7 @@ public class ProfilePresenter {
         List<TweetDisplayComponent> tweetComponentDisplayList = new LinkedList<>();
 
         for (Tweet tweet : tweetList) {
-            TweetDisplayComponent tweetComponentDisplay = new TweetDisplayComponent(tweetDisplayPresenter);
+            TweetDisplayComponent tweetComponentDisplay = new TweetDisplayComponent(tweetPresenter);
             tweetComponentDisplay.setTweet(tweet);
             tweetComponentDisplayList.add(tweetComponentDisplay);
         }
