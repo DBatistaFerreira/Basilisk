@@ -1,6 +1,7 @@
 package com.basilisk.frontend.components;
 
 import com.basilisk.backend.models.Tweet;
+import com.basilisk.backend.presenters.TweetDisplayPresenter;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
@@ -25,10 +26,15 @@ public class TweetComponentDisplay extends PolymerTemplate<TweetComponentDisplay
     @Id("tweetMessage")
     private TextArea tweetMessage;
 
+    private TweetDisplayPresenter tweetDisplayPresenter;
     private Tweet tweet;
 
-    public TweetComponentDisplay(Tweet tweet) {
+    public TweetComponentDisplay(TweetDisplayPresenter tweetDisplayPresenter) {
         // You can initialise any data required for the connected UI components here.
+        this.tweetDisplayPresenter = tweetDisplayPresenter;
+    }
+
+    public void setTweet(Tweet tweet) {
         this.tweet = tweet;
     }
 
