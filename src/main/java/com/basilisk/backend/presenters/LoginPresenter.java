@@ -28,7 +28,6 @@ public class LoginPresenter {
         if (!Objects.isNull(user)) {
             VaadinSession.getCurrent().setAttribute("currentUser", user);
             UI.getCurrent().navigate("home");
-            UI.getCurrent().getPage().reload();
             LOGGER.info("Login Success : Username = " + username);
             return true;
         } else {
