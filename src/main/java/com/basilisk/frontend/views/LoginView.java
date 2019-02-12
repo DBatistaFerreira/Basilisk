@@ -50,10 +50,9 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> impleme
 
     @Override
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-        VaadinSession vaadinSession = VaadinSession.getCurrent();
-        if (!Objects.isNull(vaadinSession.getAttribute("currentUser"))) {
+        if (!Objects.isNull(VaadinSession.getCurrent().getAttribute("currentUser"))) {
+            beforeEnterEvent.rerouteTo(HomeView.class);
             UI.getCurrent().navigate("home");
-            UI.getCurrent().getPage().reload();
         }
     }
 
