@@ -8,8 +8,6 @@ import com.vaadin.flow.server.VaadinSession;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-
 @Service
 public class TweetPresenter {
 
@@ -26,7 +24,7 @@ public class TweetPresenter {
     public boolean createAndSaveTweet(String tweetText) {
         if (!tweetText.isEmpty()) {
             User user = (User) VaadinSession.getCurrent().getAttribute("currentUser");
-            Tweet tweet = new Tweet(tweetText, new ArrayList<User>(), new ArrayList<User>(), 0, user);
+            Tweet tweet = new Tweet(tweetText, 0, user);
             LOGGER.info("Tweet creation success: " + tweetText);
             tweetService.createTweet(tweet);
             return true;
@@ -37,6 +35,7 @@ public class TweetPresenter {
     }
 
     public Tweet likesTweet(User user, Tweet tweet) {
+        LOGGER.info("User " + user + " likes tweet " + tweet);
         tweet.getLikesList().add(user);
         tweetService.updateTweet(tweet);
 
@@ -44,6 +43,7 @@ public class TweetPresenter {
     }
 
     public Tweet dislikesTweet(User user, Tweet tweet) {
+        LOGGER.info("User " + user + " dislikes tweet " + tweet);
         tweet.getDislikesList().add(user);
         tweetService.updateTweet(tweet);
 
@@ -51,6 +51,7 @@ public class TweetPresenter {
     }
 
     public Tweet unlikesTweet(User user, Tweet tweet) {
+        LOGGER.info("User " + user + " unlikes tweet " + tweet);
         tweet.getLikesList().remove(user);
         tweetService.updateTweet(tweet);
 
@@ -58,6 +59,7 @@ public class TweetPresenter {
     }
 
     public Tweet undislikesTweet(User user, Tweet tweet) {
+        LOGGER.info("User " + user + " undislikes tweet " + tweet);
         tweet.getDislikesList().remove(user);
         tweetService.updateTweet(tweet);
 

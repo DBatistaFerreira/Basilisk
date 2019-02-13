@@ -1,6 +1,10 @@
 package com.basilisk.backend.models;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,13 +18,27 @@ public class Tweet {
     @Column
     private String text;
 
-    @OneToMany(targetEntity = Tweet.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "LIKES_LIST")
-    private List<User> likesList;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(
+            cascade = CascadeType.PERSIST
+    )
+    @JoinTable(
+            name = "tweet_likes",
+            joinColumns = @JoinColumn(name = "tweet_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> likesList = new ArrayList<>();
 
-    @OneToMany(targetEntity = Tweet.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "DISLIKES_LIST")
-    private List<User> dislikesList;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(
+            cascade = CascadeType.PERSIST
+    )
+    @JoinTable(
+            name = "tweet_dislikes",
+            joinColumns = @JoinColumn(name = "tweet_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> dislikesList = new ArrayList<>();
 
     @Column
     private int retweets;
@@ -32,10 +50,8 @@ public class Tweet {
     public Tweet() {
     }
 
-    public Tweet(String text, List<User> likesList, List<User> dislikesList, int retweets, User user) {
+    public Tweet(String text, int retweets, User user) {
         this.text = text;
-        this.likesList = likesList;
-        this.dislikesList = dislikesList;
         this.retweets = retweets;
         this.user = user;
     }
@@ -56,16 +72,8 @@ public class Tweet {
         return likesList;
     }
 
-    public void setLikesList(List<User> likesList) {
-        this.likesList = likesList;
-    }
-
     public List<User> getDislikesList() {
         return dislikesList;
-    }
-
-    public void setDislikesList(List<User> dislikesList) {
-        this.dislikesList = dislikesList;
     }
 
     public int getRetweets() {
@@ -82,5 +90,17 @@ public class Tweet {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Tweet{" +
+                "id=" + id +
+                ", text='" + text + '\'' +
+                ", likesList=" + likesList +
+                ", dislikesList=" + dislikesList +
+                ", retweets=" + retweets +
+                ", user=" + user +
+                '}';
     }
 }

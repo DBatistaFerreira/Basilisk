@@ -17,6 +17,7 @@ import com.vaadin.flow.templatemodel.TemplateModel;
 @HtmlImport("tweet-display-component.html")
 public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent.TweetDisplayComponentModel> {
 
+
     @Id("likeButton")
     private Button likeButton;
     @Id("dislikeButton")
@@ -63,9 +64,14 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         if (tweet.getLikesList().contains(currentUser)) { // If user already liked the tweet
             tweet = tweetPresenter.unlikesTweet(currentUser, tweet);
             likeButton.setText("Like " + tweet.getLikesList().size());
-        } else { // If user didn't like the tweet
+        } else { // If user didn't already dislike the tweet
+            if (tweet.getDislikesList().contains(currentUser)) {
+                // If user already disliked the tweet, undislike it.
+                tweet = tweetPresenter.undislikesTweet(currentUser, tweet);
+            }
             tweet = tweetPresenter.likesTweet(currentUser, tweet);
             likeButton.setText("Un-Like " + tweet.getLikesList().size());
+            dislikeButton.setText("Dislike " + tweet.getDislikesList().size());
         }
     }
 
@@ -76,16 +82,21 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         if (tweet.getDislikesList().contains(currentUser)) { // If user already disliked the tweet
             tweet = tweetPresenter.undislikesTweet(currentUser, tweet);
             dislikeButton.setText("Dislike " + tweet.getDislikesList().size());
-        } else { // If user didn't like the tweet
+        } else { // If user didn't already like the tweet
+            if (tweet.getLikesList().contains(currentUser)) {
+                // If user already liked the tweet, unlike it.
+                tweet = tweetPresenter.unlikesTweet(currentUser, tweet);
+            }
             tweet = tweetPresenter.dislikesTweet(currentUser, tweet);
-            likeButton.setText("Un-Dislike " + tweet.getDislikesList().size());
+            dislikeButton.setText("Un-Dislike " + tweet.getDislikesList().size());
+            likeButton.setText("Like " + tweet.getLikesList().size());
         }
     }
 
     @EventHandler
     private void commentButtonClicked() {
         // Called from the template click handler
-        System.out.println("Comment");
+
     }
 
     @EventHandler
