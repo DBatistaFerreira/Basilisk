@@ -52,7 +52,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         if (tweet.getDislikesList().contains(currentUser)) {
             dislikeButton.setText("Un-Dislike " + tweet.getDislikesList().size());
         } else {
-            likeButton.setText("Dislike " + tweet.getLikesList().size());
+            dislikeButton.setText("Dislike " + tweet.getDislikesList().size());
         }
     }
 
