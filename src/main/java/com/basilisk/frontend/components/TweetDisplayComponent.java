@@ -39,8 +39,21 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     public void setTweet(Tweet tweet) {
         this.tweet = tweet;
         tweetMessage.setValue(tweet.getText() + "\n-" + ((User) VaadinSession.getCurrent().getAttribute("currentUser")).getUsername());
-        likeButton.setText("Like " + tweet.getLikesList().size());
-        dislikeButton.setText("Dislike " + tweet.getDislikesList().size());
+
+        VaadinSession vaadinSession = VaadinSession.getCurrent();
+        User currentUser = (User) vaadinSession.getAttribute("currentUser");
+
+        if (tweet.getLikesList().contains(currentUser)) {
+            likeButton.setText("Un-Like " + tweet.getLikesList().size());
+        } else {
+            likeButton.setText("Like " + tweet.getLikesList().size());
+        }
+
+        if (tweet.getDislikesList().contains(currentUser)) {
+            dislikeButton.setText("Un-Dislike " + tweet.getDislikesList().size());
+        } else {
+            likeButton.setText("Dislike " + tweet.getLikesList().size());
+        }
     }
 
     @EventHandler
