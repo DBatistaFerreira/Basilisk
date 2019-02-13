@@ -1,6 +1,7 @@
 package com.basilisk.backend.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Tweet {
@@ -13,8 +14,13 @@ public class Tweet {
     @Column
     private String text;
 
-    @Column
-    private int likes;
+    @OneToMany(targetEntity = Tweet.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "LIKES_LIST")
+    private List<User> likesList;
+
+    @OneToMany(targetEntity = Tweet.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "DISLIKES_LIST")
+    private List<User> dislikesList;
 
     @Column
     private int retweets;
@@ -26,9 +32,10 @@ public class Tweet {
     public Tweet() {
     }
 
-    public Tweet(String text, int likes, int retweets, User user) {
+    public Tweet(String text, List<User> likesList, List<User> dislikesList, int retweets, User user) {
         this.text = text;
-        this.likes = likes;
+        this.likesList = likesList;
+        this.dislikesList = dislikesList;
         this.retweets = retweets;
         this.user = user;
     }
@@ -41,28 +48,36 @@ public class Tweet {
         return text;
     }
 
-    public int getLikes() {
-        return likes;
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public List<User> getLikesList() {
+        return likesList;
+    }
+
+    public void setLikesList(List<User> likesList) {
+        this.likesList = likesList;
+    }
+
+    public List<User> getDislikesList() {
+        return dislikesList;
+    }
+
+    public void setDislikesList(List<User> dislikesList) {
+        this.dislikesList = dislikesList;
     }
 
     public int getRetweets() {
         return retweets;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
-
     public void setRetweets(int retweets) {
         this.retweets = retweets;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public void setUser(User user) {

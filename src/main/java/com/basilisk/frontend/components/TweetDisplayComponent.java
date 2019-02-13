@@ -39,7 +39,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     public void setTweet(Tweet tweet) {
         this.tweet = tweet;
         tweetMessage.setValue(tweet.getText() + "\n-" + ((User) VaadinSession.getCurrent().getAttribute("currentUser")).getUsername());
-        likeButton.setText("Like " + tweet.getLikes());
+        likeButton.setText("Like " + tweet.getLikesList().size());
         dislikeButton.setText("Dislike " + 0);
     }
 
@@ -47,9 +47,9 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     private void likeButtonClicked() {
         // Called from the template click handler
         if (!likeButton.getText().contains("-")) {
-            likeButton.setText("Un-Like " + tweet.getLikes());
+            likeButton.setText("Un-Like " + tweet.getLikesList().size());
         } else {
-            likeButton.setText("Like " + tweet.getLikes());
+            likeButton.setText("Like " + tweet.getLikesList().size());
         }
     }
 

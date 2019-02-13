@@ -8,6 +8,8 @@ import com.vaadin.flow.server.VaadinSession;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class TweetPresenter {
 
@@ -22,10 +24,9 @@ public class TweetPresenter {
     }
 
     public boolean createAndSaveTweet(String tweetText) {
-
         if (!tweetText.isEmpty()) {
             User user = (User) VaadinSession.getCurrent().getAttribute("currentUser");
-            Tweet tweet = new Tweet(tweetText, 0, 0, user);
+            Tweet tweet = new Tweet(tweetText, new ArrayList<User>(), new ArrayList<User>(), 0, user);
             LOGGER.info("Tweet creation success: " + tweetText);
             tweetService.createTweet(tweet);
             return true;
