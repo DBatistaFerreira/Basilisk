@@ -40,26 +40,32 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         this.tweet = tweet;
         tweetMessage.setValue(tweet.getText() + "\n-" + ((User) VaadinSession.getCurrent().getAttribute("currentUser")).getUsername());
         likeButton.setText("Like " + tweet.getLikesList().size());
-        dislikeButton.setText("Dislike " + 0);
+        dislikeButton.setText("Dislike " + tweet.getDislikesList().size());
     }
 
     @EventHandler
     private void likeButtonClicked() {
-        // Called from the template click handler
-        if (!likeButton.getText().contains("-")) {
-            likeButton.setText("Un-Like " + tweet.getLikesList().size());
-        } else {
+        // Called when the like button is pressed
+        User currentUser = (User) VaadinSession.getCurrent().getAttribute("currentUser");
+        if (tweet.getLikesList().contains(currentUser)) { // If user already liked the tweet
+            tweet = tweetPresenter.unlikesTweet(currentUser, tweet);
             likeButton.setText("Like " + tweet.getLikesList().size());
+        } else { // If user didn't like the tweet
+            tweet = tweetPresenter.likesTweet(currentUser, tweet);
+            likeButton.setText("Un-Like " + tweet.getLikesList().size());
         }
     }
 
     @EventHandler
     private void dislikeButtonClicked() {
-        // Called from the template click handler
-        if (!dislikeButton.getText().contains("-")) {
-            dislikeButton.setText("Un-Dislike " + 0);
-        } else {
-            dislikeButton.setText("Dislike " + 0);
+        // Called when the like button is pressed
+        User currentUser = (User) VaadinSession.getCurrent().getAttribute("currentUser");
+        if (tweet.getDislikesList().contains(currentUser)) { // If user already disliked the tweet
+            tweet = tweetPresenter.undislikesTweet(currentUser, tweet);
+            dislikeButton.setText("Dislike " + tweet.getDislikesList().size());
+        } else { // If user didn't like the tweet
+            tweet = tweetPresenter.dislikesTweet(currentUser, tweet);
+            likeButton.setText("Un-Dislike " + tweet.getDislikesList().size());
         }
     }
 

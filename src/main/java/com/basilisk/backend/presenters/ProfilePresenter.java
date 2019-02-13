@@ -35,9 +35,9 @@ public class ProfilePresenter {
         List<TweetDisplayComponent> tweetComponentDisplayList = new LinkedList<>();
 
         for (Tweet tweet : tweetList) {
-            TweetDisplayComponent tweetComponentDisplay = new TweetDisplayComponent(tweetPresenter);
-            tweetComponentDisplay.setTweet(tweet);
-            tweetComponentDisplayList.add(tweetComponentDisplay);
+            TweetDisplayComponent tweetDisplayComponent = new TweetDisplayComponent(tweetPresenter);
+            tweetDisplayComponent.setTweet(tweet);
+            tweetComponentDisplayList.add(tweetDisplayComponent);
         }
         return tweetComponentDisplayList;
     }

@@ -36,4 +36,31 @@ public class TweetPresenter {
         }
     }
 
+    public Tweet likesTweet(User user, Tweet tweet) {
+        tweet.getLikesList().add(user);
+        tweetService.updateTweet(tweet);
+
+        return tweet;
+    }
+
+    public Tweet dislikesTweet(User user, Tweet tweet) {
+        tweet.getDislikesList().add(user);
+        tweetService.updateTweet(tweet);
+
+        return tweet;
+    }
+
+    public Tweet unlikesTweet(User user, Tweet tweet) {
+        tweet.getLikesList().remove(user);
+        tweetService.updateTweet(tweet);
+
+        return tweet;
+    }
+
+    public Tweet undislikesTweet(User user, Tweet tweet) {
+        tweet.getDislikesList().remove(user);
+        tweetService.updateTweet(tweet);
+
+        return tweet;
+    }
 }
