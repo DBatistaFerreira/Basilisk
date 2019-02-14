@@ -17,7 +17,6 @@ import com.vaadin.flow.templatemodel.TemplateModel;
 @HtmlImport("tweet-display-component.html")
 public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent.TweetDisplayComponentModel> {
 
-
     @Id("likeButton")
     private Button likeButton;
     @Id("dislikeButton")
@@ -29,6 +28,15 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     @Id("tweetMessage")
     private TextArea tweetMessage;
 
+    private static final String LIKE = "Like";
+    private static final String DISLIKE = "Dislike";
+    private static final String UN_LIKE = "Un-like";
+    private static final String UN_DISLIKE = "Un-dislike";
+    private static final String BACKGROUND = "background";
+    private static final String GREY = "Grey";
+    private static final String HEX314654 = "#314654";
+    private static final String CURRENT_USER = "currentUser";
+
     private TweetPresenter tweetPresenter;
     private Tweet tweet;
 
@@ -39,66 +47,65 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
 
     public void setTweet(Tweet tweet) {
         this.tweet = tweet;
-        tweetMessage.setValue(tweet.getText() + "\n-" + ((User) VaadinSession.getCurrent().getAttribute("currentUser")).getUsername());
+        tweetMessage.setValue(tweet.getText() + "\n-" + ((User) VaadinSession.getCurrent().getAttribute(CURRENT_USER)).getUsername());
 
         VaadinSession vaadinSession = VaadinSession.getCurrent();
-        User currentUser = (User) vaadinSession.getAttribute("currentUser");
+        User currentUser = (User) vaadinSession.getAttribute(CURRENT_USER);
 
         if (tweet.getLikesList().contains(currentUser)) {
-            likeButton.setText("Un-Like " + tweet.getLikesList().size());
-            likeButton.getStyle().set("background", "GREY");
+            likeButton.setText(UN_LIKE + " " + tweet.getLikesList().size());
+            likeButton.getStyle().set(BACKGROUND, GREY);
         } else {
-            likeButton.setText("Like " + tweet.getLikesList().size());
-            likeButton.getStyle().set("background", "#314654");
+            likeButton.setText(LIKE + " " + tweet.getLikesList().size());
         }
 
         if (tweet.getDislikesList().contains(currentUser)) {
-            dislikeButton.setText("Un-Dislike " + tweet.getDislikesList().size());
-            dislikeButton.getStyle().set("background", "GREY");
+            dislikeButton.setText(UN_DISLIKE + " " + tweet.getDislikesList().size());
+            dislikeButton.getStyle().set(BACKGROUND, GREY);
         } else {
-            dislikeButton.setText("Dislike " + tweet.getDislikesList().size());
+            dislikeButton.setText(DISLIKE + " " + tweet.getDislikesList().size());
         }
     }
 
     @EventHandler
     private void likeButtonClicked() {
         // Called when the like button is pressed
-        User currentUser = (User) VaadinSession.getCurrent().getAttribute("currentUser");
+        User currentUser = (User) VaadinSession.getCurrent().getAttribute(CURRENT_USER);
         if (tweet.getLikesList().contains(currentUser)) { // If user already liked the tweet
             tweet = tweetPresenter.unlikesTweet(currentUser, tweet);
-            likeButton.setText("Like " + tweet.getLikesList().size());
-            likeButton.getStyle().set("background", "#314654");
+            likeButton.setText(LIKE + " " + tweet.getLikesList().size());
+            likeButton.getStyle().set(BACKGROUND, HEX314654);
         } else { // If user didn't already dislike the tweet
             if (tweet.getDislikesList().contains(currentUser)) {
                 // If user already disliked the tweet, undislike it.
                 tweet = tweetPresenter.undislikesTweet(currentUser, tweet);
             }
             tweet = tweetPresenter.likesTweet(currentUser, tweet);
-            likeButton.setText("Un-Like " + tweet.getLikesList().size());
-            likeButton.getStyle().set("background", "GREY");
-            dislikeButton.setText("Dislike " + tweet.getDislikesList().size());
-            dislikeButton.getStyle().set("background", "#314654");
+            likeButton.setText(UN_LIKE + " " + tweet.getLikesList().size());
+            likeButton.getStyle().set(BACKGROUND, GREY);
+            dislikeButton.setText(DISLIKE + " " + tweet.getDislikesList().size());
+            dislikeButton.getStyle().set(BACKGROUND, HEX314654);
         }
     }
 
     @EventHandler
     private void dislikeButtonClicked() {
         // Called when the like button is pressed
-        User currentUser = (User) VaadinSession.getCurrent().getAttribute("currentUser");
+        User currentUser = (User) VaadinSession.getCurrent().getAttribute(CURRENT_USER);
         if (tweet.getDislikesList().contains(currentUser)) { // If user already disliked the tweet
             tweet = tweetPresenter.undislikesTweet(currentUser, tweet);
-            dislikeButton.setText("Dislike " + tweet.getDislikesList().size());
-            dislikeButton.getStyle().set("background", "#314654");
+            dislikeButton.setText(DISLIKE + " " + tweet.getDislikesList().size());
+            dislikeButton.getStyle().set(BACKGROUND, HEX314654);
         } else { // If user didn't already like the tweet
             if (tweet.getLikesList().contains(currentUser)) {
                 // If user already liked the tweet, unlike it.
                 tweet = tweetPresenter.unlikesTweet(currentUser, tweet);
             }
             tweet = tweetPresenter.dislikesTweet(currentUser, tweet);
-            dislikeButton.setText("Un-Dislike " + tweet.getDislikesList().size());
-            dislikeButton.getStyle().set("background", "GREY");
-            likeButton.setText("Like " + tweet.getLikesList().size());
-            likeButton.getStyle().set("background", "#314654");
+            dislikeButton.setText(UN_DISLIKE + " " + tweet.getDislikesList().size());
+            dislikeButton.getStyle().set(BACKGROUND, GREY);
+            likeButton.setText(LIKE + " " + tweet.getLikesList().size());
+            likeButton.getStyle().set(BACKGROUND, HEX314654);
         }
     }
 
