@@ -1,0 +1,161 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/vaadin-tabs/src/vaadin-tabs.html">
+<link rel="import" href="bower_components/vaadin-tabs/src/vaadin-tab.html">
+<link rel="import" href="bower_components/vaadin-text-field/src/vaadin-text-area.html">
+<link rel="import" href="bower_components/vaadin-button/src/vaadin-button.html">
+
+<dom-module id="profile-view">
+    <template>
+        <style include="shared-styles">
+
+            .container {
+                background: linear-gradient(to bottom right, #96eddc 0%, #5bdab2 107%);
+            }
+
+            .mainTabs {
+                background: linear-gradient(to bottom right, #314654 0%, #28343d 107%);
+                color: whitesmoke;
+            }
+
+            vaadin-tab {
+                color: whitesmoke;
+            }
+
+            .coverPic {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 40%;
+                border-radius: 15px;
+                border-style: solid;
+                border-width: 0.01px;
+            }
+
+            .profilePic {
+                position: relative;
+                bottom: 120px;
+                clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            }
+
+            .userBio {
+
+                position: relative;
+                top: 95px;
+                border-radius: 10px;
+                background: whitesmoke;
+                border-style: solid;
+                border-width: 3px;
+                /*border-color: linear-gradient(to bottom right, #51e2c6 0%, #15cb92 107%);*/
+                width: 180px;
+                height: 330px
+            }
+
+            .userBioArea {
+                width: 180px;
+                height: 250px
+            }
+
+            .userBioAreaTitle {
+                font-weight: bold;
+                color: #314654;
+            }
+
+            .mainContent {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .userStats {
+                font-weight: bold;
+                display: flex;
+                justify-content: space-evenly;;
+                color: whitesmoke;
+                position: relative;
+                bottom: 78%;
+                float: right;
+                width: 650px;
+                height: 40px;
+                background: linear-gradient(to bottom right, #314654 0%, #28343d 107%);
+            }
+
+            #tweetFeed {
+                position: relative;
+                top: -75%;
+                width: 600px;
+                height: 125px;
+                float: right;
+                margin-bottom: 30px;
+            }
+
+            .userPostArea {
+                width: 100%;
+                height: 55%;
+                color: black;
+            }
+
+            .postButton {
+                border-radius: 0px;
+                background: #314654;
+                color: whitesmoke;
+            }
+
+
+        </style>
+        <div class="container" style="width: 100%; height: 100%;">
+            <div id="div1" style="width: 100%; height:50px;">
+                <vaadin-tabs class="mainTabs">
+                    <vaadin-tab selected id="homeTab">
+                        Home
+                    </vaadin-tab>
+                    <vaadin-tab>
+                        Profile
+                    </vaadin-tab>
+                    <vaadin-tab class="tab3">
+                        Logout
+                    </vaadin-tab>
+                </vaadin-tabs>
+            </div>
+            <div style="width: 850px; height: 315px;" class="coverPic">
+                <img src="http://www.mkcommerce.rs/wp-content/uploads/2014/07/iStock_000042112208Medium-850-x-315-pix-cut.jpg"
+                     alt="coverPicture">
+                <div class="profilePic" style="width: 200px; height: 200px;">
+                    <img src="https://scontent.fymy1-2.fna.fbcdn.net/v/t1.0-9/41321468_1823723824370053_2470938163342737408_n.jpg?_nc_cat=105&amp;_nc_ht=scontent.fymy1-2.fna&amp;oh=963ce263f4950878e8aeb7c093bb5eac&amp;oe=5CF91A99"
+                         alt="profilePicture" style="width: 200px; height: 200px;">
+                </div>
+                <div class="userStats">
+                    <span class="userName">LBuzz95</span>
+                    <span class="userFollowers">Followers | 300</span>
+                    <span class="usersFollowing"></span>Following | 786
+                </div>
+            </div>
+            <div style="width: 850px; height: 315px" class="mainContent">
+                <div id="tweetFeed"></div>
+                <div class="userBio">
+                    <span class="userBioAreaTitle">About me </span>
+                    <vaadin-text-area class="userBioArea" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum rutrum sodales. Nullam mattis fermentum libero, non volutpat.
+"></vaadin-text-area>
+                    <vaadin-button class="postButton">
+                        Edit
+                    </vaadin-button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        class ProfileView extends Polymer.Element {
+            static get is() {
+                return 'profile-view';
+            }
+
+            static get properties() {
+                return {
+                    // Declare your properties here.
+                };
+            }
+        }
+
+        customElements.define(ProfileView.is, ProfileView);
+    </script>
+</dom-module>

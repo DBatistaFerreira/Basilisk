@@ -17,20 +17,28 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public User login(String username, String password) {
+        return retrieveUserByUsernameAndPassword(username, password);
+    }
+
     // CRUD Operations for UserService
-    public void createUser(User user) {
+    private void createUser(User user) {
         userRepository.save(user);
     }
 
-    public User retrieveUserbyUsername(String username) {
+    private User retrieveUserbyUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-    public void updateUser(User user) {
+    private User retrieveUserByUsernameAndPassword(String username, String password) {
+        return userRepository.findByUsernameAndPassword(username, password);
+    }
+
+    private void updateUser(User user) {
         userRepository.save(user);
     }
 
-    public void deleteUser(User user) {
+    private void deleteUser(User user) {
         userRepository.delete(user);
     }
 
