@@ -20,7 +20,7 @@ public class Tweet {
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(
-            cascade = CascadeType.PERSIST
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
     @JoinTable(
             name = "tweet_likes",
@@ -31,7 +31,7 @@ public class Tweet {
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(
-            cascade = CascadeType.PERSIST
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
     @JoinTable(
             name = "tweet_dislikes",
