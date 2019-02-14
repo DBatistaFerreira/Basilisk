@@ -46,12 +46,15 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
 
         if (tweet.getLikesList().contains(currentUser)) {
             likeButton.setText("Un-Like " + tweet.getLikesList().size());
+            likeButton.getStyle().set("background", "GREY");
         } else {
             likeButton.setText("Like " + tweet.getLikesList().size());
+            likeButton.getStyle().set("background", "#314654");
         }
 
         if (tweet.getDislikesList().contains(currentUser)) {
             dislikeButton.setText("Un-Dislike " + tweet.getDislikesList().size());
+            dislikeButton.getStyle().set("background", "GREY");
         } else {
             dislikeButton.setText("Dislike " + tweet.getDislikesList().size());
         }
@@ -64,6 +67,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         if (tweet.getLikesList().contains(currentUser)) { // If user already liked the tweet
             tweet = tweetPresenter.unlikesTweet(currentUser, tweet);
             likeButton.setText("Like " + tweet.getLikesList().size());
+            likeButton.getStyle().set("background", "#314654");
         } else { // If user didn't already dislike the tweet
             if (tweet.getDislikesList().contains(currentUser)) {
                 // If user already disliked the tweet, undislike it.
@@ -71,7 +75,9 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
             }
             tweet = tweetPresenter.likesTweet(currentUser, tweet);
             likeButton.setText("Un-Like " + tweet.getLikesList().size());
+            likeButton.getStyle().set("background", "GREY");
             dislikeButton.setText("Dislike " + tweet.getDislikesList().size());
+            dislikeButton.getStyle().set("background", "#314654");
         }
     }
 
@@ -82,6 +88,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         if (tweet.getDislikesList().contains(currentUser)) { // If user already disliked the tweet
             tweet = tweetPresenter.undislikesTweet(currentUser, tweet);
             dislikeButton.setText("Dislike " + tweet.getDislikesList().size());
+            dislikeButton.getStyle().set("background", "#314654");
         } else { // If user didn't already like the tweet
             if (tweet.getLikesList().contains(currentUser)) {
                 // If user already liked the tweet, unlike it.
@@ -89,7 +96,9 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
             }
             tweet = tweetPresenter.dislikesTweet(currentUser, tweet);
             dislikeButton.setText("Un-Dislike " + tweet.getDislikesList().size());
+            dislikeButton.getStyle().set("background", "GREY");
             likeButton.setText("Like " + tweet.getLikesList().size());
+            likeButton.getStyle().set("background", "#314654");
         }
     }
 
