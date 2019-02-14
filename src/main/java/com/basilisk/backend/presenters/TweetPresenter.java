@@ -7,8 +7,10 @@ import com.basilisk.backend.services.UserService;
 import com.vaadin.flow.server.VaadinSession;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class TweetPresenter {
 
     private UserService userService;
@@ -22,10 +24,9 @@ public class TweetPresenter {
     }
 
     public boolean createAndSaveTweet(String tweetText) {
-
         if (!tweetText.isEmpty()) {
             User user = (User) VaadinSession.getCurrent().getAttribute("currentUser");
-            Tweet tweet = new Tweet(tweetText, 0, 0, user);
+            Tweet tweet = new Tweet(tweetText, 0, user);
             LOGGER.info("Tweet creation success: " + tweetText);
             tweetService.createTweet(tweet);
             return true;
@@ -35,4 +36,35 @@ public class TweetPresenter {
         }
     }
 
+    public Tweet likesTweet(User user, Tweet tweet) {
+        LOGGER.info("User " + user.getUsername() + " likes tweet " + tweet.getId());
+        tweet.getLikesList().add(user);
+        tweetService.updateTweet(tweet);
+
+        return tweetService.retrieveTweet(tweet.getId());
+    }
+
+    public Tweet dislikesTweet(User user, Tweet tweet) {
+        LOGGER.info("User " + user.getUsername() + " dislikes tweet " + tweet.getId());
+        tweet.getDislikesList().add(user);
+        tweetService.updateTweet(tweet);
+
+        return tweetService.retrieveTweet(tweet.getId());
+    }
+
+    public Tweet unlikesTweet(User user, Tweet tweet) {
+        LOGGER.info("User " + user.getUsername() + " unlikes tweet " + tweet.getId());
+        tweet.getLikesList().remove(user);
+        tweetService.updateTweet(tweet);
+
+        return tweetService.retrieveTweet(tweet.getId());
+    }
+
+    public Tweet undislikesTweet(User user, Tweet tweet) {
+        LOGGER.info("User " + user.getUsername() + " undislikes tweet " + tweet.getId());
+        tweet.getDislikesList().remove(user);
+        tweetService.updateTweet(tweet);
+
+        return tweetService.retrieveTweet(tweet.getId());
+    }
 }

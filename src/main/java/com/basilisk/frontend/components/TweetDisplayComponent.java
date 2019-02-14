@@ -28,6 +28,15 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     @Id("tweetMessage")
     private TextArea tweetMessage;
 
+    private static final String LIKE = "Like";
+    private static final String DISLIKE = "Dislike";
+    private static final String UN_LIKE = "Un-like";
+    private static final String UN_DISLIKE = "Un-dislike";
+    private static final String BACKGROUND = "background";
+    private static final String GREY = "Grey";
+    private static final String HEX314654 = "#314654";
+    private static final String CURRENT_USER = "currentUser";
+
     private TweetPresenter tweetPresenter;
     private Tweet tweet;
 
@@ -38,35 +47,72 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
 
     public void setTweet(Tweet tweet) {
         this.tweet = tweet;
-        tweetMessage.setValue(tweet.getText() + "\n-" + ((User) VaadinSession.getCurrent().getAttribute("currentUser")).getUsername());
-        likeButton.setText("Like " + tweet.getLikes());
-        dislikeButton.setText("Dislike " + 0);
+        tweetMessage.setValue(tweet.getText() + "\n-" + ((User) VaadinSession.getCurrent().getAttribute(CURRENT_USER)).getUsername());
+
+        VaadinSession vaadinSession = VaadinSession.getCurrent();
+        User currentUser = (User) vaadinSession.getAttribute(CURRENT_USER);
+
+        if (tweet.getLikesList().contains(currentUser)) {
+            likeButton.setText(UN_LIKE + " " + tweet.getLikesList().size());
+            likeButton.getStyle().set(BACKGROUND, GREY);
+        } else {
+            likeButton.setText(LIKE + " " + tweet.getLikesList().size());
+        }
+
+        if (tweet.getDislikesList().contains(currentUser)) {
+            dislikeButton.setText(UN_DISLIKE + " " + tweet.getDislikesList().size());
+            dislikeButton.getStyle().set(BACKGROUND, GREY);
+        } else {
+            dislikeButton.setText(DISLIKE + " " + tweet.getDislikesList().size());
+        }
     }
 
     @EventHandler
     private void likeButtonClicked() {
-        // Called from the template click handler
-        if (!likeButton.getText().contains("-")) {
-            likeButton.setText("Un-Like " + tweet.getLikes());
-        } else {
-            likeButton.setText("Like " + tweet.getLikes());
+        // Called when the like button is pressed
+        User currentUser = (User) VaadinSession.getCurrent().getAttribute(CURRENT_USER);
+        if (tweet.getLikesList().contains(currentUser)) { // If user already liked the tweet
+            tweet = tweetPresenter.unlikesTweet(currentUser, tweet);
+            likeButton.setText(LIKE + " " + tweet.getLikesList().size());
+            likeButton.getStyle().set(BACKGROUND, HEX314654);
+        } else { // If user didn't already dislike the tweet
+            if (tweet.getDislikesList().contains(currentUser)) {
+                // If user already disliked the tweet, undislike it.
+                tweet = tweetPresenter.undislikesTweet(currentUser, tweet);
+            }
+            tweet = tweetPresenter.likesTweet(currentUser, tweet);
+            likeButton.setText(UN_LIKE + " " + tweet.getLikesList().size());
+            likeButton.getStyle().set(BACKGROUND, GREY);
+            dislikeButton.setText(DISLIKE + " " + tweet.getDislikesList().size());
+            dislikeButton.getStyle().set(BACKGROUND, HEX314654);
         }
     }
 
     @EventHandler
     private void dislikeButtonClicked() {
-        // Called from the template click handler
-        if (!dislikeButton.getText().contains("-")) {
-            dislikeButton.setText("Un-Dislike " + 0);
-        } else {
-            dislikeButton.setText("Dislike " + 0);
+        // Called when the like button is pressed
+        User currentUser = (User) VaadinSession.getCurrent().getAttribute(CURRENT_USER);
+        if (tweet.getDislikesList().contains(currentUser)) { // If user already disliked the tweet
+            tweet = tweetPresenter.undislikesTweet(currentUser, tweet);
+            dislikeButton.setText(DISLIKE + " " + tweet.getDislikesList().size());
+            dislikeButton.getStyle().set(BACKGROUND, HEX314654);
+        } else { // If user didn't already like the tweet
+            if (tweet.getLikesList().contains(currentUser)) {
+                // If user already liked the tweet, unlike it.
+                tweet = tweetPresenter.unlikesTweet(currentUser, tweet);
+            }
+            tweet = tweetPresenter.dislikesTweet(currentUser, tweet);
+            dislikeButton.setText(UN_DISLIKE + " " + tweet.getDislikesList().size());
+            dislikeButton.getStyle().set(BACKGROUND, GREY);
+            likeButton.setText(LIKE + " " + tweet.getLikesList().size());
+            likeButton.getStyle().set(BACKGROUND, HEX314654);
         }
     }
 
     @EventHandler
     private void commentButtonClicked() {
         // Called from the template click handler
-        System.out.println("Comment");
+
     }
 
     @EventHandler

@@ -58,7 +58,25 @@ public class User {
 
     @Override
     public String toString() {
-        return "Username: " + username;
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof User)) {
+            return false;
+        }
+        User user = (User) obj;
+
+        return this.id == user.id && this.name.equals(user.name) && this.username.equals(user.username);
     }
 }
 
