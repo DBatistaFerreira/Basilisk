@@ -97,8 +97,8 @@ public class Tweet {
         return "Tweet{" +
                 "id=" + id +
                 ", text='" + text + '\'' +
-                ", likesList=" + likesList +
-                ", dislikesList=" + dislikesList +
+                ", likes=" + likesList.size() +
+                ", dislikes=" + dislikesList.size() +
                 ", retweets=" + retweets +
                 ", user=" + user +
                 '}';

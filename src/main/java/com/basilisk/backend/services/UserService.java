@@ -42,7 +42,7 @@ public class UserService {
     }
 
     private List<User> retrieveUserByUsernameContaining(String searchTerm) {
-        return userRepository.findByUsernameContaining(searchTerm);
+        return userRepository.findAllByUsernameContainingIgnoreCase(searchTerm);
     }
 
     private void updateUser(User user) {
