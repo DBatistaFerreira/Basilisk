@@ -6,6 +6,8 @@ import com.basilisk.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -17,11 +19,16 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    // Public Service methods
     public User login(String username, String password) {
         return retrieveUserByUsernameAndPassword(username, password);
     }
 
-    // CRUD Operations for UserService
+    public List<User> searchForUser(String searchTerm) {
+        return retrieveUserByUsernameContaining(searchTerm);
+    }
+
+    // private CRUD Operations for UserService which call the user repository
     private void createUser(User user) {
         userRepository.save(user);
     }
@@ -32,6 +39,10 @@ public class UserService {
 
     private User retrieveUserByUsernameAndPassword(String username, String password) {
         return userRepository.findByUsernameAndPassword(username, password);
+    }
+
+    private List<User> retrieveUserByUsernameContaining(String searchTerm) {
+        return userRepository.findByUsernameContaining(searchTerm);
     }
 
     private void updateUser(User user) {
