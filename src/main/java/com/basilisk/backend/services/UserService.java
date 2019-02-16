@@ -24,8 +24,8 @@ public class UserService {
         return retrieveUserByUsernameAndPassword(username, password);
     }
 
-    public List<User> searchForUser(String searchTerm) {
-        return retrieveUserByUsernameContaining(searchTerm);
+    public List<User> searchForUsers(String username) {
+        return retrieveUserByUsernameContainingIgnoreCase(username);
     }
 
     // private CRUD Operations for UserService which call the user repository
@@ -41,7 +41,7 @@ public class UserService {
         return userRepository.findByUsernameAndPassword(username, password);
     }
 
-    private List<User> retrieveUserByUsernameContaining(String searchTerm) {
+    private List<User> retrieveUserByUsernameContainingIgnoreCase(String searchTerm) {
         return userRepository.findAllByUsernameContainingIgnoreCase(searchTerm);
     }
 

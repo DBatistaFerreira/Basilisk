@@ -22,9 +22,9 @@ public class HomePresenter {
         this.tweetService = tweetService;
     }
 
-    public List<User> searchForUser(String username) {
+    public List<User> searchForUsers(String username) {
         LOGGER.info("Searching for user: " + username);
-        List<User> users = userService.searchForUser(username);
+        List<User> users = userService.searchForUsers(username);
         LOGGER.info("Search Results: ");
         for (User user : users) {
             LOGGER.info(user);

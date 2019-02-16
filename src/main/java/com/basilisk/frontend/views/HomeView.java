@@ -50,7 +50,7 @@ public class HomeView extends PolymerTemplate<HomeView.HomeViewModel> implements
 
         searchButton.addClickListener(buttonClickEvent -> {
             String query = searchField.getValue();
-            List<User> users = homePresenter.searchForUser(query);
+            List<User> users = homePresenter.searchForUsers(query);
             // The search is successful and returns the users whose username contains the query.
             // TODO generate a visual list of users that can be clicked.
 
@@ -61,7 +61,7 @@ public class HomeView extends PolymerTemplate<HomeView.HomeViewModel> implements
     @Override
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
         VaadinSession vaadinSession = VaadinSession.getCurrent();
-        if(Objects.isNull(vaadinSession.getAttribute("currentUser"))) {
+        if (Objects.isNull(vaadinSession.getAttribute("currentUser"))) {
             beforeEnterEvent.rerouteTo(LoginView.class);
             UI.getCurrent().navigate("");
         }
