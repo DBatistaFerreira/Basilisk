@@ -28,6 +28,10 @@ public class UserService {
         return retrieveUserByUsernameContainingIgnoreCase(username);
     }
 
+    public User retrieveUserByUserName(String username) {
+        return retrieveUserbyUsername(username);
+    }
+
     // private CRUD Operations for UserService which call the user repository
     private void createUser(User user) {
         userRepository.save(user);
@@ -52,5 +56,4 @@ public class UserService {
     private void deleteUser(User user) {
         userRepository.delete(user);
     }
-
 }

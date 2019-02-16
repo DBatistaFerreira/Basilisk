@@ -43,6 +43,9 @@ public class HomeView extends PolymerTemplate<HomeView.HomeViewModel> implements
 
     public HomeView(HomePresenter homePresenter) {
         this.homePresenter = homePresenter;
+    }
+
+    public void init() {
         // You can initialise any data required for the connected UI components here.
         profileTab.getElement().addEventListener("click", (event) -> {
             UI.getCurrent().navigate("profile");
@@ -55,7 +58,6 @@ public class HomeView extends PolymerTemplate<HomeView.HomeViewModel> implements
             // TODO generate a visual list of users that can be clicked.
 
         });
-
     }
 
     @Override
@@ -65,6 +67,7 @@ public class HomeView extends PolymerTemplate<HomeView.HomeViewModel> implements
             beforeEnterEvent.rerouteTo(LoginView.class);
             UI.getCurrent().navigate("");
         }
+        init();
     }
 
     public interface HomeViewModel extends TemplateModel {
