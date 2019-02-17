@@ -13,6 +13,8 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.templatemodel.TemplateModel;
 
+import java.util.Objects;
+
 @Tag("menu-bar-component")
 @HtmlImport("menu-bar-component.html")
 public class MenuBarComponent extends PolymerTemplate<MenuBarComponent.MenuBarComponentModel> {
@@ -27,13 +29,14 @@ public class MenuBarComponent extends PolymerTemplate<MenuBarComponent.MenuBarCo
     private Tab logoutTab;
 
     public MenuBarComponent(MenuBarPresenter menuBarPresenter) {
-        // You can initialise any data required for the connected UI components here.
         searchComboBox.setItemLabelGenerator(User::getUsername);
         searchComboBox.setAllowCustomValue(true);
         searchComboBox.setItems(menuBarPresenter.getAllUsers());
         searchComboBox.addValueChangeListener(event -> {
             User user = (User) searchComboBox.getValue();
-            UI.getCurrent().navigate("profile/" + user.getUsername());
+            if (!Objects.isNull(user)) {
+                UI.getCurrent().navigate("profile/" + user.getUsername());
+            }
         });
     }
 
