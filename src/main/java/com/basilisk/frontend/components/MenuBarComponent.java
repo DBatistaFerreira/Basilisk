@@ -8,6 +8,7 @@ import com.vaadin.flow.component.polymertemplate.EventHandler;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.templatemodel.TemplateModel;
 
 @Tag("menu-bar-component")
@@ -39,7 +40,8 @@ public class MenuBarComponent extends PolymerTemplate<MenuBarComponent.MenuBarCo
 
     @EventHandler
     private void logoutClicked() {
-        //TODO: logout
+        VaadinSession.getCurrent().setAttribute("currentUser", null);
+        UI.getCurrent().navigate("");
     }
 
     public interface MenuBarComponentModel extends TemplateModel {

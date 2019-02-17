@@ -50,7 +50,8 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
 
     @Override
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-        if (Objects.isNull(VaadinSession.getCurrent().getAttribute("currentUser"))) {
+        VaadinSession vaadinSession = VaadinSession.getCurrent();
+        if (Objects.isNull(vaadinSession.getCurrent().getAttribute("currentUser"))) {
             beforeEnterEvent.rerouteTo(LoginView.class);
             UI.getCurrent().navigate("");
         }
