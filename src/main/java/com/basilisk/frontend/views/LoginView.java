@@ -37,7 +37,7 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> impleme
     }
 
     public void init() {
-        // You can initialise any data required for the connected UI components here.
+        VaadinSession.getCurrent().setAttribute("currentPage", "login");
         loginButton.addClickListener(buttonClickEvent -> {
             String userName = usernameTextField.getValue(); // Valid value: Admin
             String password = passwordTextField.getValue(); // Valid value: password

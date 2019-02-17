@@ -28,7 +28,7 @@ public class HomeView extends PolymerTemplate<HomeView.HomeViewModel> implements
     }
 
     public void init() {
-        // You can initialise any data required for the connected UI components here.
+        VaadinSession.getCurrent().setAttribute("currentPage", "home");
     }
 
     @Override

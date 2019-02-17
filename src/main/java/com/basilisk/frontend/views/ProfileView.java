@@ -45,6 +45,7 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
 
     public void init() {
         User currentUser = (User) VaadinSession.getCurrent().getAttribute(CURRENT_USER);
+        VaadinSession.getCurrent().setAttribute("currentPage", "profile");
 
         if (Objects.isNull(usernameParameter)) { //If route is just /profile then go to currentUser page
             usernameParameter = currentUser.getUsername();
@@ -68,6 +69,7 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
             tweetFeed.appendChild(tweetDisplayComponent.getElement());
         }
         // You can initialise any data required for the connected UI components here.
+
     }
 
     @Override

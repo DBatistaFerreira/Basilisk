@@ -30,12 +30,20 @@ public class MenuBarComponent extends PolymerTemplate<MenuBarComponent.MenuBarCo
 
     @EventHandler
     private void navigateHome() {
-        UI.getCurrent().navigate("home");
+        if ("home".equals(VaadinSession.getCurrent().getAttribute("currentPage"))) {
+            UI.getCurrent().getPage().reload();
+        } else {
+            UI.getCurrent().navigate("home");
+        }
     }
 
     @EventHandler
     private void navigateProfile() {
-        UI.getCurrent().navigate("profile");
+        if ("profile".equals(VaadinSession.getCurrent().getAttribute("currentPage"))) {
+            UI.getCurrent().getPage().reload();
+        } else {
+            UI.getCurrent().navigate("profile");
+        }
     }
 
     @EventHandler
