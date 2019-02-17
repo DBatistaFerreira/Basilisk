@@ -1,0 +1,69 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/vaadin-tabs/src/vaadin-tabs.html">
+<link rel="import" href="bower_components/vaadin-tabs/src/vaadin-tab.html">
+<link rel="import" href="bower_components/vaadin-text-field/src/vaadin-text-area.html">
+<link rel="import" href="bower_components/vaadin-button/src/vaadin-button.html">
+<link rel="import" href="bower_components/vaadin-ordered-layout/src/vaadin-horizontal-layout.html">
+<link rel="import" href="bower_components/vaadin-combo-box/src/vaadin-combo-box-light.html">
+<link rel="import" href="bower_components/vaadin-text-field/src/vaadin-text-field.html">
+
+<dom-module id="menu-bar-component">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+            }
+
+            .container {
+                background: linear-gradient(to bottom right, #96eddc 0%, #5bdab2 107%);
+            }
+
+            .mainTabs {
+                background: linear-gradient(to bottom right, #314654 0%, #28343d 107%);
+                color: whitesmoke;
+            }
+
+            vaadin-tab {
+                color: whitesmoke;
+            }
+
+            .searchBox {
+                background-color: whitesmoke;
+                margin-left: auto;
+                margin-right: auto;
+                border: 3px solid #314654;
+                width: 50%;
+                max-width: 400px
+            }
+        </style>
+        <vaadin-tabs class="mainTabs" id="vaadinTabs">
+            <vaadin-tab selected id="homeTab" on-click="navigateHome">
+                Home
+            </vaadin-tab>
+            <vaadin-tab id="profileTab" on-click="navigateProfile">
+                Profile
+            </vaadin-tab>
+            <vaadin-horizontal-layout style="width: 100%; height: 100%;">
+                <vaadin-combo-box id="searchComboBox" class="searchBox"></vaadin-combo-box>
+            </vaadin-horizontal-layout>
+            <vaadin-tab id="logoutTab" on-click="logoutClicked">
+                Logout
+            </vaadin-tab>
+        </vaadin-tabs>
+    </template>
+    <script>
+        class MenuBarComponent extends Polymer.Element {
+            static get is() {
+                return 'menu-bar-component';
+            }
+
+            static get properties() {
+                return {
+                    // Declare your properties here.
+                };
+            }
+        }
+
+        customElements.define(MenuBarComponent.is, MenuBarComponent);
+    </script>
+</dom-module>
