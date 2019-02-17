@@ -3,14 +3,15 @@ package com.basilisk.frontend.views;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.presenters.ProfilePresenter;
 import com.basilisk.backend.presenters.TweetPresenter;
+import com.basilisk.frontend.components.MenuBarComponent;
 import com.basilisk.frontend.components.TweetCreateComponent;
 import com.basilisk.frontend.components.TweetDisplayComponent;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
-import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.VaadinSession;
@@ -23,6 +24,7 @@ import java.util.Objects;
 @Tag("profile-view")
 @HtmlImport("profile-view.html")
 @Route("profile")
+@Uses(MenuBarComponent.class)
 public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> implements BeforeEnterObserver, HasUrlParameter<String> {
 
     private ProfilePresenter profilePresenter;
@@ -35,9 +37,6 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
 
     @Id("tweetFeed")
     private Element tweetFeed;
-    @Id("homeTab")
-    private Tab homeTab;
-
 
     public ProfileView(ProfilePresenter profilePresenter, TweetPresenter tweetPresenter) {
         this.profilePresenter = profilePresenter;
@@ -68,17 +67,13 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
         for (TweetDisplayComponent tweetDisplayComponent : tweetDisplayComponentList) {
             tweetFeed.appendChild(tweetDisplayComponent.getElement());
         }
-
-        homeTab.getElement().addEventListener("click", (event) -> {
-            UI.getCurrent().navigate("home");
-        });
-
         // You can initialise any data required for the connected UI components here.
     }
 
     @Override
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-        if (Objects.isNull(VaadinSession.getCurrent().getAttribute("currentUser"))) {
+        VaadinSession vaadinSession = VaadinSession.getCurrent();
+        if (Objects.isNull(vaadinSession.getCurrent().getAttribute("currentUser"))) {
             beforeEnterEvent.rerouteTo(LoginView.class);
             UI.getCurrent().navigate("");
         }
