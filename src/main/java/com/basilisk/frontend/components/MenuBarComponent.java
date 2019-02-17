@@ -1,5 +1,8 @@
 package com.basilisk.frontend.components;
 
+import com.basilisk.backend.models.User;
+import com.basilisk.backend.presenters.MenuBarPresenter;
+import com.vaadin.flow.component.ItemLabelGenerator;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -20,30 +23,32 @@ public class MenuBarComponent extends PolymerTemplate<MenuBarComponent.MenuBarCo
     @Id("profileTab")
     private Tab profileTab;
     @Id("searchComboBox")
-    private ComboBox searchComboBox;
+    private ComboBox<User> searchComboBox;
     @Id("logoutTab")
     private Tab logoutTab;
 
-    public MenuBarComponent() {
+    public MenuBarComponent(MenuBarPresenter menuBarPresenter) {
         // You can initialise any data required for the connected UI components here.
+        searchComboBox.setItemLabelGenerator((ItemLabelGenerator) o -> {
+            User user = (User) o;
+            return user.getUsername();
+        });
+        searchComboBox.setItems(menuBarPresenter.getAllUsers());
+        searchComboBox.addValueChangeListener(event -> {
+            User user = (User) searchComboBox.getValue();
+            UI.getCurrent().navigate("profile/" + user.getUsername());
+        });
     }
 
     @EventHandler
     private void navigateHome() {
-        if ("home".equals(VaadinSession.getCurrent().getAttribute("currentPage"))) {
-            UI.getCurrent().getPage().reload();
-        } else {
-            UI.getCurrent().navigate("home");
-        }
+        VaadinSession.getCurrent().setAttribute("userProfile", null);
+        UI.getCurrent().navigate("home");
     }
 
     @EventHandler
     private void navigateProfile() {
-        if ("profile".equals(VaadinSession.getCurrent().getAttribute("currentPage"))) {
-            UI.getCurrent().getPage().reload();
-        } else {
-            UI.getCurrent().navigate("profile");
-        }
+        UI.getCurrent().navigate("profile");
     }
 
     @EventHandler

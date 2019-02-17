@@ -59,6 +59,7 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
             VaadinSession.getCurrent().setAttribute(USER_PROFILE, userProfile);
         }
 
+        tweetFeed.removeAllChildren();
         //Loading the tweets
         User userProfile = (User) VaadinSession.getCurrent().getAttribute(USER_PROFILE);
         List<TweetDisplayComponent> tweetDisplayComponentList = profilePresenter.getAllUserTweetsDisplayComponents(userProfile);

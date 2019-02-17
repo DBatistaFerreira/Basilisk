@@ -28,6 +28,10 @@ public class UserService {
         return retrieveUserByUsernameContainingIgnoreCase(username);
     }
 
+    public List<User> retrieveAllUsers() {
+        return userRepository.findAll();
+    }
+
     public User retrieveUserByUserName(String username) {
         return retrieveUserbyUsername(username);
     }
