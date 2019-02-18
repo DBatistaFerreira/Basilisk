@@ -30,7 +30,7 @@ public class ProfilePresenter {
         this.tweetPresenter = tweetPresenter;
     }
 
-    public List<TweetDisplayComponent> getAllUserTweets(User user) {
+    public List<TweetDisplayComponent> getAllUserTweetsDisplayComponents(User user) {
         List<Tweet> tweetList = tweetService.retrieveAllTweets(user);
         List<TweetDisplayComponent> tweetComponentDisplayList = new LinkedList<>();
 
@@ -40,5 +40,12 @@ public class ProfilePresenter {
             tweetComponentDisplayList.add(tweetDisplayComponent);
         }
         return tweetComponentDisplayList;
+    }
+
+    public User getUser(String username) {
+        LOGGER.info("Retrieving user: " + username);
+        User user = userService.retrieveUserByUserName(username);
+        LOGGER.info("Retrieved user: " + username);
+        return user;
     }
 }

@@ -1,74 +1,15 @@
 <link rel="import" href="bower_components/polymer/polymer.html">
-<link rel="import" href="bower_components/vaadin-ordered-layout/src/vaadin-vertical-layout.html">
-<link rel="import" href="bower_components/vaadin-tabs/src/vaadin-tabs.html">
-<link rel="import" href="bower_components/vaadin-tabs/src/vaadin-tab.html">
-<link rel="import" href="bower_components/vaadin-button/src/vaadin-button.html">
-<link rel="import" href="bower_components/vaadin-ordered-layout/src/vaadin-horizontal-layout.html">
-<link rel="import" href="bower_components/vaadin-text-field/src/vaadin-text-field.html">
+<link rel="import" href="menu-bar-component.html">
 
 <dom-module id="home-view">
     <template>
-<style include="shared-styles">
+        <style include="shared-styles">
             :host {
                 display: block;
-                width: 100vw;
-                height: 100vh;
-                background-color: #e8e8e8;
-            }
-            .main_Layout {
-                position: fixed;
-                right: 40vw;
-            }
-            .touch_Bar {
-            }
-            .tabs {
-            }
-            .home {
-            }
-            .profile {
-            }
-            .logout {
-                background-color: cyan;
-            }
-            .reload {
-                background-color: cyan;
-            }
-            .search_Bar {
-            }
-            .search_Field {
-                background-color: white;
-            }
-            .search_Button {
-                background-color: cyan;
             }
         </style>
-<vaadin-vertical-layout theme="spacing" style="undefined" class="main_Layout" id="mainLayout">
- <vaadin-horizontal-layout theme="spacing" style="width: 100%; height: 100%;" class="touch_Bar">
-  <vaadin-tabs id="vaadinTabs" class="tabs">
-   <vaadin-tab selected class="home">
-     Home 
-   </vaadin-tab>
-      <vaadin-tab class="profile" id="profileTab">
-     Profile 
-   </vaadin-tab>
-  </vaadin-tabs>
-     <vaadin-button class="logout" id="logoutButton">
-    Logout 
-  </vaadin-button>
-     <vaadin-button _vaadin_designer_import_href="bower_components/vaadin-button/theme/lumo/vaadin-button.html"
-                    tabindex="0" role="button" draggable="true" vaadin-dnd-item="true" active="" focused=""
-                    class="reload" id="reloadButton">
-    Reload 
-  </vaadin-button>
- </vaadin-horizontal-layout>
- <vaadin-horizontal-layout theme="spacing" class="search_Bar">
-  <vaadin-text-field placeholder="Search" class="search_Field"></vaadin-text-field>
-     <vaadin-button class="search_Button" id="searchButton">
-    Search 
-  </vaadin-button>
- </vaadin-horizontal-layout>
-</vaadin-vertical-layout>
-</template>
+        <menu-bar-component></menu-bar-component>
+    </template>
 
     <script>
         class HomeView extends Polymer.Element {

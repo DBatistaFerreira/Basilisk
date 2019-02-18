@@ -1,8 +1,7 @@
 <link rel="import" href="bower_components/polymer/polymer.html">
-<link rel="import" href="bower_components/vaadin-tabs/src/vaadin-tabs.html">
-<link rel="import" href="bower_components/vaadin-tabs/src/vaadin-tab.html">
 <link rel="import" href="bower_components/vaadin-text-field/src/vaadin-text-area.html">
 <link rel="import" href="bower_components/vaadin-button/src/vaadin-button.html">
+<link rel="import" href="menu-bar-component.html">
 
 <dom-module id="profile-view">
     <template>
@@ -104,17 +103,7 @@
         </style>
         <div class="container" style="width: 100%; height: 100%;">
             <div id="div1" style="width: 100%; height:50px;">
-                <vaadin-tabs class="mainTabs">
-                    <vaadin-tab selected id="homeTab">
-                        Home
-                    </vaadin-tab>
-                    <vaadin-tab>
-                        Profile
-                    </vaadin-tab>
-                    <vaadin-tab class="tab3">
-                        Logout
-                    </vaadin-tab>
-                </vaadin-tabs>
+                <menu-bar-component></menu-bar-component>
             </div>
             <div style="width: 850px; height: 315px;" class="coverPic">
                 <img src="http://www.mkcommerce.rs/wp-content/uploads/2014/07/iStock_000042112208Medium-850-x-315-pix-cut.jpg"
