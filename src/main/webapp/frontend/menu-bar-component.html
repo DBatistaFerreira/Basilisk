@@ -36,20 +36,23 @@
                 max-width: 400px
             }
         </style>
-        <vaadin-tabs class="mainTabs" id="vaadinTabs">
-            <vaadin-tab selected id="homeTab" on-click="navigateHome">
-                Home
-            </vaadin-tab>
-            <vaadin-tab id="profileTab" on-click="navigateProfile">
-                Profile
-            </vaadin-tab>
-            <vaadin-horizontal-layout style="width: 100%; height: 100%;">
+        <vaadin-horizontal-layout
+                style="background: linear-gradient(to bottom right, #314654 0%, #28343d 107%); width: 100%; height: 100%;">
+            <vaadin-tabs class="mainTabs" id="vaadinTabs">
+                <vaadin-tab selected id="homeTab" on-click="navigateHome">
+                    Home
+                </vaadin-tab>
+                <vaadin-tab id="profileTab" on-click="navigateProfile">
+                    Profile
+                </vaadin-tab>
+            </vaadin-tabs>
                 <vaadin-combo-box id="searchComboBox" class="searchBox"></vaadin-combo-box>
-            </vaadin-horizontal-layout>
-            <vaadin-tab id="logoutTab" on-click="logoutClicked">
-                Logout
-            </vaadin-tab>
-        </vaadin-tabs>
+            <vaadin-tabs class="mainTabs" id="vaadinTabs">
+                <vaadin-tab id="logoutTab" on-click="logoutClicked">
+                    Logout
+                </vaadin-tab>
+            </vaadin-tabs>
+        </vaadin-horizontal-layout>
     </template>
     <script>
         class MenuBarComponent extends Polymer.Element {

@@ -25,16 +25,20 @@ public class HomeView extends PolymerTemplate<HomeView.HomeViewModel> implements
 
     public HomeView(HomePresenter homePresenter) {
         this.homePresenter = homePresenter;
-        // You can initialise any data required for the connected UI components here.
+    }
+
+    public void init() {
+        VaadinSession.getCurrent().setAttribute("currentPage", "home");
     }
 
     @Override
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
         VaadinSession vaadinSession = VaadinSession.getCurrent();
-        if(Objects.isNull(vaadinSession.getAttribute("currentUser"))) {
+        if (Objects.isNull(vaadinSession.getAttribute("currentUser"))) {
             beforeEnterEvent.rerouteTo(LoginView.class);
             UI.getCurrent().navigate("");
         }
+        init();
     }
 
     public interface HomeViewModel extends TemplateModel {

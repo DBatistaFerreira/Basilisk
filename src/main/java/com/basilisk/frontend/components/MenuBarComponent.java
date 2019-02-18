@@ -1,5 +1,7 @@
 package com.basilisk.frontend.components;
 
+import com.basilisk.backend.models.User;
+import com.basilisk.backend.presenters.MenuBarPresenter;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -11,6 +13,10 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.templatemodel.TemplateModel;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+
 @Tag("menu-bar-component")
 @HtmlImport("menu-bar-component.html")
 public class MenuBarComponent extends PolymerTemplate<MenuBarComponent.MenuBarComponentModel> {
@@ -20,16 +26,38 @@ public class MenuBarComponent extends PolymerTemplate<MenuBarComponent.MenuBarCo
     @Id("profileTab")
     private Tab profileTab;
     @Id("searchComboBox")
-    private ComboBox searchComboBox;
+    private ComboBox<User> searchComboBox;
     @Id("logoutTab")
     private Tab logoutTab;
 
-    public MenuBarComponent() {
-        // You can initialise any data required for the connected UI components here.
+    public MenuBarComponent(MenuBarPresenter menuBarPresenter) {
+        List<User> users = menuBarPresenter.getAllUsers();
+
+        users.sort(new UserCompare());
+        searchComboBox.setItems(users);
+        searchComboBox.setAllowCustomValue(true);
+
+        //Listener for when user is clicked in combo box
+        searchComboBox.addValueChangeListener(event -> {
+            System.out.println(searchComboBox.getElement().getText());
+            User user = searchComboBox.getValue();
+            if (!Objects.isNull(user)) {
+                UI.getCurrent().navigate("profile/" + user.getUsername());
+            }
+        });
+
+        //Listener for when user presses enter on combo box
+        searchComboBox.addCustomValueSetListener(event -> {
+            List<User> searchedUsers = menuBarPresenter.getSelectedUsers(event.getDetail());
+            searchedUsers.sort(new UserCompare());
+            User user = searchedUsers.get(0);
+            UI.getCurrent().navigate("profile/" + user.getUsername());
+        });
     }
 
     @EventHandler
     private void navigateHome() {
+        VaadinSession.getCurrent().setAttribute("userProfile", null);
         UI.getCurrent().navigate("home");
     }
 
@@ -46,5 +74,13 @@ public class MenuBarComponent extends PolymerTemplate<MenuBarComponent.MenuBarCo
 
     public interface MenuBarComponentModel extends TemplateModel {
         // Add setters and getters for template properties here.
+    }
+
+    private class UserCompare implements Comparator<User> {
+
+        @Override
+        public int compare(User user1, User user2) {
+            return user1.getUsername().compareToIgnoreCase(user2.getUsername());
+        }
     }
 }
