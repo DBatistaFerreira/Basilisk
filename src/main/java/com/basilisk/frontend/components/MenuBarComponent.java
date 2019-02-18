@@ -29,7 +29,6 @@ public class MenuBarComponent extends PolymerTemplate<MenuBarComponent.MenuBarCo
     private Tab logoutTab;
 
     public MenuBarComponent(MenuBarPresenter menuBarPresenter) {
-        searchComboBox.setAllowCustomValue(true);
         searchComboBox.setItems(menuBarPresenter.getAllUsers());
         searchComboBox.addValueChangeListener(event -> {
             User user = (User) searchComboBox.getValue();

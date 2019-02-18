@@ -59,18 +59,23 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
             VaadinSession.getCurrent().setAttribute(USER_PROFILE, userProfile);
         }
 
+        //Remove all children from tweetFeed so no duplicates
         tweetFeed.removeAllChildren();
+
         //Loading the tweets
         User userProfile = (User) VaadinSession.getCurrent().getAttribute(USER_PROFILE);
         List<TweetDisplayComponent> tweetDisplayComponentList = profilePresenter.getAllUserTweetsDisplayComponents(userProfile);
         Collections.reverse(tweetDisplayComponentList);
-        tweetFeed.appendChild(new TweetCreateComponent(tweetPresenter).getElement());
 
+        //Only see the create tweet button on your own page
+        if (userProfile.equals(currentUser)) {
+            tweetFeed.appendChild(new TweetCreateComponent(tweetPresenter).getElement());
+        }
+
+        //Adding tweets to div element (tweetFeed)
         for (TweetDisplayComponent tweetDisplayComponent : tweetDisplayComponentList) {
             tweetFeed.appendChild(tweetDisplayComponent.getElement());
         }
-        // You can initialise any data required for the connected UI components here.
-
     }
 
     @Override
