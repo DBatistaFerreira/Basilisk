@@ -34,10 +34,7 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> impleme
 
     public LoginView(LoginPresenter loginPresenter) {
         this.loginPresenter = loginPresenter;
-    }
-
-    public void init() {
-        VaadinSession.getCurrent().setAttribute("currentPage", "login");
+        // You can initialise any data required for the connected UI components here.
         loginButton.addClickListener(buttonClickEvent -> {
             String userName = usernameTextField.getValue(); // Valid value: Admin
             String password = passwordTextField.getValue(); // Valid value: password
@@ -57,7 +54,6 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> impleme
             beforeEnterEvent.rerouteTo(HomeView.class);
             UI.getCurrent().navigate("home");
         }
-        init();
     }
 
     public interface LoginViewModel extends TemplateModel {
