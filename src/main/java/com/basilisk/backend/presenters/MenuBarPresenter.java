@@ -22,4 +22,8 @@ public class MenuBarPresenter {
     public List<User> getAllUsers() {
         return userService.retrieveAllUsers();
     }
+
+    public List<User> getSelectedUsers(String name) {
+        return userService.searchForUsers(name);
+    }
 }

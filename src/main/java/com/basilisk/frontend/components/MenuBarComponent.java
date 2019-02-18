@@ -13,6 +13,8 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.templatemodel.TemplateModel;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 
 @Tag("menu-bar-component")
@@ -29,12 +31,27 @@ public class MenuBarComponent extends PolymerTemplate<MenuBarComponent.MenuBarCo
     private Tab logoutTab;
 
     public MenuBarComponent(MenuBarPresenter menuBarPresenter) {
-        searchComboBox.setItems(menuBarPresenter.getAllUsers());
+        List<User> users = menuBarPresenter.getAllUsers();
+
+        users.sort(new UserCompare());
+        searchComboBox.setItems(users);
+        searchComboBox.setAllowCustomValue(true);
+
+        //Listener for when user is clicked in combo box
         searchComboBox.addValueChangeListener(event -> {
-            User user = (User) searchComboBox.getValue();
+            System.out.println(searchComboBox.getElement().getText());
+            User user = searchComboBox.getValue();
             if (!Objects.isNull(user)) {
                 UI.getCurrent().navigate("profile/" + user.getUsername());
             }
+        });
+
+        //Listener for when user presses enter on combo box
+        searchComboBox.addCustomValueSetListener(event -> {
+            List<User> searchedUsers = menuBarPresenter.getSelectedUsers(event.getDetail());
+            searchedUsers.sort(new UserCompare());
+            User user = searchedUsers.get(0);
+            UI.getCurrent().navigate("profile/" + user.getUsername());
         });
     }
 
@@ -57,5 +74,13 @@ public class MenuBarComponent extends PolymerTemplate<MenuBarComponent.MenuBarCo
 
     public interface MenuBarComponentModel extends TemplateModel {
         // Add setters and getters for template properties here.
+    }
+
+    private class UserCompare implements Comparator<User> {
+
+        @Override
+        public int compare(User user1, User user2) {
+            return user1.getUsername().compareToIgnoreCase(user2.getUsername());
+        }
     }
 }
