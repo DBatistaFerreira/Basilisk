@@ -37,4 +37,24 @@ public class LoginPresenter {
 
 
     }
+
+    //Added sign up presenter
+    public boolean signupUser(String name, String username, String password) {
+        LOGGER.info("Signup Attempt: Username = " + username);
+
+        User user = userService.retrieveUserByUserName(username);
+        if (Objects.isNull(user)) {
+            user = new User(name, username, password);
+            userService.newUser(user);
+            LOGGER.info("Signup Success : Username = " + username);
+            VaadinSession.getCurrent().setAttribute("currentUser", user);
+            UI.getCurrent().navigate("profile");
+            LOGGER.info("Login Success : Username = " + username);
+            return true;
+        } else {
+            LOGGER.info("Signup Failure : Username = " + username);
+            return false;
+        }
+
+    }
 }

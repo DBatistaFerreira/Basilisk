@@ -33,7 +33,12 @@ public class UserService {
     }
 
     public User retrieveUserByUserName(String username) {
-        return retrieveUserbyUsername(username);
+        return retrieveUserByUsername(username);
+    }
+
+    //Added 2019-02-18 to be used by Login Presenter
+    public void newUser(User user) {
+        createUser(user);
     }
 
     // private CRUD Operations for UserService which call the user repository
@@ -41,7 +46,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-    private User retrieveUserbyUsername(String username) {
+    //changed the 'b' in 'by' to capital 'B' 2019-02-18 @ 5:30 am
+    private User retrieveUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -60,4 +66,5 @@ public class UserService {
     private void deleteUser(User user) {
         userRepository.delete(user);
     }
+
 }
