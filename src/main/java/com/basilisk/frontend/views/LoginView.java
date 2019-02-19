@@ -23,14 +23,20 @@ import java.util.Objects;
 public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> implements BeforeEnterObserver {
 
     private LoginPresenter loginPresenter;
-    @Id("signUpButton")
-    private Button signUpButton;
     @Id("usernameTextField")
     private TextField usernameTextField;
     @Id("passwordTextField")
     private PasswordField passwordTextField;
     @Id("loginButton")
     private Button loginButton;
+    @Id("fullNameTextField")
+    private TextField fullNameTextField;
+    @Id("createUsernameTextField")
+    private TextField createUsernameTextField;
+    @Id("createPasswordTextField")
+    private PasswordField createPasswordTextField;
+    @Id("signUpButton")
+    private Button signUpButton;
 
     public LoginView(LoginPresenter loginPresenter) {
         this.loginPresenter = loginPresenter;
@@ -47,6 +53,25 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> impleme
             } else {
                 passwordTextField.setInvalid(true);
                 passwordTextField.setErrorMessage("The username and password you entered do not match our records. Please double-check and try again.");
+            }
+        });
+
+        //Setting the maximum length of characters for each input field in the sign up section.
+        fullNameTextField.setMaxLength(30);
+        createUsernameTextField.setMaxLength(15);
+        createPasswordTextField.setMaxLength(15);
+
+        signUpButton.addClickListener(buttonClickEvent -> {
+            String fullName = fullNameTextField.getValue();
+            String newUserName = createUsernameTextField.getValue();
+            String newPassword = createPasswordTextField.getValue();
+
+            //Create a new account
+            if (loginPresenter.signupUser(fullName, newUserName, newPassword)) {
+                createUsernameTextField.setInvalid(false);
+            } else {
+                createUsernameTextField.setInvalid(true);
+                createUsernameTextField.setErrorMessage("Username has already been taken! Please choose another one.");
             }
         });
     }
