@@ -28,7 +28,7 @@ public class ProfilePresenter {
     }
 
     public List<TweetDisplayComponent> getAllUserTweetsDisplayComponents(User user) {
-        List<Tweet> tweetList = tweetService.retrieveAllTweets(user);
+        List<Tweet> tweetList = tweetService.getAllTweetsByUser(user);
         List<TweetDisplayComponent> tweetComponentDisplayList = new LinkedList<>();
 
         for (Tweet tweet : tweetList) {

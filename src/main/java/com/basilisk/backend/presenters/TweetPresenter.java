@@ -29,7 +29,7 @@ public class TweetPresenter {
             User user = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
             Tweet tweet = new Tweet(tweetText, 0, user);
             LOGGER.info("Tweet creation success: " + tweetText);
-            tweetService.createTweet(tweet);
+            tweetService.writeTweet(tweet);
             return true;
         } else {
             LOGGER.info("Tweet creation failure " + tweetText);
@@ -40,32 +40,32 @@ public class TweetPresenter {
     public Tweet likesTweet(User user, Tweet tweet) {
         LOGGER.info("User " + user.getUsername() + " likes tweet " + tweet.getId());
         tweet.getLikesList().add(user);
-        tweetService.updateTweet(tweet);
+        tweetService.editTweet(tweet);
 
-        return tweetService.retrieveTweet(tweet.getId());
+        return tweetService.getTweetById(tweet.getId());
     }
 
     public Tweet dislikesTweet(User user, Tweet tweet) {
         LOGGER.info("User " + user.getUsername() + " dislikes tweet " + tweet.getId());
         tweet.getDislikesList().add(user);
-        tweetService.updateTweet(tweet);
+        tweetService.editTweet(tweet);
 
-        return tweetService.retrieveTweet(tweet.getId());
+        return tweetService.getTweetById(tweet.getId());
     }
 
     public Tweet unlikesTweet(User user, Tweet tweet) {
         LOGGER.info("User " + user.getUsername() + " unlikes tweet " + tweet.getId());
         tweet.getLikesList().remove(user);
-        tweetService.updateTweet(tweet);
+        tweetService.editTweet(tweet);
 
-        return tweetService.retrieveTweet(tweet.getId());
+        return tweetService.getTweetById(tweet.getId());
     }
 
     public Tweet undislikesTweet(User user, Tweet tweet) {
         LOGGER.info("User " + user.getUsername() + " undislikes tweet " + tweet.getId());
         tweet.getDislikesList().remove(user);
-        tweetService.updateTweet(tweet);
+        tweetService.editTweet(tweet);
 
-        return tweetService.retrieveTweet(tweet.getId());
+        return tweetService.getTweetById(tweet.getId());
     }
 }

@@ -36,7 +36,7 @@ public class UserService {
         return retrieveUserbyUsername(username);
     }
 
-    // private CRUD Operations for UserService which call the user repository
+    // private CRUD Operations
     private void createUser(User user) {
         userRepository.save(user);
     }
