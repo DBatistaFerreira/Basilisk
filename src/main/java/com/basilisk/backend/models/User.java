@@ -4,6 +4,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.List;
 
 @Entity
@@ -33,6 +34,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "FOLLOWING_ID")
     )
     private List<User> following;
+
+    @Column
+    private final Instant creationTime = Instant.now();
 
     public User() {
     }
@@ -70,6 +74,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Instant getCreationTime() {
+        return creationTime;
     }
 
     @Override

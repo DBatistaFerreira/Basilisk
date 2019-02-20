@@ -4,6 +4,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +47,9 @@ public class Tweet {
     @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "USER")
     private User user;
+
+    @Column
+    private final Instant creationTime = Instant.now();
 
     public Tweet() {
     }
@@ -90,6 +94,10 @@ public class Tweet {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Instant getCreationTime() {
+        return creationTime;
     }
 
     @Override
