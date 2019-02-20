@@ -23,7 +23,7 @@ public class Tweet {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
     @JoinTable(
-            name = "tweet_likes",
+            name = "TWEET_LIKES",
             joinColumns = @JoinColumn(name = "tweet_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
@@ -34,7 +34,7 @@ public class Tweet {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
     @JoinTable(
-            name = "tweet_dislikes",
+            name = "TWEET_DISLIKES",
             joinColumns = @JoinColumn(name = "tweet_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )

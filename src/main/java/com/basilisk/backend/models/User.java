@@ -1,6 +1,10 @@
 package com.basilisk.backend.models;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class User {
@@ -19,13 +23,25 @@ public class User {
     @Column
     private String password;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
+    )
+    @JoinTable(
+            name = "USER_FOLLOWING",
+            joinColumns = @JoinColumn(name = "USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "FOLLOWING_ID")
+    )
+    private List<User> following;
+
     public User() {
     }
 
-    public User(String name, String username, String password) {
+    public User(String name, String username, String password, List<User> following) {
         this.name = name;
         this.username = username;
         this.password = password;
+        this.following = following;
     }
 
     public long getId() {
@@ -73,6 +89,10 @@ public class User {
         User user = (User) obj;
 
         return this.id == user.id && this.name.equals(user.name) && this.username.equals(user.username);
+    }
+
+    public List<User> getFollowing() {
+        return following;
     }
 }
 
