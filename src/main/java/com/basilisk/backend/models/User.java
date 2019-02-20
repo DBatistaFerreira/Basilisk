@@ -24,6 +24,9 @@ public class User {
     @Column
     private String password;
 
+    @Column
+    private String biography;
+
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}
@@ -34,6 +37,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "FOLLOWING_ID")
     )
     private List<User> following;
+
+    @Lob
+    @Column(columnDefinition = "BLOB")
+    private byte[] profilePicture;
 
     @Column
     private final Instant creationTime = Instant.now();
@@ -47,6 +54,8 @@ public class User {
         this.password = password;
         this.following = following;
     }
+
+    // Getters and Setters
 
     public long getId() {
         return id;
@@ -80,6 +89,22 @@ public class User {
         return creationTime;
     }
 
+    public String getBiography() {
+        return biography;
+    }
+
+    public void setBiography(String biography) {
+        this.biography = biography;
+    }
+
+    public List<User> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<User> following) {
+        this.following = following;
+    }
+
     @Override
     public String toString() {
         return name + " @" + username;
@@ -99,8 +124,6 @@ public class User {
         return this.id == user.id && this.name.equals(user.name) && this.username.equals(user.username);
     }
 
-    public List<User> getFollowing() {
-        return following;
-    }
+
 }
 
