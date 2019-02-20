@@ -2,7 +2,6 @@ package com.basilisk.backend.presenters;
 
 import com.basilisk.backend.models.Tweet;
 import com.basilisk.backend.models.User;
-import com.basilisk.backend.services.FriendListService;
 import com.basilisk.backend.services.TweetService;
 import com.basilisk.backend.services.UserService;
 import com.basilisk.frontend.components.TweetDisplayComponent;
@@ -18,15 +17,13 @@ public class ProfilePresenter {
 
     private UserService userService;
     private TweetService tweetService;
-    private FriendListService friendListService;
     private TweetPresenter tweetPresenter;
     private static Logger LOGGER = Logger.getLogger(ProfilePresenter.class);
 
     @Autowired
-    public ProfilePresenter(UserService userService, TweetService tweetService, FriendListService friendLisService, TweetPresenter tweetPresenter) {
+    public ProfilePresenter(UserService userService, TweetService tweetService, TweetPresenter tweetPresenter) {
         this.userService = userService;
         this.tweetService = tweetService;
-        this.friendListService = friendLisService;
         this.tweetPresenter = tweetPresenter;
     }
 
