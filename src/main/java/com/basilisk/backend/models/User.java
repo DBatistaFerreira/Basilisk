@@ -5,10 +5,13 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class User {
+
+    // Fields
 
     @Id
     @Column
@@ -36,7 +39,7 @@ public class User {
             joinColumns = @JoinColumn(name = "USER_ID"),
             inverseJoinColumns = @JoinColumn(name = "FOLLOWING_ID")
     )
-    private List<User> following;
+    private List<User> following = new ArrayList<>();
 
     @Lob
     @Column(columnDefinition = "BLOB")
@@ -45,14 +48,17 @@ public class User {
     @Column
     private final Instant creationTime = Instant.now();
 
+    // Constructors
+
     public User() {
     }
 
-    public User(String name, String username, String password, List<User> following) {
+    public User(String name, String username, String password, String biography, byte[] profilePicture) {
         this.name = name;
         this.username = username;
         this.password = password;
-        this.following = following;
+        this.biography = biography;
+        this.profilePicture = profilePicture;
     }
 
     // Getters and Setters
@@ -65,16 +71,12 @@ public class User {
         return name;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void setUsername(String username) {
@@ -83,10 +85,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Instant getCreationTime() {
-        return creationTime;
     }
 
     public String getBiography() {
@@ -101,9 +99,19 @@ public class User {
         return following;
     }
 
-    public void setFollowing(List<User> following) {
-        this.following = following;
+    public byte[] getProfilePicture() {
+        return profilePicture;
     }
+
+    public void setProfilePicture(byte[] profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+    public Instant getCreationTime() {
+        return creationTime;
+    }
+
+    // Overridden Methods
 
     @Override
     public String toString() {

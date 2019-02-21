@@ -27,7 +27,7 @@ public class TweetPresenter {
     public boolean createAndSaveTweet(String tweetText) {
         if (!tweetText.isEmpty()) {
             User user = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
-            Tweet tweet = new Tweet(tweetText, 0, user);
+            Tweet tweet = new Tweet(tweetText, user);
             LOGGER.info("Tweet creation success: " + tweetText);
             tweetService.writeTweet(tweet);
             return true;

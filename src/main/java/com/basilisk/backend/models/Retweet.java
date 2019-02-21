@@ -5,7 +5,7 @@ import java.time.Instant;
 import java.util.Objects;
 
 @Entity
-public class Comment {
+public class Retweet {
 
     // Fields
 
@@ -13,9 +13,6 @@ public class Comment {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @Column
-    private String text;
 
     @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "USER")
@@ -30,11 +27,10 @@ public class Comment {
 
     // Constructors
 
-    public Comment() {
+    public Retweet() {
     }
 
-    public Comment(String text, User user, Tweet tweet) {
-        this.text = text;
+    public Retweet(User user, Tweet tweet) {
         this.user = user;
         this.tweet = tweet;
     }
@@ -45,18 +41,9 @@ public class Comment {
         return id;
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public User getUser() {
         return user;
     }
-
 
     public Tweet getTweet() {
         return tweet;
@@ -69,21 +56,21 @@ public class Comment {
     // Overridden Methods
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Comment)) return false;
-        Comment comment = (Comment) o;
-        return id == comment.id &&
-                Objects.equals(text, comment.text) &&
-                Objects.equals(user, comment.user) &&
-                Objects.equals(creationTime, comment.creationTime);
+    public String toString() {
+        return "Retweet{" +
+                "id=" + id +
+                '}';
     }
 
     @Override
-    public String toString() {
-        return "Comment{" +
-                "id=" + id +
-                ", text='" + text + '\'' +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Retweet)) return false;
+        Retweet retweet = (Retweet) o;
+        return id == retweet.id &&
+                Objects.equals(user, retweet.user) &&
+                Objects.equals(tweet, retweet.tweet) &&
+                Objects.equals(creationTime, retweet.creationTime);
     }
+
 }

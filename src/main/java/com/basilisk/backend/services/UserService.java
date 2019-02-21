@@ -36,6 +36,10 @@ public class UserService {
         return retrieveUserbyUsername(username);
     }
 
+    public void registerNewUser(User user) {
+        createUser(user);
+    }
+
     // private CRUD Operations
     private void createUser(User user) {
         userRepository.save(user);

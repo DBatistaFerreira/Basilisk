@@ -11,6 +11,8 @@ import java.util.List;
 @Entity
 public class Tweet {
 
+    // Fields
+
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,8 +43,6 @@ public class Tweet {
     )
     private List<User> dislikesList = new ArrayList<>();
 
-    @Column
-    private int retweets;
 
     @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "USER")
@@ -51,14 +51,17 @@ public class Tweet {
     @Column
     private final Instant creationTime = Instant.now();
 
+    // Constructors
+
     public Tweet() {
     }
 
-    public Tweet(String text, int retweets, User user) {
+    public Tweet(String text, User user) {
         this.text = text;
-        this.retweets = retweets;
         this.user = user;
     }
+
+    //Getters and Setters
 
     public long getId() {
         return id;
@@ -80,25 +83,15 @@ public class Tweet {
         return dislikesList;
     }
 
-    public int getRetweets() {
-        return retweets;
-    }
-
-    public void setRetweets(int retweets) {
-        this.retweets = retweets;
-    }
-
     public User getUser() {
         return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Instant getCreationTime() {
         return creationTime;
     }
+
+    // Overridden Methods
 
     @Override
     public String toString() {
@@ -107,7 +100,6 @@ public class Tweet {
                 ", text='" + text + '\'' +
                 ", likes=" + likesList.size() +
                 ", dislikes=" + dislikesList.size() +
-                ", retweets=" + retweets +
                 ", user=" + user +
                 '}';
     }
