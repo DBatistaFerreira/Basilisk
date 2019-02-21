@@ -1,5 +1,6 @@
 package com.basilisk.frontend.views;
 
+import com.basilisk.Constants;
 import com.basilisk.backend.presenters.HomePresenter;
 import com.basilisk.frontend.components.MenuBarComponent;
 import com.vaadin.flow.component.Tag;
@@ -34,7 +35,7 @@ public class HomeView extends PolymerTemplate<HomeView.HomeViewModel> implements
     @Override
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
         VaadinSession vaadinSession = VaadinSession.getCurrent();
-        if (Objects.isNull(vaadinSession.getAttribute("currentUser"))) {
+        if (Objects.isNull(vaadinSession.getAttribute(Constants.CURRENT_USER))) {
             beforeEnterEvent.rerouteTo(LoginView.class);
             UI.getCurrent().navigate("");
         }
