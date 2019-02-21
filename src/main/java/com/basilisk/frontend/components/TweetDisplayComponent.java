@@ -47,7 +47,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
 
     public void setTweet(Tweet tweet) {
         this.tweet = tweet;
-        tweetMessage.setValue(tweet.getText() + "\n-" + ((User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER)).getUsername());
+        tweetMessage.setValue(tweet.getText() + "\n-" + tweet.getUser().getUsername());
 
         VaadinSession vaadinSession = VaadinSession.getCurrent();
         User currentUser = (User) vaadinSession.getAttribute(Constants.CURRENT_USER);
