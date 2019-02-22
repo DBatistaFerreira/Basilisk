@@ -1,7 +1,9 @@
 package com.basilisk.backend.presenters;
 
+import com.basilisk.backend.models.Follow;
 import com.basilisk.backend.models.Tweet;
 import com.basilisk.backend.models.User;
+import com.basilisk.backend.services.FollowService;
 import com.basilisk.backend.services.TweetService;
 import com.basilisk.backend.services.UserService;
 import com.basilisk.frontend.components.TweetDisplayComponent;
@@ -18,13 +20,15 @@ public class ProfilePresenter {
     private UserService userService;
     private TweetService tweetService;
     private TweetPresenter tweetPresenter;
+    private FollowService followService;
     private static Logger LOGGER = Logger.getLogger(ProfilePresenter.class);
 
     @Autowired
-    public ProfilePresenter(UserService userService, TweetService tweetService, TweetPresenter tweetPresenter) {
+    public ProfilePresenter(UserService userService, TweetService tweetService, TweetPresenter tweetPresenter, FollowService followService) {
         this.userService = userService;
         this.tweetService = tweetService;
         this.tweetPresenter = tweetPresenter;
+        this.followService = followService;
     }
 
     public List<TweetDisplayComponent> getAllUserTweetsDisplayComponents(User user) {

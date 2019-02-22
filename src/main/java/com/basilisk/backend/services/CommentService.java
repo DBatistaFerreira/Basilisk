@@ -33,7 +33,7 @@ public class CommentService {
         commentRepository.delete(comment);
     }
 
-    private void updateTweet(Comment comment) {
+    private void updateComment(Comment comment) {
         commentRepository.save(comment);
     }
 
