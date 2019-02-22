@@ -30,17 +30,6 @@ public class User {
     @Column
     private String biography;
 
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToMany(
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
-    )
-    @JoinTable(
-            name = "USER_FOLLOWING",
-            joinColumns = @JoinColumn(name = "USER_ID"),
-            inverseJoinColumns = @JoinColumn(name = "FOLLOWING_ID")
-    )
-    private List<User> following = new ArrayList<>();
-
     @Lob
     @Column(columnDefinition = "BLOB")
     private byte[] profilePicture;
@@ -93,10 +82,6 @@ public class User {
 
     public void setBiography(String biography) {
         this.biography = biography;
-    }
-
-    public List<User> getFollowing() {
-        return following;
     }
 
     public byte[] getProfilePicture() {
