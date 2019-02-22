@@ -1,5 +1,6 @@
 package com.basilisk.frontend.components;
 
+import com.basilisk.Constants;
 import com.basilisk.backend.models.Tweet;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.presenters.TweetPresenter;
@@ -35,7 +36,6 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     private static final String BACKGROUND = "background";
     private static final String GREY = "Grey";
     private static final String HEX314654 = "#314654";
-    private static final String CURRENT_USER = "currentUser";
 
     private TweetPresenter tweetPresenter;
     private Tweet tweet;
@@ -47,10 +47,10 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
 
     public void setTweet(Tweet tweet) {
         this.tweet = tweet;
-        tweetMessage.setValue(tweet.getText() + "\n-" + ((User) VaadinSession.getCurrent().getAttribute(CURRENT_USER)).getUsername());
+        tweetMessage.setValue(tweet.getText() + "\n-" + tweet.getUser().getUsername());
 
         VaadinSession vaadinSession = VaadinSession.getCurrent();
-        User currentUser = (User) vaadinSession.getAttribute(CURRENT_USER);
+        User currentUser = (User) vaadinSession.getAttribute(Constants.CURRENT_USER);
 
         if (tweet.getLikesList().contains(currentUser)) {
             likeButton.setText(UN_LIKE + " " + tweet.getLikesList().size());
@@ -70,7 +70,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     @EventHandler
     private void likeButtonClicked() {
         // Called when the like button is pressed
-        User currentUser = (User) VaadinSession.getCurrent().getAttribute(CURRENT_USER);
+        User currentUser = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
         if (tweet.getLikesList().contains(currentUser)) { // If user already liked the tweet
             tweet = tweetPresenter.unlikesTweet(currentUser, tweet);
             likeButton.setText(LIKE + " " + tweet.getLikesList().size());
@@ -91,7 +91,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     @EventHandler
     private void dislikeButtonClicked() {
         // Called when the like button is pressed
-        User currentUser = (User) VaadinSession.getCurrent().getAttribute(CURRENT_USER);
+        User currentUser = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
         if (tweet.getDislikesList().contains(currentUser)) { // If user already disliked the tweet
             tweet = tweetPresenter.undislikesTweet(currentUser, tweet);
             dislikeButton.setText(DISLIKE + " " + tweet.getDislikesList().size());

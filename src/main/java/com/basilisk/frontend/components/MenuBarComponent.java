@@ -1,5 +1,6 @@
 package com.basilisk.frontend.components;
 
+import com.basilisk.Constants;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.presenters.MenuBarPresenter;
 import com.vaadin.flow.component.Tag;
@@ -42,7 +43,7 @@ public class MenuBarComponent extends PolymerTemplate<MenuBarComponent.MenuBarCo
             System.out.println(searchComboBox.getElement().getText());
             User user = searchComboBox.getValue();
             if (!Objects.isNull(user)) {
-                UI.getCurrent().navigate("profile/" + user.getUsername());
+                UI.getCurrent().navigate(Constants.PROFILE_ROUTE + user.getUsername());
             }
         });
 
@@ -51,24 +52,24 @@ public class MenuBarComponent extends PolymerTemplate<MenuBarComponent.MenuBarCo
             List<User> searchedUsers = menuBarPresenter.getSelectedUsers(event.getDetail());
             searchedUsers.sort(new UserCompare());
             User user = searchedUsers.get(0);
-            UI.getCurrent().navigate("profile/" + user.getUsername());
+            UI.getCurrent().navigate(Constants.PROFILE_ROUTE + user.getUsername());
         });
     }
 
     @EventHandler
     private void navigateHome() {
-        VaadinSession.getCurrent().setAttribute("userProfile", null);
-        UI.getCurrent().navigate("home");
+        VaadinSession.getCurrent().setAttribute(Constants.USER_PROFILE, null);
+        UI.getCurrent().navigate(Constants.HOME_ROUTE);
     }
 
     @EventHandler
     private void navigateProfile() {
-        UI.getCurrent().navigate("profile");
+        UI.getCurrent().navigate(Constants.PROFILE_ROUTE);
     }
 
     @EventHandler
     private void logoutClicked() {
-        VaadinSession.getCurrent().setAttribute("currentUser", null);
+        VaadinSession.getCurrent().setAttribute(Constants.CURRENT_USER, null);
         UI.getCurrent().navigate("");
     }
 

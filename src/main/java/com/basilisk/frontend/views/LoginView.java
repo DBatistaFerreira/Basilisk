@@ -1,5 +1,6 @@
 package com.basilisk.frontend.views;
 
+import com.basilisk.Constants;
 import com.basilisk.backend.presenters.LoginPresenter;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
@@ -78,9 +79,9 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> impleme
 
     @Override
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-        if (!Objects.isNull(VaadinSession.getCurrent().getAttribute("currentUser"))) {
+        if (!Objects.isNull(VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER))) {
             beforeEnterEvent.rerouteTo(HomeView.class);
-            UI.getCurrent().navigate("home");
+            UI.getCurrent().navigate(Constants.HOME_ROUTE);
         }
         init();
     }
