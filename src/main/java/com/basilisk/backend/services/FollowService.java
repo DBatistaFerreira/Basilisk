@@ -1,6 +1,5 @@
 package com.basilisk.backend.services;
 
-import com.basilisk.backend.models.Comment;
 import com.basilisk.backend.models.Follow;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.repositories.FollowRepository;
@@ -37,7 +36,7 @@ public class FollowService {
     }
 
     public void unfollow(User follower, User followed){
-        deleteFollow(new Follow(follower, followed));
+        deleteFollow(retrieveFollowByFollowerAndFollowed(follower, followed));
     }
 
     // private CRUD Operations
@@ -55,5 +54,9 @@ public class FollowService {
 
     private Follow retrieveFollow(long id) {
         return followRepository.getOne(id);
+    }
+
+    private Follow retrieveFollowByFollowerAndFollowed(User follower, User followed) {
+        return followRepository.getByFollowerAndAndFollowed(follower, followed);
     }
 }

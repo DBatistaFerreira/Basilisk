@@ -9,8 +9,10 @@ import com.basilisk.frontend.components.TweetCreateComponent;
 import com.basilisk.frontend.components.TweetDisplayComponent;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.dependency.Uses;
+import com.vaadin.flow.component.polymertemplate.EventHandler;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.dom.Element;
@@ -28,13 +30,17 @@ import java.util.Objects;
 @Uses(MenuBarComponent.class)
 public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> implements BeforeEnterObserver, HasUrlParameter<String> {
 
+    private static final String FOLLOW_USER = "Follow User";
+    private static final String UNFOLLOW_USER = "Unfollow User";
+
     private ProfilePresenter profilePresenter;
     private TweetPresenter tweetPresenter;
     private String usernameParameter;
 
-
     @Id("tweetFeed")
     private Element tweetFeed;
+    @Id("followButton")
+    private Button followButton;
 
     public ProfileView(ProfilePresenter profilePresenter, TweetPresenter tweetPresenter) {
         this.profilePresenter = profilePresenter;
@@ -65,14 +71,37 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
         List<TweetDisplayComponent> tweetDisplayComponentList = profilePresenter.getAllUserTweetsDisplayComponents(userProfile);
         Collections.reverse(tweetDisplayComponentList);
 
-        //Only see the create tweet button on your own page
+        //followButton Login for when page is initalized if its follow or unfollow user
+        followButton.setVisible(true);
+        if (profilePresenter.checkIfFollowing(currentUser, userProfile)) {
+            followButton.setText(UNFOLLOW_USER);
+        } else {
+            followButton.setText(FOLLOW_USER);
+        }
+
+        //Own page stuff
         if (userProfile.equals(currentUser)) {
+            followButton.setVisible(false);
             tweetFeed.appendChild(new TweetCreateComponent(tweetPresenter).getElement());
         }
 
         //Adding tweets to div element (tweetFeed)
         for (TweetDisplayComponent tweetDisplayComponent : tweetDisplayComponentList) {
             tweetFeed.appendChild(tweetDisplayComponent.getElement());
+        }
+    }
+
+    @EventHandler
+    private void followButtonClicked() {
+        User currentUser = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
+        User userProfile = (User) VaadinSession.getCurrent().getAttribute(Constants.USER_PROFILE);
+
+        if (profilePresenter.checkIfFollowing(currentUser, userProfile)) {
+            followButton.setText(FOLLOW_USER);
+            profilePresenter.unfollowUser(currentUser, userProfile);
+        } else {
+            followButton.setText(UNFOLLOW_USER);
+            profilePresenter.followUser(currentUser, userProfile);
         }
     }
 

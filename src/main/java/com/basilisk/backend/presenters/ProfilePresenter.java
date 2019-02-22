@@ -1,6 +1,5 @@
 package com.basilisk.backend.presenters;
 
-import com.basilisk.backend.models.Follow;
 import com.basilisk.backend.models.Tweet;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.services.FollowService;
@@ -48,5 +47,22 @@ public class ProfilePresenter {
         User user = userService.retrieveUserByUserName(username);
         LOGGER.info("Retrieved user: " + username);
         return user;
+    }
+
+    public void followUser(User currentUser, User userProfile) {
+        followService.follow(currentUser, userProfile);
+        LOGGER.info(currentUser.getUsername() + " has just followed " + userProfile.getUsername());
+    }
+
+    public void unfollowUser(User currentUser, User userProfile) {
+        followService.unfollow(currentUser, userProfile);
+        LOGGER.info(currentUser.getUsername() + " has just unfollowed " + userProfile.getUsername());
+    }
+
+    public boolean checkIfFollowing(User currentUser, User userProfile) {
+        if (followService.getAllUserFollowers(userProfile).contains(currentUser)) {
+            return true;
+        }
+        return false;
     }
 }
