@@ -45,9 +45,6 @@
             <vaadin-horizontal-layout>
                 <vaadin-button class="postButton" id="likeButton" on-click="likeButtonClicked"></vaadin-button>
                 <vaadin-button class="postButton" id="dislikeButton" on-click="dislikeButtonClicked"></vaadin-button>
-                <vaadin-button class="postButton" id="commentButton" on-click="commentButtonClicked">
-                    Comment
-                </vaadin-button>
                 <vaadin-button class="postButton" id="retweetButton" on-click="retweetButtonClicked">
                     Retweet
                 </vaadin-button>
@@ -55,7 +52,8 @@
             <vaadin-vertical-layout>
                 <vaadin-text-area class="userCommentArea" id="commentMessage"
                                   placeholder="Write a comment..."></vaadin-text-area>
-
+                <vaadin-button class="postButton" id="commentButton" on-click="commentButtonClicked"> Comment
+                </vaadin-button>
             </vaadin-vertical-layout>
         </div>
     </template>
