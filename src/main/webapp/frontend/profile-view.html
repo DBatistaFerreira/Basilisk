@@ -106,10 +106,10 @@
                 <menu-bar-component></menu-bar-component>
             </div>
             <div style="width: 850px; height: 315px;" class="coverPic">
-                <img src="http://www.mkcommerce.rs/wp-content/uploads/2014/07/iStock_000042112208Medium-850-x-315-pix-cut.jpg"
-                     alt="coverPicture">
+                <img id="coverImage"
+                     alt="coverPicture" style="width: 850px; height: 315px;">
                 <div class="profilePic" style="width: 200px; height: 200px;">
-                    <img src="https://scontent.fymy1-2.fna.fbcdn.net/v/t1.0-9/41321468_1823723824370053_2470938163342737408_n.jpg?_nc_cat=105&amp;_nc_ht=scontent.fymy1-2.fna&amp;oh=963ce263f4950878e8aeb7c093bb5eac&amp;oe=5CF91A99"
+                    <img id="profileImage"
                          alt="profilePicture" style="width: 200px; height: 200px;">
                 </div>
                 <div class="userStats">
@@ -126,6 +126,8 @@
                     <vaadin-button id="editButton" on-click="editButtonClicked" class="postButton">
                         Edit
                     </vaadin-button>
+                    <vaadin-upload id="profileImageUpload"></vaadin-upload>
+                    <vaadin-upload id="coverImageUpload"></vaadin-upload>
                 </div>
             </div>
         </div>
