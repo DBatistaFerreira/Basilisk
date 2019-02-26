@@ -1,6 +1,5 @@
 package com.basilisk.backend.presenters;
 
-import com.basilisk.backend.models.Follow;
 import com.basilisk.backend.models.Tweet;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.services.FollowService;
@@ -48,5 +47,18 @@ public class ProfilePresenter {
         User user = userService.retrieveUserByUserName(username);
         LOGGER.info("Retrieved user: " + username);
         return user;
+    }
+
+    public void saveBiography(User currentUser) {
+        userService.saveUserInfo(currentUser);
+        LOGGER.info("Saved Biography for: " + currentUser.getName());
+    }
+
+    public int getNumberOfFollowings(User currentUser) {
+        return followService.getAllUserFollowings(currentUser).size();
+    }
+
+    public int getNumberOfFollowers(User currentUser) {
+        return followService.getAllUserFollowers(currentUser).size();
     }
 }

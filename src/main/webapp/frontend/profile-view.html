@@ -113,18 +113,17 @@
                          alt="profilePicture" style="width: 200px; height: 200px;">
                 </div>
                 <div class="userStats">
-                    <span class="userName">LBuzz95</span>
-                    <span class="userFollowers">Followers | 300</span>
-                    <span class="usersFollowing"></span>Following | 786
+                    <Label id="userNameLabel" class="userName"></Label>
+                    <Label id="followersLabel" class="userFollowers"></Label>
+                    <Label id="followingLabel" class="usersFollowing"></Label>
                 </div>
             </div>
             <div style="width: 850px; height: 315px" class="mainContent">
                 <div id="tweetFeed"></div>
                 <div class="userBio">
                     <span class="userBioAreaTitle">About me </span>
-                    <vaadin-text-area class="userBioArea" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum rutrum sodales. Nullam mattis fermentum libero, non volutpat.
-"></vaadin-text-area>
-                    <vaadin-button class="postButton">
+                    <vaadin-text-area id="userBioTextArea" class="userBioArea"></vaadin-text-area>
+                    <vaadin-button id="editButton" on-click="editButtonClicked" class="postButton">
                         Edit
                     </vaadin-button>
                 </div>

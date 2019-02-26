@@ -9,10 +9,14 @@ import com.basilisk.frontend.components.TweetCreateComponent;
 import com.basilisk.frontend.components.TweetDisplayComponent;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.dependency.Uses;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.polymertemplate.EventHandler;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
+import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.VaadinSession;
@@ -32,9 +36,23 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
     private TweetPresenter tweetPresenter;
     private String usernameParameter;
 
-
     @Id("tweetFeed")
     private Element tweetFeed;
+
+    @Id("userNameLabel")
+    private Label userNameLabel;
+
+    @Id("followersLabel")
+    private Label followersLabel;
+
+    @Id("followingLabel")
+    private Label followingLabel;
+
+    @Id("userBioTextArea")
+    private TextArea userBioTextArea;
+
+    @Id("editButton")
+    private Button editButton;
 
     public ProfileView(ProfilePresenter profilePresenter, TweetPresenter tweetPresenter) {
         this.profilePresenter = profilePresenter;
@@ -65,9 +83,20 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
         List<TweetDisplayComponent> tweetDisplayComponentList = profilePresenter.getAllUserTweetsDisplayComponents(userProfile);
         Collections.reverse(tweetDisplayComponentList);
 
+        //Setting up stats
+        userNameLabel.getElement().setText(userProfile.getName() + " @" + userProfile.getUsername());
+        followingLabel.getElement().setText("Following: " + profilePresenter.getNumberOfFollowings(userProfile));
+        followersLabel.getElement().setText("Followers: " + profilePresenter.getNumberOfFollowers(userProfile));
+
+        //Setting up bio
+        userBioTextArea.setReadOnly(true);
+        userBioTextArea.setValue(userProfile.getBiography());
+        editButton.setVisible(false);
+
         //Only see the create tweet button on your own page
         if (userProfile.equals(currentUser)) {
             tweetFeed.appendChild(new TweetCreateComponent(tweetPresenter).getElement());
+            editButton.setVisible(true);
         }
 
         //Adding tweets to div element (tweetFeed)
@@ -84,6 +113,24 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
             UI.getCurrent().navigate("");
         }
         init();
+    }
+
+    @EventHandler
+    public void editButtonClicked() {
+        User currentUser = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
+
+        if (userBioTextArea.isReadOnly()) {
+            //Edit Mode
+            editButton.setText("Save");
+            userBioTextArea.setReadOnly(false);
+        } else {
+            //Save Mode
+            editButton.setText("Edit");
+            userBioTextArea.setReadOnly(true);
+            currentUser.setBiography(userBioTextArea.getValue());
+            profilePresenter.saveBiography(currentUser);
+
+        }
     }
 
     @Override
