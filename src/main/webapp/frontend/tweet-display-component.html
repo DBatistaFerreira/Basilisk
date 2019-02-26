@@ -50,10 +50,12 @@
                 </vaadin-button>
             </vaadin-horizontal-layout>
             <vaadin-vertical-layout>
-                <vaadin-text-area class="userCommentArea" id="commentMessage"
+                <vaadin-text-area class="userCommentArea" id="commentBox"
                                   placeholder="Write a comment..."></vaadin-text-area>
-                <vaadin-button class="postButton" id="commentButton" on-click="commentButtonClicked"> Comment
+                <vaadin-button class="postButton" id="commentButton" on-click="commentButtonClicked">
+                    Comment
                 </vaadin-button>
+                <vaadin-text-area class="userCommentArea" id="commentMessage" readonly></vaadin-text-area>
             </vaadin-vertical-layout>
         </div>
     </template>
