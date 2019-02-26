@@ -1,12 +1,7 @@
 package com.basilisk.backend.models;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class User {
@@ -33,6 +28,10 @@ public class User {
     @Lob
     @Column(columnDefinition = "BLOB")
     private byte[] profilePicture;
+
+    @Lob
+    @Column(columnDefinition = "BLOB")
+    private byte[] coverPicture;
 
     @Column
     private final Instant creationTime = Instant.now();
@@ -94,6 +93,14 @@ public class User {
 
     public Instant getCreationTime() {
         return creationTime;
+    }
+
+    public byte[] getCoverPicture() {
+        return coverPicture;
+    }
+
+    public void setCoverPicture(byte[] coverPicture) {
+        this.coverPicture = coverPicture;
     }
 
     // Overridden Methods
