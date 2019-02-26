@@ -45,6 +45,10 @@ public class UserService {
         createUser(user);
     }
 
+    public void saveUserInfo(User currentUser) {
+        updateUser(currentUser);
+    }
+
     // private CRUD Operations
     private void createUser(User user) {
         userRepository.save(user);
