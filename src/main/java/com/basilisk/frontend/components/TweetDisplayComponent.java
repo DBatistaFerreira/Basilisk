@@ -74,22 +74,12 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         } else {
             dislikeButton.setText(DISLIKE + " " + tweet.getDislikesList().size());
         }
-        
+
         //Add comments/text boxes to tweets
         List<Comment> tweetComments = tweetPresenter.getTweetComments(tweet);
         for (Comment comment : tweetComments)
         {
-            TextArea wComment = new  TextArea();
-            wComment.setValue(comment.getUser().getUsername() + ": " + comment.getText() + "\n");
-            wComment.setReadOnly(true);
-
-            wComment.getStyle().set("border-radius", "15px");
-            wComment.getStyle().set("border-style", "solid");
-            wComment.getStyle().set("border-color", "#314654");
-            wComment.getStyle().set("background", "linear-gradient(to bottom right, #51e2c6 0%, #15cb92 107%)");
-            wComment.getStyle().set("min-width", "563px");
-            wComment.getStyle().set("max-width", "563px");
-
+            CommentDisplayComponent wComment = new CommentDisplayComponent(comment);
             commentSection.add(wComment);
         }
     }

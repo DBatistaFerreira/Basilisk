@@ -1,0 +1,46 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/vaadin-tabs/src/vaadin-tabs.html">
+<link rel="import" href="bower_components/vaadin-tabs/src/vaadin-tab.html">
+<link rel="import" href="bower_components/vaadin-text-field/src/vaadin-text-area.html">
+<link rel="import" href="bower_components/vaadin-button/src/vaadin-button.html">
+<link rel="import" href="bower_components/vaadin-ordered-layout/src/vaadin-horizontal-layout.html">
+<link rel="import" href="bower_components/vaadin-ordered-layout/src/vaadin-vertical-layout.html">
+
+<dom-module id="comment-display-component">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+            }
+
+            .userCommentArea {
+                min-width: 563px;
+                max-width: 563px;
+                border-radius: 15px;
+                border-style: solid;
+                border-color: #314654;
+                background: linear-gradient(to bottom right, #51e2c6 0%, #15cb92 107%);
+            }
+
+        </style>
+<div style="width: 100%; height: 100%;" class="userComment">
+ <vaadin-text-area class="userCommentArea" id="UserComment" readonly></vaadin-text-area>
+ </vaadin-horizontal-layout>
+</div>
+</template>
+    <script>
+        class CommentDisplayComponent extends Polymer.Element {
+            static get is() {
+                return 'comment-display-component';
+            }
+
+            static get properties() {
+                return {
+                    // Declare your properties here.
+                };
+            }
+        }
+
+        customElements.define(CommentDisplayComponent.is, CommentDisplayComponent);
+    </script>
+</dom-module>
