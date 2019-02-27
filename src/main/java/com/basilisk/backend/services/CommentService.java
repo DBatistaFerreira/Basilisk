@@ -20,6 +20,21 @@ public class CommentService {
     }
 
     // Public Service methods
+    public void writeComment(Comment comment)
+    {
+        createComment(comment);
+    }
+
+    public void editComment(Comment comment)
+    {
+        updateComment(comment);
+    }
+
+    public Comment getCommentById(long id)
+    {
+        return retrieveComment(id);
+    }
+
     public List<Comment> getTweetComments(Tweet tweet) {
         return commentRepository.getAllByTweet(tweet);
     }
