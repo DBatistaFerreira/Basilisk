@@ -56,7 +56,7 @@ public class UserService {
 
     //changed the 'b' in 'by' to capital 'B' 2019-02-18 @ 5:30 am
     private User retrieveUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsernameContainingIgnoreCase(username);
     }
 
     private User retrieveUserByUsernameAndPassword(String username, String password) {
