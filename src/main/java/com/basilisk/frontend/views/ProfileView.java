@@ -140,7 +140,7 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
             coverImageUpload.setVisible(true);
         }
 
-        //Profile Image and Cover Image
+        //Profile Image and Cover Image Initalizations
         MemoryBuffer profileImageBuffer = new MemoryBuffer();
         MemoryBuffer coverImageBuffer = new MemoryBuffer();
         profileImageUpload.setAcceptedFileTypes("image/jpeg", "image/png", "image/gif");
