@@ -25,8 +25,8 @@ public class ProfilePresenter {
 
     private UserService userService;
     private TweetService tweetService;
-    private TweetPresenter tweetPresenter;
     private FollowService followService;
+    private TweetPresenter tweetPresenter;
     private static Logger LOGGER = Logger.getLogger(ProfilePresenter.class);
 
     @Autowired
