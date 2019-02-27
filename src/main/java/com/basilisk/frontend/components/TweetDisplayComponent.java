@@ -2,6 +2,7 @@ package com.basilisk.frontend.components;
 
 import com.basilisk.Constants;
 import com.basilisk.backend.models.Comment;
+import com.basilisk.backend.models.Retweet;
 import com.basilisk.backend.models.Tweet;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.presenters.TweetPresenter;
@@ -17,6 +18,7 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.templatemodel.TemplateModel;
 
+import java.time.Instant;
 import java.util.List;
 
 @Tag("tweet-display-component")
@@ -48,16 +50,33 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
 
     private TweetPresenter tweetPresenter;
     private Tweet tweet;
+    private boolean isRetweet;
+    private Instant timeStamp;
 
-    public TweetDisplayComponent(TweetPresenter tweetPresenter) {
-        // You can initialise any data required for the connected UI components here.
+    // Constructors
+
+    // Tweet constructor
+    public TweetDisplayComponent(TweetPresenter tweetPresenter, Tweet tweet) {
         this.tweetPresenter = tweetPresenter;
+        this.tweet = tweet;
+        this.isRetweet = false;
+        this.timeStamp = tweet.getCreationTime();
+
+        setTweet();
     }
 
-    public void setTweet(Tweet tweet) {
-        this.tweet = tweet;
-        tweetMessage.setValue(tweet.getText() + "\n-" + tweet.getUser().getUsername());
+    // Retweet constructor
+    public TweetDisplayComponent(TweetPresenter tweetPresenter, Retweet retweet) {
+        this.tweetPresenter = tweetPresenter;
+        this.tweet = retweet.getTweet();
+        this.isRetweet = true;
+        this.timeStamp = retweet.getCreationTime();
 
+        setTweet();
+    }
+
+    private void setTweet() {
+        tweetMessage.setValue(tweet.getText() + "\n-" + tweet.getUser().getUsername());
         VaadinSession vaadinSession = VaadinSession.getCurrent();
         User currentUser = (User) vaadinSession.getAttribute(Constants.CURRENT_USER);
 
@@ -77,8 +96,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
 
         //Add comments/text boxes to tweets
         List<Comment> tweetComments = tweetPresenter.getTweetComments(tweet);
-        for (Comment comment : tweetComments)
-        {
+        for (Comment comment : tweetComments) {
             CommentDisplayComponent wComment = new CommentDisplayComponent(comment);
             commentSection.add(wComment);
         }

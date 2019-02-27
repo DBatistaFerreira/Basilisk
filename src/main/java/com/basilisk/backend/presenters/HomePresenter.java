@@ -55,8 +55,7 @@ public class HomePresenter {
         List<TweetDisplayComponent> tweetComponentDisplayList = new LinkedList<>();
 
         for (Tweet tweet : tweetList) {
-            TweetDisplayComponent tweetDisplayComponent = new TweetDisplayComponent(tweetPresenter);
-            tweetDisplayComponent.setTweet(tweet);
+            TweetDisplayComponent tweetDisplayComponent = new TweetDisplayComponent(tweetPresenter, tweet);
             tweetComponentDisplayList.add(tweetDisplayComponent);
         }
         return tweetComponentDisplayList;
