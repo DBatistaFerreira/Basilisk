@@ -15,4 +15,6 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
     // Returns all y for which x follows y
     // In other words, returns all followings of user
     List<Follow> getAllByFollower(User user);
+
+    Follow getByFollowerAndAndFollowed(User follower, User followed);
 }

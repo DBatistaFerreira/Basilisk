@@ -25,8 +25,8 @@ public class ProfilePresenter {
 
     private UserService userService;
     private TweetService tweetService;
-    private TweetPresenter tweetPresenter;
     private FollowService followService;
+    private TweetPresenter tweetPresenter;
     private static Logger LOGGER = Logger.getLogger(ProfilePresenter.class);
 
     @Autowired
@@ -124,5 +124,22 @@ public class ProfilePresenter {
         while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
             byteArrayOutputStream.write(data, 0, nRead);
         }
+    }
+
+    public void followUser(User currentUser, User userProfile) {
+        followService.follow(currentUser, userProfile);
+        LOGGER.info(currentUser.getUsername() + " has just followed " + userProfile.getUsername());
+    }
+
+    public void unfollowUser(User currentUser, User userProfile) {
+        followService.unfollow(currentUser, userProfile);
+        LOGGER.info(currentUser.getUsername() + " has just unfollowed " + userProfile.getUsername());
+    }
+
+    public boolean checkIfFollowing(User currentUser, User userProfile) {
+        if (followService.getAllUserFollowers(userProfile).contains(currentUser)) {
+            return true;
+        }
+        return false;
     }
 }
