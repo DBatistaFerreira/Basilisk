@@ -15,7 +15,6 @@ import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.polymertemplate.EventHandler;
-import com.vaadin.flow.component.polymertemplate.EventHandler;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.component.textfield.TextArea;
@@ -124,7 +123,6 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
         //Setting up profile image
         profilePresenter.setImages(profileImage, coverImage, userProfile);
 
-        //Things you can see on only your own page
         //followButton Login for when page is initalized if its follow or unfollow user
         followButton.setVisible(true);
         if (profilePresenter.checkIfFollowing(currentUser, userProfile)) {
@@ -133,10 +131,10 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
             followButton.setText(FOLLOW_USER);
         }
 
-        //Own page stuff
+        //Things you can see on only your own page
         if (userProfile.equals(currentUser)) {
-            followButton.setVisible(false);
             tweetFeed.appendChild(new TweetCreateComponent(tweetPresenter).getElement());
+            followButton.setVisible(false);
             editButton.setVisible(true);
             profileImageUpload.setVisible(true);
             coverImageUpload.setVisible(true);
@@ -182,9 +180,11 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
         if (profilePresenter.checkIfFollowing(currentUser, userProfile)) {
             followButton.setText(FOLLOW_USER);
             profilePresenter.unfollowUser(currentUser, userProfile);
+            followersLabel.getElement().setText("Followers: " + profilePresenter.getNumberOfFollowers(userProfile));
         } else {
             followButton.setText(UNFOLLOW_USER);
             profilePresenter.followUser(currentUser, userProfile);
+            followersLabel.getElement().setText("Followers: " + profilePresenter.getNumberOfFollowers(userProfile));
         }
     }
 
