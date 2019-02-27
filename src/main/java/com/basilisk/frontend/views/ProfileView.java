@@ -12,9 +12,15 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.dependency.Uses;
+import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.polymertemplate.EventHandler;
 import com.vaadin.flow.component.polymertemplate.EventHandler;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
+import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.component.upload.Upload;
+import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.VaadinSession;
@@ -32,6 +38,8 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
 
     private static final String FOLLOW_USER = "Follow User";
     private static final String UNFOLLOW_USER = "Unfollow User";
+    private static final String UPLOAD_PROFILE_IMAGE = "Upload Photo";
+    private static final String UPLOAD_COVER_IMAGE = "Upload Cover";
 
     private ProfilePresenter profilePresenter;
     private TweetPresenter tweetPresenter;
@@ -39,8 +47,36 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
 
     @Id("tweetFeed")
     private Element tweetFeed;
+
     @Id("followButton")
     private Button followButton;
+
+    @Id("userNameLabel")
+    private Label userNameLabel;
+
+    @Id("followersLabel")
+    private Label followersLabel;
+
+    @Id("followingLabel")
+    private Label followingLabel;
+
+    @Id("userBioTextArea")
+    private TextArea userBioTextArea;
+
+    @Id("editButton")
+    private Button editButton;
+
+    @Id("profileImageUpload")
+    private Upload profileImageUpload;
+
+    @Id("coverImageUpload")
+    private Upload coverImageUpload;
+
+    @Id("profileImage")
+    private Image profileImage;
+
+    @Id("coverImage")
+    private Image coverImage;
 
     public ProfileView(ProfilePresenter profilePresenter, TweetPresenter tweetPresenter) {
         this.profilePresenter = profilePresenter;
@@ -71,6 +107,24 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
         List<TweetDisplayComponent> tweetDisplayComponentList = profilePresenter.getAllUserTweetsDisplayComponents(userProfile);
         Collections.reverse(tweetDisplayComponentList);
 
+        //Setting up stats
+        userNameLabel.getElement().setText(userProfile.getName() + " @" + userProfile.getUsername());
+        followingLabel.getElement().setText("Following: " + profilePresenter.getNumberOfFollowings(userProfile));
+        followersLabel.getElement().setText("Followers: " + profilePresenter.getNumberOfFollowers(userProfile));
+
+        //Setting up bio
+        userBioTextArea.setReadOnly(true);
+        userBioTextArea.setValue(userProfile.getBiography());
+
+        //If not user profile set edit buttons to invisible
+        editButton.setVisible(false);
+        profileImageUpload.setVisible(false);
+        coverImageUpload.setVisible(false);
+
+        //Setting up profile image
+        profilePresenter.setImages(profileImage, coverImage, userProfile);
+
+        //Things you can see on only your own page
         //followButton Login for when page is initalized if its follow or unfollow user
         followButton.setVisible(true);
         if (profilePresenter.checkIfFollowing(currentUser, userProfile)) {
@@ -83,12 +137,41 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
         if (userProfile.equals(currentUser)) {
             followButton.setVisible(false);
             tweetFeed.appendChild(new TweetCreateComponent(tweetPresenter).getElement());
+            editButton.setVisible(true);
+            profileImageUpload.setVisible(true);
+            coverImageUpload.setVisible(true);
         }
+
+        //Profile Image and Cover Image
+        MemoryBuffer profileImageBuffer = new MemoryBuffer();
+        MemoryBuffer coverImageBuffer = new MemoryBuffer();
+        profileImageUpload.setAcceptedFileTypes("image/jpeg", "image/png", "image/gif");
+        coverImageUpload.setAcceptedFileTypes("image/jpeg", "image/png", "image/gif");
+        profileImageUpload.setUploadButton(new Button(UPLOAD_PROFILE_IMAGE));
+        coverImageUpload.setUploadButton(new Button(UPLOAD_COVER_IMAGE));
+        profileImageUpload.setDropAllowed(false);
+        coverImageUpload.setDropAllowed(false);
+        profileImageUpload.setReceiver(profileImageBuffer);
+        coverImageUpload.setReceiver(coverImageBuffer);
+        profileImageUpload.setMaxFiles(1);
+        coverImageUpload.setMaxFiles(1);
 
         //Adding tweets to div element (tweetFeed)
         for (TweetDisplayComponent tweetDisplayComponent : tweetDisplayComponentList) {
             tweetFeed.appendChild(tweetDisplayComponent.getElement());
         }
+
+        //When Profile Image is Uploaded Listener
+        profileImageUpload.addSucceededListener(event -> {
+            profilePresenter.uploadProfileImage(profileImageBuffer.getInputStream(), currentUser);
+            UI.getCurrent().getPage().reload();
+        });
+
+        //When Cover Image is Uploaded Listener
+        coverImageUpload.addSucceededListener(event -> {
+            profilePresenter.uploadCoverImage(coverImageBuffer.getInputStream(), currentUser);
+            UI.getCurrent().getPage().reload();
+        });
     }
 
     @EventHandler
@@ -115,10 +198,27 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
         init();
     }
 
+    @EventHandler
+    public void editButtonClicked() {
+        User currentUser = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
+
+        if (userBioTextArea.isReadOnly()) {
+            //Edit Mode
+            editButton.setText("Save");
+            userBioTextArea.setReadOnly(false);
+        } else {
+            //Save Mode
+            editButton.setText("Edit");
+            userBioTextArea.setReadOnly(true);
+            currentUser.setBiography(userBioTextArea.getValue());
+            profilePresenter.saveBiography(currentUser);
+
+        }
+    }
+
     @Override
     public void setParameter(BeforeEvent event, @OptionalParameter String parameter) {
         usernameParameter = parameter;
-
     }
 
     public interface ProfileViewModel extends TemplateModel {
