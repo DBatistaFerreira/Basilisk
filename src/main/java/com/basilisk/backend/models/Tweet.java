@@ -4,11 +4,14 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Tweet {
+
+    // Fields
 
     @Id
     @Column
@@ -23,7 +26,7 @@ public class Tweet {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
     @JoinTable(
-            name = "tweet_likes",
+            name = "TWEET_LIKES",
             joinColumns = @JoinColumn(name = "tweet_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
@@ -34,27 +37,31 @@ public class Tweet {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
     @JoinTable(
-            name = "tweet_dislikes",
+            name = "TWEET_DISLIKES",
             joinColumns = @JoinColumn(name = "tweet_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private List<User> dislikesList = new ArrayList<>();
 
-    @Column
-    private int retweets;
 
     @OneToOne(targetEntity = User.class)
     @JoinColumn(name = "USER")
     private User user;
 
+    @Column
+    private final Instant creationTime = Instant.now();
+
+    // Constructors
+
     public Tweet() {
     }
 
-    public Tweet(String text, int retweets, User user) {
+    public Tweet(String text, User user) {
         this.text = text;
-        this.retweets = retweets;
         this.user = user;
     }
+
+    //Getters and Setters
 
     public long getId() {
         return id;
@@ -76,30 +83,23 @@ public class Tweet {
         return dislikesList;
     }
 
-    public int getRetweets() {
-        return retweets;
-    }
-
-    public void setRetweets(int retweets) {
-        this.retweets = retweets;
-    }
-
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public Instant getCreationTime() {
+        return creationTime;
     }
+
+    // Overridden Methods
 
     @Override
     public String toString() {
         return "Tweet{" +
                 "id=" + id +
                 ", text='" + text + '\'' +
-                ", likesList=" + likesList +
-                ", dislikesList=" + dislikesList +
-                ", retweets=" + retweets +
+                ", likes=" + likesList.size() +
+                ", dislikes=" + dislikesList.size() +
                 ", user=" + user +
                 '}';
     }

@@ -13,34 +13,47 @@ public class TweetService {
 
     private TweetRepository tweetRepository;
 
+    // Constructor
     @Autowired
     public TweetService(TweetRepository tweetRepository) {
         this.tweetRepository = tweetRepository;
     }
 
+    // Public Service methods
+    public void writeTweet(Tweet tweet) {
+        createTweet(tweet);
+    }
+
+    public void editTweet(Tweet tweet) {
+        updateTweet(tweet);
+    }
+
+    public Tweet getTweetById(long id) {
+        return retrieveTweet(id);
+    }
+
+    public List<Tweet> getAllTweetsByUser(User user) {
+        return retrieveAllTweets(user);
+    }
+
     //CRUD OPERATIONS
-    //Save tweet into DB
-    public void createTweet(Tweet tweet) {
+    private void createTweet(Tweet tweet) {
         tweetRepository.save(tweet);
     }
 
-    //Delete tweet from DB
-    public void deleteTweet(Tweet tweet) {
+    private void deleteTweet(Tweet tweet) {
         tweetRepository.delete(tweet);
     }
 
-    //Update tweet into DB
-    public void updateTweet(Tweet tweet) {
+    private void updateTweet(Tweet tweet) {
         tweetRepository.save(tweet);
     }
 
-    //Get one tweet with tweet id
-    public Tweet retrieveTweet(long id) {
+    private Tweet retrieveTweet(long id) {
         return tweetRepository.getOne(id);
     }
 
-    //Get all tweets from specific user 
-    public List<Tweet> retrieveAllTweets(User user) {
+    private List<Tweet> retrieveAllTweets(User user) {
         return tweetRepository.getAllByUser(user);
     }
 }

@@ -1,5 +1,6 @@
 package com.basilisk.frontend.views;
 
+import com.basilisk.Constants;
 import com.basilisk.backend.presenters.LoginPresenter;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
@@ -34,7 +35,10 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> impleme
 
     public LoginView(LoginPresenter loginPresenter) {
         this.loginPresenter = loginPresenter;
-        // You can initialise any data required for the connected UI components here.
+    }
+
+    public void init() {
+        VaadinSession.getCurrent().setAttribute("currentPage", "login");
         loginButton.addClickListener(buttonClickEvent -> {
             String userName = usernameTextField.getValue(); // Valid value: Admin
             String password = passwordTextField.getValue(); // Valid value: password
@@ -50,10 +54,11 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> impleme
 
     @Override
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-        if (!Objects.isNull(VaadinSession.getCurrent().getAttribute("currentUser"))) {
+        if (!Objects.isNull(VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER))) {
             beforeEnterEvent.rerouteTo(HomeView.class);
-            UI.getCurrent().navigate("home");
+            UI.getCurrent().navigate(Constants.HOME_ROUTE);
         }
+        init();
     }
 
     public interface LoginViewModel extends TemplateModel {

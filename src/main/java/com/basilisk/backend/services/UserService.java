@@ -6,6 +6,8 @@ import com.basilisk.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -17,11 +19,32 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    // Public Service methods
     public User login(String username, String password) {
         return retrieveUserByUsernameAndPassword(username, password);
     }
 
-    // CRUD Operations for UserService
+    public List<User> searchForUsers(String username) {
+        return retrieveUserByUsernameContainingIgnoreCase(username);
+    }
+
+    public List<User> retrieveAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public User retrieveUserByUserName(String username) {
+        return retrieveUserbyUsername(username);
+    }
+
+    public void registerNewUser(User user) {
+        createUser(user);
+    }
+
+    public void saveUserInfo(User currentUser) {
+        updateUser(currentUser);
+    }
+
+    // private CRUD Operations
     private void createUser(User user) {
         userRepository.save(user);
     }
@@ -34,6 +57,10 @@ public class UserService {
         return userRepository.findByUsernameAndPassword(username, password);
     }
 
+    private List<User> retrieveUserByUsernameContainingIgnoreCase(String searchTerm) {
+        return userRepository.findAllByUsernameContainingIgnoreCase(searchTerm);
+    }
+
     private void updateUser(User user) {
         userRepository.save(user);
     }
@@ -41,5 +68,4 @@ public class UserService {
     private void deleteUser(User user) {
         userRepository.delete(user);
     }
-
 }
