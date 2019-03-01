@@ -24,6 +24,10 @@ public class UserService {
         return retrieveUserByUsernameAndPassword(username, password);
     }
 
+    public User getUser(String userName) {
+        return retrieveUserbyUsername(userName);
+    }
+
     public List<User> searchForUsers(String username) {
         return retrieveUserByUsernameContainingIgnoreCase(username);
     }

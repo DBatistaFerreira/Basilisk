@@ -130,7 +130,8 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     private void commentButtonClicked() {
         // Called from the template click handler
         //tweet =
-        tweetPresenter.createAndSaveComment(commentMessage.getValue(), tweet);
+        User currentUser = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
+        tweetPresenter.createAndSaveComment(commentMessage.getValue(), tweet, currentUser);
         UI.getCurrent().getPage().reload();
     }
 
