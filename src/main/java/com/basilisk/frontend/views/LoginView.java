@@ -44,6 +44,8 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> impleme
             String password = passwordTextField.getValue(); // Valid value: password
 
             if (loginPresenter.loginUser(userName, password)) {
+                VaadinSession.getCurrent().setAttribute(Constants.CURRENT_USER, loginPresenter.getUser(userName));
+                UI.getCurrent().navigate(Constants.HOME_ROUTE);
                 passwordTextField.setInvalid(false);
             } else {
                 passwordTextField.setInvalid(true);

@@ -1,13 +1,11 @@
 package com.basilisk.backend.presenters;
 
-import com.basilisk.Constants;
 import com.basilisk.backend.models.Comment;
 import com.basilisk.backend.models.Tweet;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.services.CommentService;
 import com.basilisk.backend.services.TweetService;
 import com.basilisk.backend.services.UserService;
-import com.vaadin.flow.server.VaadinSession;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,10 +29,9 @@ public class TweetPresenter {
         this.commentService = commentService;
     }
 
-    public boolean createAndSaveTweet(String tweetText) {
+    public boolean createAndSaveTweet(String tweetText, User currentUser) {
         if (!tweetText.isEmpty()) {
-            User user = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
-            Tweet tweet = new Tweet(tweetText, user);
+            Tweet tweet = new Tweet(tweetText, currentUser);
             LOGGER.info("Tweet creation success: " + tweetText);
             tweetService.writeTweet(tweet);
             return true;
@@ -44,12 +41,10 @@ public class TweetPresenter {
         }
     }
 
-    public boolean createAndSaveComment(String commentText, Tweet tweet)
+    public boolean createAndSaveComment(String commentText, Tweet tweet, User currentUser)
     {
-        if (!commentText.isEmpty())
-        {
-            User user = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
-            Comment comment = new Comment(commentText, user, tweet);
+        if (!commentText.isEmpty()) {
+            Comment comment = new Comment(commentText, currentUser, tweet);
             LOGGER.info("Comment creation success: " + commentText);
             LOGGER.info("Comment: " + comment.getText() + comment.getUser().toString() + comment.getTweet().toString());
             commentService.writeComment(comment);

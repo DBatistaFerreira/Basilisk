@@ -1,10 +1,7 @@
 package com.basilisk.backend.presenters;
 
-import com.basilisk.Constants;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.services.UserService;
-import com.vaadin.flow.component.UI;
-import com.vaadin.flow.server.VaadinSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +24,6 @@ public class LoginPresenter {
 
         User user = userService.login(username, password);
         if (!Objects.isNull(user)) {
-            VaadinSession.getCurrent().setAttribute(Constants.CURRENT_USER, user);
-            UI.getCurrent().navigate(Constants.HOME_ROUTE);
             LOGGER.info("Login Success : Username = " + username);
             return true;
         } else {
@@ -37,5 +32,9 @@ public class LoginPresenter {
         }
 
 
+    }
+
+    public User getUser(String userName) {
+        return userService.getUser(userName);
     }
 }
