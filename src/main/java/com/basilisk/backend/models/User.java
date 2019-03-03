@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
-public class User {
+public class User implements Cloneable {
 
     // Fields
 
@@ -124,6 +124,10 @@ public class User {
         return this.id == user.id && this.name.equals(user.name) && this.username.equals(user.username);
     }
 
-
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }
+
 

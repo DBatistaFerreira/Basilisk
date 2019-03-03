@@ -4,9 +4,11 @@ import com.basilisk.backend.models.Retweet;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.repositories.RetweetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class RetweetService {
 
     private RetweetRepository retweetRepository;

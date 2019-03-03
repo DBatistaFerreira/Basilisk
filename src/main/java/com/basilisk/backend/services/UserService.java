@@ -48,6 +48,10 @@ public class UserService {
         updateUser(currentUser);
     }
 
+    public void removeUser(User user) {
+        deleteUser(user);
+    }
+
     // private CRUD Operations
     private void createUser(User user) {
         userRepository.save(user);

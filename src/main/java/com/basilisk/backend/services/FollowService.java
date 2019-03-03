@@ -39,6 +39,14 @@ public class FollowService {
         deleteFollow(retrieveFollowByFollowerAndFollowed(follower, followed));
     }
 
+    public void editFollow(Follow follow) {
+        updateFollow(follow);
+    }
+
+    public Follow getFollowById(long id) {
+        return retrieveFollow(id);
+    }
+
     // private CRUD Operations
     private void createFollow(Follow follow) {
         followRepository.save(follow);
