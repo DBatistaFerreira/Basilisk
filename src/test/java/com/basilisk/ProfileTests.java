@@ -1,7 +1,7 @@
 package com.basilisk;
 
 import com.basilisk.backend.presenters.ProfilePresenter;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 

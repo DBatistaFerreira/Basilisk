@@ -3,8 +3,7 @@ package com.basilisk;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.repositories.*;
 import com.basilisk.backend.services.*;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
