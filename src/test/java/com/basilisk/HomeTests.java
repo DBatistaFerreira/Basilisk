@@ -1,7 +1,7 @@
 package com.basilisk;
 
 import com.basilisk.backend.presenters.HomePresenter;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,8 +11,8 @@ public class HomeTests extends Tests {
     @Autowired
     private HomePresenter homePresenter;
 
-    @Before
-    public void setUp() {
+    @BeforeAll
+    public static void setUp() {
 
     }
 }
