@@ -26,7 +26,7 @@ public class RetweetService {
 
     public Retweet getRetweetById(long id) { return retrieveRetweet(id); }
 
-    public List<Retweet> getUserRetweets(User user) { return retrieveAllRetweets(user); }
+    public List<Retweet> getAllRetweetsByUser(User user) { return retrieveAllRetweets(user); }
 
     // private CRUD Operations
     private void createRetweet(Retweet retweet) {

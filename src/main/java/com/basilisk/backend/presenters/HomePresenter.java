@@ -1,8 +1,10 @@
 package com.basilisk.backend.presenters;
 
+import com.basilisk.backend.models.Retweet;
 import com.basilisk.backend.models.Tweet;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.services.FollowService;
+import com.basilisk.backend.services.RetweetService;
 import com.basilisk.backend.services.TweetService;
 import com.basilisk.backend.services.UserService;
 import com.basilisk.frontend.components.TweetDisplayComponent;
@@ -18,6 +20,7 @@ public class HomePresenter {
 
     private UserService userService;
     private TweetService tweetService;
+    private RetweetService retweetService;
     private FollowService followService;
     private TweetPresenter tweetPresenter;
     private static final Logger LOGGER = Logger.getLogger(HomePresenter.class);
@@ -40,25 +43,53 @@ public class HomePresenter {
         return users;
     }
 
-    public List<TweetDisplayComponent> getAllUserTweetsDisplayComponents(User user) {
-        List<Tweet> tweetList = tweetService.getAllTweetsByUser(user);
-        List<User> userFollowingsList = followService.getAllUserFollowings(user);
+    public List<TweetDisplayComponent> getAllHomePageTweetsDisplayComponents(User user) {
+        List<Tweet> tweetList = getAllUserAndFollowingTweets(user);
+        List<Tweet> retweetList = getAllUserAndFollowingRetweets(user);
+        List<TweetDisplayComponent> tweetDisplayComponentList = new LinkedList<>();
 
-        for (User userFollowing : userFollowingsList) {
-            List<Tweet> userFollowingTweetList = tweetService.getAllTweetsByUser(userFollowing);
+        List<Tweet> fullTweetList = new LinkedList<>();
+        fullTweetList.addAll(tweetList);
+        fullTweetList.addAll(retweetList);
 
-            for (Tweet userFollowingTweet : userFollowingTweetList) {
-                tweetList.add(userFollowingTweet);
-            }
-        }
-
-        List<TweetDisplayComponent> tweetComponentDisplayList = new LinkedList<>();
-
-        for (Tweet tweet : tweetList) {
+        for (Tweet tweet : fullTweetList) {
             TweetDisplayComponent tweetDisplayComponent = new TweetDisplayComponent(tweetPresenter, tweet);
-            tweetComponentDisplayList.add(tweetDisplayComponent);
+            tweetDisplayComponentList.add(tweetDisplayComponent);
         }
-        return tweetComponentDisplayList;
+        return tweetDisplayComponentList;
+    }
+
+    private List<Tweet> getAllUserAndFollowingTweets(User user) {
+        List<Tweet> tweetList = tweetService.getAllTweetsByUser(user);
+        List<User> userFollowingList = followService.getAllUserFollowings(user);
+
+        for (User userFollowing : userFollowingList) {
+            List<Tweet> userFollowingTweetList = tweetService.getAllTweetsByUser(userFollowing);
+            tweetList.addAll(userFollowingTweetList);
+        }
+        return tweetList;
+    }
+
+    private List<Tweet> getAllUserAndFollowingRetweets(User user) {
+        List<Retweet> retweetList = retweetService.getAllRetweetsByUser(user);
+        List<Tweet> tweetList = GetTweetListFromRetweetList(retweetList);
+        List<User> userFollowingList = followService.getAllUserFollowings(user);
+
+        for (User userFollowing : userFollowingList) {
+            List<Retweet> userFollowingRetweets = retweetService.getAllRetweetsByUser(userFollowing);
+            List<Tweet> userFollowingRetweetList = GetTweetListFromRetweetList(userFollowingRetweets);
+            tweetList.addAll(userFollowingRetweetList);
+        }
+        return tweetList;
+    }
+
+    private List<Tweet> GetTweetListFromRetweetList(List<Retweet> retweetList) {
+        List<Tweet> tweetList = new LinkedList<>();
+
+        for (Retweet retweet : retweetList) {
+            tweetList.add(retweet.getTweet());
+        }
+        return tweetList;
     }
 
 }
