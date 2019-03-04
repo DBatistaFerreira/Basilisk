@@ -68,7 +68,7 @@ public class ProfilePresenter {
 
     public User getUser(String username) {
         LOGGER.info("Retrieving user: " + username);
-        User user = userService.retrieveUserByUserName(username);
+        User user = userService.getUserByUsername(username);
         LOGGER.info("Retrieved user: " + username);
         return user;
     }

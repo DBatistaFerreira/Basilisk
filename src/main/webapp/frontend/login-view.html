@@ -42,20 +42,29 @@
             }
 
             .info__header {
-                color: white;
-                margin: 70px 0 30px 170px;
+                color: #314654;
+                margin: 70px 70px 30px;
             }
 
             .signup__layout {
                 display: flex;
                 flex-direction: column;
-                margin: 110px 0 0 75px;
+                margin: -20px 0 0 70px;
             }
 
             .signup__button {
                 width: 75%;
                 max-width: 75%;
                 background: linear-gradient(to bottom right, #314654 0%, #28343d 107%);
+                color: whitesmoke;
+            }
+
+            .signup__input__field {
+                background: transparent;
+                border: none;
+                outline: none;
+                border-radius: 5px;
+                width: 75%;
                 color: whitesmoke;
             }
 
@@ -93,7 +102,7 @@
                 color: whitesmoke;
             }
 
-            .input__field {
+            .login__input__field {
                 background: transparent;
                 border: none;
                 outline: none;
@@ -123,6 +132,12 @@
             <div class="info" id="div1">
                 <h2 class="info__header" id="h2">Sign Up</h2>
                 <div class="signup__layout" id="div2">
+                    <vaadin-text-field id="fullNameTextField" name="fullName" label="Full Name"
+                                       class="signup__input__field"></vaadin-text-field>
+                    <vaadin-text-field id="createUsernameTextField" name="username" label="Username"
+                                       class="signup__input__field"></vaadin-text-field>
+                    <vaadin-password-field id="createPasswordTextField" name="password" label="Password"
+                                           class="signup__input__field"></vaadin-password-field>
                     <vaadin-button class="signup__button" id="signUpButton">
                         Sign up
                     </vaadin-button>
@@ -134,9 +149,9 @@
                         <h2 class="login__header" id="h21">Sign in</h2>
                         <div class="login__layout" id="div4">
                             <vaadin-text-field id="usernameTextField" name="username" label="Username"
-                                               class="input__field" autofocus required></vaadin-text-field>
+                                               class="login__input__field" required></vaadin-text-field>
                             <vaadin-password-field id="passwordTextField" name="password" label="Password"
-                                                   class="input__field" required
+                                                   class="login__input__field" required
                                                    on-keydown="_onPasswordKeydown"></vaadin-password-field>
                             <vaadin-button class="login__button" id="loginButton">
                                 Sign in

@@ -39,6 +39,10 @@ public class CommentService {
         return commentRepository.getAllByTweet(tweet);
     }
 
+    public void removeComment(Comment comment) {
+        deleteComment(comment);
+    }
+
     // private CRUD Operations
     private void createComment(Comment comment) {
         commentRepository.save(comment);
