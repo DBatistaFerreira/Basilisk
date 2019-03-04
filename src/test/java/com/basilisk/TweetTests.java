@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 public class TweetTests extends Tests {
@@ -133,5 +133,31 @@ public class TweetTests extends Tests {
         assertEquals(1, tweetService.getTweetById(tweet.getId()).getDislikesList().size());
         //Ensure that there is no likes
         assertEquals(0, tweetService.getTweetById(tweet.getId()).getLikesList().size());
+    }
+
+    @Test
+    public void postingANonEmptyTweetTest() {
+        User user = new User();
+        user.setName("TestName");
+        user.setPassword("TestPass");
+        user.setUsername("TestUsername");
+
+        //Create new user
+        userService.registerNewUser(user);
+
+        assertTrue(tweetPresenter.createAndSaveTweet("test", user));
+    }
+
+    @Test
+    public void postingAEmptyTweetTest() {
+        User user = new User();
+        user.setName("TestName");
+        user.setPassword("TestPass");
+        user.setUsername("TestUsername");
+
+        //Create new user
+        userService.registerNewUser(user);
+
+        assertFalse(tweetPresenter.createAndSaveTweet("", user));
     }
 }
