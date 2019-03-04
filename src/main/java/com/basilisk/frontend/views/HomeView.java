@@ -43,7 +43,7 @@ public class HomeView extends PolymerTemplate<HomeView.HomeViewModel> implements
 
         // Get all tweets of user and user's followings
         User userHome = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
-        List<TweetDisplayComponent> tweetDisplayComponentList = homePresenter.getAllHomePageTweetsDisplayComponents(userHome);
+        List<TweetDisplayComponent> tweetDisplayComponentList = homePresenter.getAllHomePageTweetDisplayComponents(userHome);
 
         // Displaying tweets on page
         for (TweetDisplayComponent tweetDisplayComponent : tweetDisplayComponentList) {

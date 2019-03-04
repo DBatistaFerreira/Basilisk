@@ -43,17 +43,17 @@ public class HomePresenter {
         return users;
     }
 
-    public List<TweetDisplayComponent> getAllHomePageTweetsDisplayComponents(User user) {
+    public List<TweetDisplayComponent> getAllHomePageTweetDisplayComponents(User user) {
         List<Tweet> tweetList = getAllUserAndFollowingTweets(user);
-        List<Tweet> retweetList = getAllUserAndFollowingRetweets(user);
+        List<Retweet> retweetList = getAllUserAndFollowingRetweets(user);
         List<TweetDisplayComponent> tweetDisplayComponentList = new LinkedList<>();
 
-        List<Tweet> fullTweetList = new LinkedList<>();
-        fullTweetList.addAll(tweetList);
-        fullTweetList.addAll(retweetList);
-
-        for (Tweet tweet : fullTweetList) {
+        for (Tweet tweet : tweetList) {
             TweetDisplayComponent tweetDisplayComponent = new TweetDisplayComponent(tweetPresenter, tweet);
+            tweetDisplayComponentList.add(tweetDisplayComponent);
+        }
+        for (Retweet retweet : retweetList) {
+            TweetDisplayComponent tweetDisplayComponent = new TweetDisplayComponent(tweetPresenter, retweet);
             tweetDisplayComponentList.add(tweetDisplayComponent);
         }
         return tweetDisplayComponentList;
@@ -70,26 +70,15 @@ public class HomePresenter {
         return tweetList;
     }
 
-    private List<Tweet> getAllUserAndFollowingRetweets(User user) {
+    private List<Retweet> getAllUserAndFollowingRetweets(User user) {
         List<Retweet> retweetList = retweetService.getAllRetweetsByUser(user);
-        List<Tweet> tweetList = GetTweetListFromRetweetList(retweetList);
         List<User> userFollowingList = followService.getAllUserFollowings(user);
 
         for (User userFollowing : userFollowingList) {
-            List<Retweet> userFollowingRetweets = retweetService.getAllRetweetsByUser(userFollowing);
-            List<Tweet> userFollowingRetweetList = GetTweetListFromRetweetList(userFollowingRetweets);
-            tweetList.addAll(userFollowingRetweetList);
+            List<Retweet> userFollowingRetweetList = retweetService.getAllRetweetsByUser(userFollowing);
+            retweetList.addAll(userFollowingRetweetList);
         }
-        return tweetList;
-    }
-
-    private List<Tweet> GetTweetListFromRetweetList(List<Retweet> retweetList) {
-        List<Tweet> tweetList = new LinkedList<>();
-
-        for (Retweet retweet : retweetList) {
-            tweetList.add(retweet.getTweet());
-        }
-        return tweetList;
+        return retweetList;
     }
 
 }
