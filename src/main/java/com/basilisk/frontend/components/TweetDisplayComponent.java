@@ -19,6 +19,7 @@ import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.templatemodel.TemplateModel;
 
 import java.time.Instant;
+import java.util.Comparator;
 import java.util.List;
 
 @Tag("tweet-display-component")
@@ -73,6 +74,10 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         this.timeStamp = retweet.getCreationTime();
 
         setTweet();
+    }
+
+    public Instant getTimeStamp() {
+        return timeStamp;
     }
 
     private void setTweet() {
@@ -160,5 +165,13 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
 
     public interface TweetDisplayComponentModel extends TemplateModel {
         // Add setters and getters for template properties here.
+    }
+
+    public static class TweetDisplayComponentByTimeStampComparator implements Comparator<TweetDisplayComponent> {
+
+        @Override
+        public int compare(TweetDisplayComponent comp1, TweetDisplayComponent comp2) {
+            return comp1.getTimeStamp().compareTo(comp2.getTimeStamp());
+        }
     }
 }

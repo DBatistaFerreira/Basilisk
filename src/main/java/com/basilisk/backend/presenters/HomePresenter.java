@@ -8,10 +8,12 @@ import com.basilisk.backend.services.RetweetService;
 import com.basilisk.backend.services.TweetService;
 import com.basilisk.backend.services.UserService;
 import com.basilisk.frontend.components.TweetDisplayComponent;
+import com.basilisk.frontend.components.TweetDisplayComponent.TweetDisplayComponentByTimeStampComparator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -44,6 +46,7 @@ public class HomePresenter {
     }
 
     public List<TweetDisplayComponent> getAllHomePageTweetDisplayComponents(User user) {
+
         List<Tweet> tweetList = getAllUserAndFollowingTweets(user);
         List<Retweet> retweetList = getAllUserAndFollowingRetweets(user);
         List<TweetDisplayComponent> tweetDisplayComponentList = new LinkedList<>();
@@ -56,10 +59,14 @@ public class HomePresenter {
             TweetDisplayComponent tweetDisplayComponent = new TweetDisplayComponent(tweetPresenter, retweet);
             tweetDisplayComponentList.add(tweetDisplayComponent);
         }
+
+        tweetDisplayComponentList.sort(new TweetDisplayComponentByTimeStampComparator());
+        Collections.reverse(tweetDisplayComponentList);
         return tweetDisplayComponentList;
     }
 
     private List<Tweet> getAllUserAndFollowingTweets(User user) {
+
         List<Tweet> tweetList = tweetService.getAllTweetsByUser(user);
         List<User> userFollowingList = followService.getAllUserFollowings(user);
 
@@ -71,6 +78,7 @@ public class HomePresenter {
     }
 
     private List<Retweet> getAllUserAndFollowingRetweets(User user) {
+
         List<Retweet> retweetList = retweetService.getAllRetweetsByUser(user);
         List<User> userFollowingList = followService.getAllUserFollowings(user);
 
