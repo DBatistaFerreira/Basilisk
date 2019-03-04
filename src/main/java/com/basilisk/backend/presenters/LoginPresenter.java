@@ -42,6 +42,10 @@ public class LoginPresenter {
     public boolean signupUser(String name, String username, String password) {
         LOGGER.info("Signup Attempt: Username = " + username);
 
+        if (name.length() == 0 || username.length() == 0 || password.length() == 0) {
+            return false;
+        }
+
         User user = userService.retrieveUserByUserName(username);
         if (Objects.isNull(user)) {
             user = new User(name, username, password, "", null);

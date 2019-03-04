@@ -61,8 +61,13 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> impleme
 
         //Setting the maximum length of characters for each input field in the sign up section.
         fullNameTextField.setMaxLength(30);
+        fullNameTextField.setRequired(true);
+
         createUsernameTextField.setMaxLength(15);
+        createUsernameTextField.setRequired(true);
+
         createPasswordTextField.setMaxLength(15);
+        createPasswordTextField.setRequired(true);
 
         signUpButton.addClickListener(buttonClickEvent -> {
             String fullName = fullNameTextField.getValue();
@@ -75,10 +80,29 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> impleme
                 UI.getCurrent().navigate("profile");
                 createUsernameTextField.setInvalid(false);
             } else {
-                createUsernameTextField.setInvalid(true);
-                createUsernameTextField.setErrorMessage("Username has already been taken! Please choose another one.");
+
+                if (fullName.length() == 0 || newUserName.length() == 0 || newPassword.length() == 0) {
+                    if (fullName.length() == 0) {
+                        fullNameTextField.setInvalid(true);
+                        fullNameTextField.setErrorMessage("Please enter your full name.");
+                    }
+
+                    if (newUserName.length() == 0) {
+                        createUsernameTextField.setInvalid(true);
+                        createUsernameTextField.setErrorMessage("Please enter a username.");
+                    }
+
+                    if (newPassword.length() == 0) {
+                        createPasswordTextField.setInvalid(true);
+                        createPasswordTextField.setErrorMessage("Please enter a password.");
+                    }
+                } else {
+                    createUsernameTextField.setInvalid(true);
+                    createUsernameTextField.setErrorMessage("Username has already been taken! Please choose another one.");
+                }
             }
         });
+
     }
 
     @Override
