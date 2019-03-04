@@ -36,6 +36,10 @@ public class TweetService {
         return retrieveAllTweets(user);
     }
 
+    public void removeTweet(Tweet tweet) {
+        deleteTweet(tweet);
+    }
+
     //CRUD OPERATIONS
     private void createTweet(Tweet tweet) {
         tweetRepository.save(tweet);

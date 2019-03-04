@@ -1,18 +1,23 @@
 package com.basilisk.frontend.components;
 
 import com.basilisk.Constants;
+import com.basilisk.backend.models.Comment;
 import com.basilisk.backend.models.Tweet;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.presenters.TweetPresenter;
 import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.polymertemplate.EventHandler;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.templatemodel.TemplateModel;
+
+import java.util.List;
 
 @Tag("tweet-display-component")
 @HtmlImport("tweet-display-component.html")
@@ -28,6 +33,10 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     private Button retweetButton;
     @Id("tweetMessage")
     private TextArea tweetMessage;
+    @Id("commentMessage")
+    private TextArea commentMessage;
+    @Id("commentSection")
+    private VerticalLayout commentSection;
 
     private static final String LIKE = "Like";
     private static final String DISLIKE = "Dislike";
@@ -64,6 +73,14 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
             dislikeButton.getStyle().set(BACKGROUND, GREY);
         } else {
             dislikeButton.setText(DISLIKE + " " + tweet.getDislikesList().size());
+        }
+
+        //Add comments/text boxes to tweets
+        List<Comment> tweetComments = tweetPresenter.getTweetComments(tweet);
+        for (Comment comment : tweetComments)
+        {
+            CommentDisplayComponent wComment = new CommentDisplayComponent(comment);
+            commentSection.add(wComment);
         }
     }
 
@@ -112,7 +129,10 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     @EventHandler
     private void commentButtonClicked() {
         // Called from the template click handler
-
+        //tweet =
+        User currentUser = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
+        tweetPresenter.createAndSaveComment(commentMessage.getValue(), tweet, currentUser);
+        UI.getCurrent().getPage().reload();
     }
 
     @EventHandler

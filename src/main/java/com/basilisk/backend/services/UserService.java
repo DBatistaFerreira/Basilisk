@@ -24,6 +24,10 @@ public class UserService {
         return retrieveUserByUsernameAndPassword(username, password);
     }
 
+    public User getUser(String userName) {
+        return retrieveUserByUsername(userName);
+    }
+
     public List<User> searchForUsers(String username) {
         return retrieveUserByUsernameContainingIgnoreCase(username);
     }
@@ -46,6 +50,10 @@ public class UserService {
 
     public void saveUserInfo(User currentUser) {
         updateUser(currentUser);
+    }
+
+    public void removeUser(User user) {
+        deleteUser(user);
     }
 
     // private CRUD Operations

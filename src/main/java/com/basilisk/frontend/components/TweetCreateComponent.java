@@ -1,5 +1,7 @@
 package com.basilisk.frontend.components;
 
+import com.basilisk.Constants;
+import com.basilisk.backend.models.User;
 import com.basilisk.backend.presenters.TweetPresenter;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
@@ -9,6 +11,7 @@ import com.vaadin.flow.component.polymertemplate.EventHandler;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.templatemodel.TemplateModel;
 
 @Tag("tweet-create-component")
@@ -30,7 +33,8 @@ public class TweetCreateComponent extends PolymerTemplate<TweetCreateComponent.T
     @EventHandler
     private void createButtonClicked() {
         // Called from the template click handler
-        tweetPresenter.createAndSaveTweet(tweetMessage.getValue());
+        User currentUser = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
+        tweetPresenter.createAndSaveTweet(tweetMessage.getValue(), currentUser);
         UI.getCurrent().getPage().reload();
     }
 

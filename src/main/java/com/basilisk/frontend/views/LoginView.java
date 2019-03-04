@@ -50,6 +50,8 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> impleme
             String password = passwordTextField.getValue(); // Valid value: password
 
             if (loginPresenter.loginUser(userName, password)) {
+                VaadinSession.getCurrent().setAttribute(Constants.CURRENT_USER, loginPresenter.getUser(userName));
+                UI.getCurrent().navigate(Constants.HOME_ROUTE);
                 passwordTextField.setInvalid(false);
             } else {
                 passwordTextField.setInvalid(true);
@@ -69,6 +71,8 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> impleme
 
             //Create a new account
             if (loginPresenter.signupUser(fullName, newUserName, newPassword)) {
+                VaadinSession.getCurrent().setAttribute("currentUser", loginPresenter.getUser(newUserName));
+                UI.getCurrent().navigate("profile");
                 createUsernameTextField.setInvalid(false);
             } else {
                 createUsernameTextField.setInvalid(true);

@@ -35,8 +35,10 @@ import java.util.Objects;
 @Uses(MenuBarComponent.class)
 public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> implements BeforeEnterObserver, HasUrlParameter<String> {
 
-    public static final String UPLOAD_PROFILE_IMAGE = "Upload Photo";
-    public static final String UPLOAD_COVER_IMAGE = "Upload Cover";
+    private static final String FOLLOW_USER = "Follow User";
+    private static final String UNFOLLOW_USER = "Unfollow User";
+    private static final String UPLOAD_PROFILE_IMAGE = "Upload Photo";
+    private static final String UPLOAD_COVER_IMAGE = "Upload Cover";
 
     private ProfilePresenter profilePresenter;
     private TweetPresenter tweetPresenter;
@@ -44,6 +46,9 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
 
     @Id("tweetFeed")
     private Element tweetFeed;
+
+    @Id("followButton")
+    private Button followButton;
 
     @Id("userNameLabel")
     private Label userNameLabel;
@@ -118,15 +123,24 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
         //Setting up profile image
         profilePresenter.setImages(profileImage, coverImage, userProfile);
 
+        //followButton Login for when page is initalized if its follow or unfollow user
+        followButton.setVisible(true);
+        if (profilePresenter.checkIfFollowing(currentUser, userProfile)) {
+            followButton.setText(UNFOLLOW_USER);
+        } else {
+            followButton.setText(FOLLOW_USER);
+        }
+
         //Things you can see on only your own page
         if (userProfile.equals(currentUser)) {
             tweetFeed.appendChild(new TweetCreateComponent(tweetPresenter).getElement());
+            followButton.setVisible(false);
             editButton.setVisible(true);
             profileImageUpload.setVisible(true);
             coverImageUpload.setVisible(true);
         }
 
-        //Profile Image and Cover Image
+        //Profile Image and Cover Image Initalizations
         MemoryBuffer profileImageBuffer = new MemoryBuffer();
         MemoryBuffer coverImageBuffer = new MemoryBuffer();
         profileImageUpload.setAcceptedFileTypes("image/jpeg", "image/png", "image/gif");
@@ -156,6 +170,22 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
             profilePresenter.uploadCoverImage(coverImageBuffer.getInputStream(), currentUser);
             UI.getCurrent().getPage().reload();
         });
+    }
+
+    @EventHandler
+    private void followButtonClicked() {
+        User currentUser = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
+        User userProfile = (User) VaadinSession.getCurrent().getAttribute(Constants.USER_PROFILE);
+
+        if (profilePresenter.checkIfFollowing(currentUser, userProfile)) {
+            followButton.setText(FOLLOW_USER);
+            profilePresenter.unfollowUser(currentUser, userProfile);
+            followersLabel.getElement().setText("Followers: " + profilePresenter.getNumberOfFollowers(userProfile));
+        } else {
+            followButton.setText(UNFOLLOW_USER);
+            profilePresenter.followUser(currentUser, userProfile);
+            followersLabel.getElement().setText("Followers: " + profilePresenter.getNumberOfFollowers(userProfile));
+        }
     }
 
     @Override
