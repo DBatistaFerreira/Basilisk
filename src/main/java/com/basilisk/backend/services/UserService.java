@@ -25,7 +25,7 @@ public class UserService {
     }
 
     public User getUser(String userName) {
-        return retrieveUserbyUsername(userName);
+        return retrieveUserByUsername(userName);
     }
 
     public List<User> searchForUsers(String username) {
@@ -37,7 +37,11 @@ public class UserService {
     }
 
     public User retrieveUserByUserName(String username) {
-        return retrieveUserbyUsername(username);
+        return retrieveUserByUsername(username);
+    }
+
+    public void newUser(User user) {
+        createUser(user);
     }
 
     public void registerNewUser(User user) {
@@ -57,8 +61,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-    private User retrieveUserbyUsername(String username) {
-        return userRepository.findByUsername(username);
+    private User retrieveUserByUsername(String username) {
+        return userRepository.findByUsernameContainingIgnoreCase(username);
     }
 
     private User retrieveUserByUsernameAndPassword(String username, String password) {
@@ -76,4 +80,5 @@ public class UserService {
     private void deleteUser(User user) {
         userRepository.delete(user);
     }
+
 }

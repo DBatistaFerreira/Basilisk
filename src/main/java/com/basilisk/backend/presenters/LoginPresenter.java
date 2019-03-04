@@ -37,4 +37,25 @@ public class LoginPresenter {
     public User getUser(String userName) {
         return userService.getUser(userName);
     }
+
+    //Added sign up presenter
+    public boolean signupUser(String name, String username, String password) {
+        LOGGER.info("Signup Attempt: Username = " + username);
+
+        if (name.length() == 0 || username.length() == 0 || password.length() == 0) {
+            return false;
+        }
+
+        User user = userService.retrieveUserByUserName(username);
+        if (Objects.isNull(user)) {
+            user = new User(name, username, password, "", null);
+            userService.newUser(user);
+            LOGGER.info("Signup Success : Username = " + username);
+            return true;
+        } else {
+            LOGGER.info("Signup Failure : Username = " + username);
+            return false;
+        }
+
+    }
 }
