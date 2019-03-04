@@ -45,7 +45,7 @@ public class LoginPresenter {
 
         User user = userService.retrieveUserByUserName(username);
         if (Objects.isNull(user)) {
-            user = new User(name, username, password);
+            user = new User(name, username, password, null, null);
             userService.newUser(user);
             LOGGER.info("Signup Success : Username = " + username);
             VaadinSession.getCurrent().setAttribute("currentUser", user);

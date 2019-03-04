@@ -36,7 +36,6 @@ public class UserService {
         return retrieveUserByUsername(username);
     }
 
-    //Added 2019-02-18 to be used by Login Presenter
     public void newUser(User user) {
         createUser(user);
     }
@@ -54,7 +53,6 @@ public class UserService {
         userRepository.save(user);
     }
 
-    //changed the 'b' in 'by' to capital 'B' 2019-02-18 @ 5:30 am
     private User retrieveUserByUsername(String username) {
         return userRepository.findByUsernameContainingIgnoreCase(username);
     }
