@@ -54,11 +54,11 @@ public class UserService {
     }
 
     private User retrieveUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsernameIgnoreCase(username);
     }
 
     private User retrieveUserByUsernameAndPassword(String username, String password) {
-        return userRepository.findByUsernameAndPassword(username, password);
+        return userRepository.findByUsernameIgnoreCaseAndPassword(username, password);
     }
 
     private List<User> retrieveUserByUsernameContainingIgnoreCase(String searchTerm) {

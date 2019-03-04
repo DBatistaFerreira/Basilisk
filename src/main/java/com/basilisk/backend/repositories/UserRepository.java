@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsername(String username);
+    User findByUsernameIgnoreCase(String username);
 
     List<User> findAllByUsernameContainingIgnoreCase(String username);
 
-    User findByUsernameAndPassword(String username, String password);
+    User findByUsernameIgnoreCaseAndPassword(String username, String password);
 }

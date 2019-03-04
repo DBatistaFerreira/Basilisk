@@ -88,7 +88,7 @@ public class CrudTests extends Tests {
         //Save a user
         userRepository.save(user);
 
-        User sameUser = userRepository.findByUsername("TestUsername");
+        User sameUser = userRepository.findByUsernameIgnoreCase("TestUsername");
         //Create a copy of sameUser because sameUser is the same in memory as user.
         User originalUser = null;
         try {

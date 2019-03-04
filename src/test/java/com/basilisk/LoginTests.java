@@ -53,7 +53,7 @@ public class LoginTests extends Tests {
     @Test
     public void successfulSignUp() {
         loginPresenter.signupUser("TestName", "TestUser", "TestPass");
-        User user = userRepository.findByUsername("TestUser");
+        User user = userRepository.findByUsernameIgnoreCase("TestUser");
         assertNotNull(user);
     }
 
