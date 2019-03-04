@@ -102,7 +102,7 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
 
         //Loading the tweets
         User userProfile = (User) VaadinSession.getCurrent().getAttribute(Constants.USER_PROFILE);
-        List<TweetDisplayComponent> tweetDisplayComponentList = profilePresenter.getAllUserTweetsDisplayComponents(userProfile);
+        List<TweetDisplayComponent> tweetDisplayComponentList = profilePresenter.getAllUserTweetDisplayComponents(userProfile);
 
         //Setting up stats
         userNameLabel.getElement().setText(userProfile.getName() + " @" + userProfile.getUsername());

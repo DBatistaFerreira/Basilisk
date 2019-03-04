@@ -8,6 +8,7 @@ import com.basilisk.backend.services.RetweetService;
 import com.basilisk.backend.services.TweetService;
 import com.basilisk.backend.services.UserService;
 import com.basilisk.frontend.components.TweetDisplayComponent;
+import com.basilisk.frontend.components.TweetDisplayComponent.TweetDisplayComponentByTimeStampComparator;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.server.StreamResource;
 import org.apache.log4j.Logger;
@@ -42,7 +43,7 @@ public class ProfilePresenter {
         this.followService = followService;
     }
 
-    public List<TweetDisplayComponent> getAllUserTweetsDisplayComponents(User user) {
+    public List<TweetDisplayComponent> getAllUserTweetDisplayComponents(User user) {
         List<Tweet> tweetList = tweetService.getAllTweetsByUser(user);
         List<TweetDisplayComponent> tweetDisplayComponentList = new LinkedList<>();
 
@@ -60,7 +61,7 @@ public class ProfilePresenter {
         }
 
         //Sorting the tweet
-        tweetDisplayComponentList.sort(new TweetDisplayComponent.TweetDisplayComponentByTimeStampComparator());
+        tweetDisplayComponentList.sort(new TweetDisplayComponentByTimeStampComparator());
         Collections.reverse(tweetDisplayComponentList); //removed this from profile view and added it here
         return tweetDisplayComponentList;
     }
