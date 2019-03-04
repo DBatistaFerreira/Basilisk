@@ -19,7 +19,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -62,7 +61,6 @@ public class ProfilePresenter {
 
         //Sorting the tweet
         tweetDisplayComponentList.sort(new TweetDisplayComponentByTimeStampComparator());
-        Collections.reverse(tweetDisplayComponentList); //removed this from profile view and added it here
         return tweetDisplayComponentList;
     }
 

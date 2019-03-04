@@ -185,7 +185,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
 
         @Override
         public int compare(TweetDisplayComponent comp1, TweetDisplayComponent comp2) {
-            return comp1.getTimeStamp().compareTo(comp2.getTimeStamp());
+            return -comp1.getTimeStamp().compareTo(comp2.getTimeStamp());
         }
     }
 }
