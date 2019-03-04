@@ -20,9 +20,13 @@ public class RetweetService {
     }
 
     // Public Service methods
-    public List<Retweet> getUserRetweets(User user) {
-        return retweetRepository.getAllByUser(user);
-    }
+    public void postRetweet(Retweet retweet) { createRetweet(retweet); }
+
+    public void removeRetweet(Retweet retweet) { deleteRetweet(retweet); }
+
+    public Retweet getRetweetById(long id) { return retrieveRetweet(id); }
+
+    public List<Retweet> getAllRetweetsByUser(User user) { return retrieveAllRetweets(user); }
 
     // private CRUD Operations
     private void createRetweet(Retweet retweet) {
@@ -40,5 +44,7 @@ public class RetweetService {
     private Retweet retrieveRetweet(long id) {
         return retweetRepository.getOne(id);
     }
+
+    private List<Retweet> retrieveAllRetweets(User user) { return retweetRepository.getAllByUser(user); }
 
 }

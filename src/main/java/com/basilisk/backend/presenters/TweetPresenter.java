@@ -1,9 +1,11 @@
 package com.basilisk.backend.presenters;
 
 import com.basilisk.backend.models.Comment;
+import com.basilisk.backend.models.Retweet;
 import com.basilisk.backend.models.Tweet;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.services.CommentService;
+import com.basilisk.backend.services.RetweetService;
 import com.basilisk.backend.services.TweetService;
 import com.basilisk.backend.services.UserService;
 import org.apache.log4j.Logger;
@@ -18,14 +20,16 @@ public class TweetPresenter {
 
     private UserService userService;
     private TweetService tweetService;
+    private RetweetService retweetService;
     private CommentService commentService;
 
     private static Logger LOGGER = Logger.getLogger(ProfilePresenter.class);
 
-    public TweetPresenter(UserService userService, TweetService tweetService, CommentService commentService)
+    public TweetPresenter(UserService userService, TweetService tweetService, RetweetService retweetService, CommentService commentService)
     {
         this.userService = userService;
         this.tweetService = tweetService;
+        this.retweetService = retweetService;
         this.commentService = commentService;
     }
 
@@ -54,6 +58,13 @@ public class TweetPresenter {
             LOGGER.info("Comment creation failure " + commentText);
             return false;
         }
+    }
+
+    public boolean createAndSaveRetweet(Tweet tweet, User currentUser) {
+        Retweet retweet = new Retweet(currentUser, tweet);
+        LOGGER.info("Retweet creation success: " + tweet.getText() + " retweeted by @" + currentUser.getUsername());
+        retweetService.postRetweet(retweet);
+        return true;
     }
 
     public List<Comment> getTweetComments(Tweet tweet)

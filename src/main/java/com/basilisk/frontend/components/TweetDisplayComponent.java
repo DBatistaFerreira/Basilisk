@@ -2,6 +2,7 @@ package com.basilisk.frontend.components;
 
 import com.basilisk.Constants;
 import com.basilisk.backend.models.Comment;
+import com.basilisk.backend.models.Retweet;
 import com.basilisk.backend.models.Tweet;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.presenters.TweetPresenter;
@@ -17,6 +18,8 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.templatemodel.TemplateModel;
 
+import java.time.Instant;
+import java.util.Comparator;
 import java.util.List;
 
 @Tag("tweet-display-component")
@@ -37,6 +40,8 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     private TextArea commentMessage;
     @Id("commentSection")
     private VerticalLayout commentSection;
+    @Id("retweetLabel")
+    private TextArea retweetLabel;
 
     private static final String LIKE = "Like";
     private static final String DISLIKE = "Dislike";
@@ -48,18 +53,48 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
 
     private TweetPresenter tweetPresenter;
     private Tweet tweet;
+    private boolean isRetweet;
+    private User retweetedBy;
+    private Instant timeStamp;
 
-    public TweetDisplayComponent(TweetPresenter tweetPresenter) {
-        // You can initialise any data required for the connected UI components here.
+    // Constructors
+
+    // Tweet constructor
+    public TweetDisplayComponent(TweetPresenter tweetPresenter, Tweet tweet) {
         this.tweetPresenter = tweetPresenter;
+        this.tweet = tweet;
+        this.isRetweet = false;
+        this.timeStamp = tweet.getCreationTime();
+
+        setTweet();
     }
 
-    public void setTweet(Tweet tweet) {
-        this.tweet = tweet;
-        tweetMessage.setValue(tweet.getText() + "\n-" + tweet.getUser().getUsername());
+    // Retweet constructor
+    public TweetDisplayComponent(TweetPresenter tweetPresenter, Retweet retweet) {
+        this.tweetPresenter = tweetPresenter;
+        this.tweet = retweet.getTweet();
+        this.isRetweet = true;
+        this.retweetedBy = retweet.getUser();
+        this.timeStamp = retweet.getCreationTime();
 
+        setTweet();
+    }
+
+    public Instant getTimeStamp() {
+        return timeStamp;
+    }
+
+    private void setTweet() {
+        tweetMessage.setValue(tweet.getText() + "\n-" + tweet.getUser().getUsername());
         VaadinSession vaadinSession = VaadinSession.getCurrent();
         User currentUser = (User) vaadinSession.getAttribute(Constants.CURRENT_USER);
+
+        if (isRetweet) {
+            retweetLabel.setValue("Retweeted by " + retweetedBy.getUsername());
+        }
+        else {
+            retweetLabel.setVisible(false);
+        }
 
         if (tweet.getLikesList().contains(currentUser)) {
             likeButton.setText(UN_LIKE + " " + tweet.getLikesList().size());
@@ -77,8 +112,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
 
         //Add comments/text boxes to tweets
         List<Comment> tweetComments = tweetPresenter.getTweetComments(tweet);
-        for (Comment comment : tweetComments)
-        {
+        for (Comment comment : tweetComments) {
             CommentDisplayComponent wComment = new CommentDisplayComponent(comment);
             commentSection.add(wComment);
         }
@@ -138,10 +172,20 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     @EventHandler
     private void retweetButtonClicked() {
         // Called from the template click handler
-        System.out.println("Retweet");
+        User currentUser = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
+        tweetPresenter.createAndSaveRetweet(tweet, currentUser);
+        UI.getCurrent().getPage().reload();
     }
 
     public interface TweetDisplayComponentModel extends TemplateModel {
         // Add setters and getters for template properties here.
+    }
+
+    public static class TweetDisplayComponentByTimeStampComparator implements Comparator<TweetDisplayComponent> {
+
+        @Override
+        public int compare(TweetDisplayComponent comp1, TweetDisplayComponent comp2) {
+            return -comp1.getTimeStamp().compareTo(comp2.getTimeStamp());
+        }
     }
 }
