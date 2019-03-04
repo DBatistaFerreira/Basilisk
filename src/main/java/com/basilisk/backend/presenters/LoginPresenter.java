@@ -44,7 +44,7 @@ public class LoginPresenter {
 
         User user = userService.retrieveUserByUserName(username);
         if (Objects.isNull(user)) {
-            user = new User(name, username, password, null, null);
+            user = new User(name, username, password, "", null);
             userService.newUser(user);
             LOGGER.info("Signup Success : Username = " + username);
             return true;
