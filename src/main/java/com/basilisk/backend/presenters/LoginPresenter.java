@@ -35,10 +35,10 @@ public class LoginPresenter {
     }
 
     public User getUser(String userName) {
-        return userService.getUser(userName);
+        return userService.getUserByUsername(userName);
     }
 
-    //Added sign up presenter
+    //Added sign up method
     public boolean signupUser(String name, String username, String password) {
         LOGGER.info("Signup Attempt: Username = " + username);
 
@@ -46,10 +46,10 @@ public class LoginPresenter {
             return false;
         }
 
-        User user = userService.retrieveUserByUserName(username);
+        User user = userService.getUserByUsername(username);
         if (Objects.isNull(user)) {
             user = new User(name, username, password, "", null);
-            userService.newUser(user);
+            userService.createNewUser(user);
             LOGGER.info("Signup Success : Username = " + username);
             return true;
         } else {

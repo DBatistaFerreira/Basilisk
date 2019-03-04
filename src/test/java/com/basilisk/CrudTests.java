@@ -54,7 +54,7 @@ public class CrudTests extends Tests {
         user.setUsername("TestUsername");
 
         //Create new user
-        userService.registerNewUser(user);
+        userService.createNewUser(user);
 
         //See if the user exists in the DB
         User retrievedUser = userRepository.getOne(user.getId());
@@ -72,7 +72,7 @@ public class CrudTests extends Tests {
         userRepository.save(user);
 
         //Retrieve that user
-        User retrievedUser = userService.getUser("TestUsername");
+        User retrievedUser = userService.getUserByUsername("TestUsername");
 
         //See that the user is not null
         assertNotNull(retrievedUser);
@@ -126,7 +126,7 @@ public class CrudTests extends Tests {
         userService.removeUser(user);
 
         //Get that user
-        User retrievedUser = userService.getUser("TestUsername");
+        User retrievedUser = userService.getUserByUsername("TestUsername");
 
         //Check if that user is null
         assertNull(retrievedUser);

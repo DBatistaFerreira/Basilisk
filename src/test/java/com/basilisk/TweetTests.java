@@ -37,7 +37,7 @@ public class TweetTests extends Tests {
         user.setUsername("TestUsername");
 
         //Create new user
-        userService.registerNewUser(user);
+        userService.createNewUser(user);
         //Create a tweet and set its text
         Tweet tweet = new Tweet();
         tweet.setText("test");
@@ -59,7 +59,7 @@ public class TweetTests extends Tests {
         user.setUsername("TestUsername");
 
         //Create new user
-        userService.registerNewUser(user);
+        userService.createNewUser(user);
         //Create a tweet and set its text
         Tweet tweet = new Tweet();
         tweet.setText("test");
@@ -81,7 +81,7 @@ public class TweetTests extends Tests {
         user.setUsername("TestUsername");
 
         //Create new user
-        userService.registerNewUser(user);
+        userService.createNewUser(user);
         //Create a tweet and set its text
         Tweet tweet = new Tweet();
         tweet.setText("test");
@@ -112,7 +112,7 @@ public class TweetTests extends Tests {
         user.setUsername("TestUsername");
 
         //Create new user
-        userService.registerNewUser(user);
+        userService.createNewUser(user);
         //Create a tweet and set its text
         Tweet tweet = new Tweet();
         tweet.setText("test");
@@ -143,7 +143,7 @@ public class TweetTests extends Tests {
         user.setUsername("TestUsername");
 
         //Create new user
-        userService.registerNewUser(user);
+        userService.createNewUser(user);
 
         assertTrue(tweetPresenter.createAndSaveTweet("test", user));
     }
@@ -156,7 +156,7 @@ public class TweetTests extends Tests {
         user.setUsername("TestUsername");
 
         //Create new user
-        userService.registerNewUser(user);
+        userService.createNewUser(user);
 
         assertFalse(tweetPresenter.createAndSaveTweet("", user));
     }
