@@ -40,6 +40,8 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     private TextArea commentMessage;
     @Id("commentSection")
     private VerticalLayout commentSection;
+    @Id("retweetLabel")
+    private TextArea retweetLabel;
 
     private static final String LIKE = "Like";
     private static final String DISLIKE = "Dislike";
@@ -52,6 +54,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     private TweetPresenter tweetPresenter;
     private Tweet tweet;
     private boolean isRetweet;
+    private User retweetedBy;
     private Instant timeStamp;
 
     // Constructors
@@ -71,6 +74,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         this.tweetPresenter = tweetPresenter;
         this.tweet = retweet.getTweet();
         this.isRetweet = true;
+        this.retweetedBy = retweet.getUser();
         this.timeStamp = retweet.getCreationTime();
 
         setTweet();
@@ -84,6 +88,13 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         tweetMessage.setValue(tweet.getText() + "\n-" + tweet.getUser().getUsername());
         VaadinSession vaadinSession = VaadinSession.getCurrent();
         User currentUser = (User) vaadinSession.getAttribute(Constants.CURRENT_USER);
+
+        if (isRetweet) {
+            retweetLabel.setValue("Retweeted by " + retweetedBy.getUsername());
+        }
+        else {
+            retweetLabel.setVisible(false);
+        }
 
         if (tweet.getLikesList().contains(currentUser)) {
             likeButton.setText(UN_LIKE + " " + tweet.getLikesList().size());
@@ -160,7 +171,8 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     @EventHandler
     private void retweetButtonClicked() {
         // Called from the template click handler
-        System.out.println("Retweet");
+        tweetPresenter.createAndSaveRetweet(tweet);
+        UI.getCurrent().getPage().reload();
     }
 
     public interface TweetDisplayComponentModel extends TemplateModel {
