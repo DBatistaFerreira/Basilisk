@@ -28,9 +28,11 @@ public class HomePresenter {
     private static final Logger LOGGER = Logger.getLogger(HomePresenter.class);
 
     @Autowired
-    public HomePresenter(UserService userService, TweetService tweetService, FollowService followService, TweetPresenter tweetPresenter) {
+    public HomePresenter(UserService userService, TweetService tweetService, RetweetService retweetService,
+                         FollowService followService, TweetPresenter tweetPresenter) {
         this.userService = userService;
         this.tweetService = tweetService;
+        this.retweetService = retweetService;
         this.followService = followService;
         this.tweetPresenter = tweetPresenter;
     }
