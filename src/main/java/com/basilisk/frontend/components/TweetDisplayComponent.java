@@ -172,7 +172,8 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     @EventHandler
     private void retweetButtonClicked() {
         // Called from the template click handler
-        tweetPresenter.createAndSaveRetweet(tweet);
+        User currentUser = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
+        tweetPresenter.createAndSaveRetweet(tweet, currentUser);
         UI.getCurrent().getPage().reload();
     }
 

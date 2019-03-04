@@ -60,10 +60,9 @@ public class TweetPresenter {
         }
     }
 
-    public boolean createAndSaveRetweet(Tweet tweet) {
-        User user = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
-        Retweet retweet = new Retweet(user, tweet);
-        LOGGER.info("Retweet creation success: " + tweet.getText() + " retweeted by @" + user.getUsername());
+    public boolean createAndSaveRetweet(Tweet tweet, User currentUser) {
+        Retweet retweet = new Retweet(currentUser, tweet);
+        LOGGER.info("Retweet creation success: " + tweet.getText() + " retweeted by @" + currentUser.getUsername());
         retweetService.postRetweet(retweet);
         return true;
     }
