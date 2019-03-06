@@ -34,8 +34,7 @@ public class ProfilePresenter {
 
     @Autowired
     public ProfilePresenter(UserService userService, TweetService tweetService, RetweetService retweetService,
-                            TweetPresenter tweetPresenter, FollowService followService, CommentService commentService)
-    {
+                            TweetPresenter tweetPresenter, FollowService followService, CommentService commentService){
         this.userService = userService;
         this.tweetService = tweetService;
         this.retweetService = retweetService; //Added this 2019-03-04 12:00 PM

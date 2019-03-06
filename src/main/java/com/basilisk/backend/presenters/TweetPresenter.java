@@ -26,8 +26,7 @@ public class TweetPresenter {
     private static Logger LOGGER = Logger.getLogger(ProfilePresenter.class);
 
     public TweetPresenter(UserService userService, TweetService tweetService, FollowService followService,
-                          RetweetService retweetService, CommentService commentService)
-    {
+                          RetweetService retweetService, CommentService commentService){
         this.followService = followService;
         this.userService = userService;
         this.tweetService = tweetService;
