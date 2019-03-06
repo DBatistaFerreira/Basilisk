@@ -1,7 +1,10 @@
+
+
+
 package com.basilisk.backend.presenters;
 
 import com.basilisk.backend.models.User;
-import com.basilisk.backend.services.UserService;
+import com.basilisk.backend.services.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,11 +15,20 @@ import java.util.Objects;
 public class LoginPresenter {
 
     private UserService userService;
+    private TweetService tweetService;
+    private RetweetService retweetService;
+    private FollowService followService;
+    private CommentService commentService;
     private static final Logger LOGGER = Logger.getLogger(LoginPresenter.class);
 
     @Autowired
-    public LoginPresenter(UserService userService) {
+    public LoginPresenter(UserService userService, TweetService tweetService, RetweetService retweetService,
+                          FollowService followService, CommentService commentService){
         this.userService = userService;
+        this.tweetService = tweetService;
+        this.retweetService = retweetService;
+        this.followService = followService;
+        this.commentService = commentService;
     }
 
     public boolean loginUser(String username, String password) {

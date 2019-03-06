@@ -1,12 +1,10 @@
+
 package com.basilisk.backend.presenters;
 
 import com.basilisk.backend.models.Retweet;
 import com.basilisk.backend.models.Tweet;
 import com.basilisk.backend.models.User;
-import com.basilisk.backend.services.FollowService;
-import com.basilisk.backend.services.RetweetService;
-import com.basilisk.backend.services.TweetService;
-import com.basilisk.backend.services.UserService;
+import com.basilisk.backend.services.*;
 import com.basilisk.frontend.components.TweetDisplayComponent;
 import com.basilisk.frontend.components.TweetDisplayComponent.TweetDisplayComponentByTimeStampComparator;
 import org.apache.log4j.Logger;
@@ -23,16 +21,18 @@ public class HomePresenter {
     private TweetService tweetService;
     private RetweetService retweetService;
     private FollowService followService;
+    private CommentService commentService;
     private TweetPresenter tweetPresenter;
     private static final Logger LOGGER = Logger.getLogger(HomePresenter.class);
 
     @Autowired
     public HomePresenter(UserService userService, TweetService tweetService, RetweetService retweetService,
-                         FollowService followService, TweetPresenter tweetPresenter) {
+                         FollowService followService, CommentService commentService, TweetPresenter tweetPresenter){
         this.userService = userService;
         this.tweetService = tweetService;
         this.retweetService = retweetService;
         this.followService = followService;
+        this.commentService = commentService;
         this.tweetPresenter = tweetPresenter;
     }
 

@@ -3,10 +3,7 @@ package com.basilisk.backend.presenters;
 import com.basilisk.backend.models.Retweet;
 import com.basilisk.backend.models.Tweet;
 import com.basilisk.backend.models.User;
-import com.basilisk.backend.services.FollowService;
-import com.basilisk.backend.services.RetweetService;
-import com.basilisk.backend.services.TweetService;
-import com.basilisk.backend.services.UserService;
+import com.basilisk.backend.services.*;
 import com.basilisk.frontend.components.TweetDisplayComponent;
 import com.basilisk.frontend.components.TweetDisplayComponent.TweetDisplayComponentByTimeStampComparator;
 import com.vaadin.flow.component.html.Image;
@@ -30,16 +27,20 @@ public class ProfilePresenter {
     private TweetService tweetService;
     private RetweetService retweetService; //Added this 2019-03-04 12:00 PM
     private FollowService followService;
+    private CommentService commentService;
     private TweetPresenter tweetPresenter;
+
     private static Logger LOGGER = Logger.getLogger(ProfilePresenter.class);
 
     @Autowired
-    public ProfilePresenter(UserService userService, TweetService tweetService, RetweetService retweetService, TweetPresenter tweetPresenter, FollowService followService) {
+    public ProfilePresenter(UserService userService, TweetService tweetService, RetweetService retweetService,
+                            TweetPresenter tweetPresenter, FollowService followService, CommentService commentService){
         this.userService = userService;
         this.tweetService = tweetService;
         this.retweetService = retweetService; //Added this 2019-03-04 12:00 PM
-        this.tweetPresenter = tweetPresenter;
+        this.commentService = commentService;
         this.followService = followService;
+        this.tweetPresenter = tweetPresenter;
     }
 
     public List<TweetDisplayComponent> getAllUserTweetDisplayComponents(User user) {
