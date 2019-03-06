@@ -33,7 +33,8 @@ public class ProfilePresenter {
     private static Logger LOGGER = Logger.getLogger(ProfilePresenter.class);
 
     @Autowired
-    public ProfilePresenter(UserService userService, TweetService tweetService, RetweetService retweetService, TweetPresenter tweetPresenter, FollowService followService, CommentService commentService)
+    public ProfilePresenter(UserService userService, TweetService tweetService, RetweetService retweetService,
+                            TweetPresenter tweetPresenter, FollowService followService, CommentService commentService)
     {
         this.userService = userService;
         this.tweetService = tweetService;
