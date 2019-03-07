@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Tweet {
+public class Tweet implements Cloneable {
 
     // Fields
 
@@ -102,5 +102,10 @@ public class Tweet {
                 ", dislikes=" + dislikesList.size() +
                 ", user=" + user +
                 '}';
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

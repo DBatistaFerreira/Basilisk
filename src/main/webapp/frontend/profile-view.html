@@ -5,10 +5,12 @@
 
 <dom-module id="profile-view">
     <template>
-        <style include="shared-styles">
-
+     <style include="shared-styles">
             .container {
                 background: linear-gradient(to bottom right, #96eddc 0%, #5bdab2 107%);
+             display: block;
+             overflow: auto;
+
             }
 
             .mainTabs {
@@ -25,7 +27,6 @@
                 margin-left: auto;
                 margin-right: auto;
                 width: 40%;
-                border-radius: 15px;
                 border-style: solid;
                 border-width: 0.01px;
             }
@@ -34,16 +35,16 @@
                 position: relative;
                 bottom: 120px;
                 clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+
             }
 
             .userBio {
 
                 position: relative;
                 top: 95px;
-                border-radius: 10px;
                 background: whitesmoke;
                 border-style: solid;
-                border-width: 3px;
+             border-width: 1.5px;
                 /*border-color: linear-gradient(to bottom right, #51e2c6 0%, #15cb92 107%);*/
                 width: 180px;
                 height: 330px
@@ -55,20 +56,20 @@
             }
 
             .userBioAreaTitle {
-                font-weight: bold;
                 color: #314654;
+             margin: 5px;
             }
 
             .mainContent {
                 display: block;
                 margin-left: auto;
                 margin-right: auto;
+
             }
 
             .userStats {
-                font-weight: bold;
                 display: flex;
-                justify-content: space-evenly;;
+             justify-content: space-evenly;
                 color: whitesmoke;
                 position: relative;
                 bottom: 78%;
@@ -78,6 +79,10 @@
                 background: linear-gradient(to bottom right, #314654 0%, #28343d 107%);
             }
 
+            #editButtonBio {
+             margin: 5px;
+            }
+
             #tweetFeed {
                 position: relative;
                 top: -75%;
@@ -85,6 +90,7 @@
                 height: 125px;
                 float: right;
                 margin-bottom: 30px;
+
             }
 
             .userPostArea {
@@ -101,39 +107,37 @@
 
 
         </style>
-        <div class="container" style="width: 100%; height: 100%;">
-            <div id="div1" style="width: 100%; height:50px;">
-                <menu-bar-component></menu-bar-component>
-            </div>
-            <div style="width: 850px; height: 315px;" class="coverPic">
-                <img id="coverImage"
-                     alt="coverPicture" style="width: 850px; height: 315px;">
-                <div class="profilePic" style="width: 200px; height: 200px;">
-                    <img id="profileImage"
-                         alt="profilePicture" style="width: 200px; height: 200px;">
-                </div>
-                <div class="userStats">
-                    <Label id="userNameLabel" class="userName"></Label>
-                    <Label id="followersLabel" class="userFollowers"></Label>
-                    <Label id="followingLabel" class="usersFollowing"></Label>
-                </div>
-            </div>
-            <div style="width: 850px; height: 315px" class="mainContent">
-                <div id="tweetFeed"></div>
-                <div class="userBio">
-                    <span class="userBioAreaTitle">About me </span>
-                    <vaadin-text-area id="userBioTextArea" class="userBioArea"></vaadin-text-area>
-                    <vaadin-button id="editButton" on-click="editButtonClicked" class="postButton">
-                        Edit
-                    </vaadin-button>
-                    <vaadin-button id="followButton" class="postButton" on-click="followButtonClicked">
-                        Follow User
-                    </vaadin-button>
-                    <vaadin-upload id="profileImageUpload"></vaadin-upload>
-                    <vaadin-upload id="coverImageUpload"></vaadin-upload>
-                </div>
-            </div>
-        </div>
+     <div class="container" style="width: 100%; height: 100%;">
+      <div id="div1" style="width: 100%; height:50px;">
+       <menu-bar-component></menu-bar-component>
+      </div>
+      <div style="width: 850px; height: 315px;" class="coverPic">
+       <img id="coverImage" alt="coverPicture" style="width: 850px; height: 315px;">
+       <div class="profilePic" style="width: 200px; height: 200px;">
+        <img id="profileImage" alt="profilePicture" style="width: 200px; height: 200px;">
+       </div>
+       <div class="userStats">
+        <label id="userNameLabel" class="userName"></label>
+        <label id="followersLabel" class="userFollowers"></label>
+        <label id="followingLabel" class="usersFollowing"></label>
+       </div>
+      </div>
+      <div style="width: 850px; height: 315px" class="mainContent">
+       <div id="tweetFeed"></div>
+       <div class="userBio">
+        <span class="userBioAreaTitle">About me </span>
+        <vaadin-text-area id="userBioTextArea" class="userBioArea"></vaadin-text-area>
+        <vaadin-button id="editButtonBio" on-click="editButtonClicked" class="postButton">
+         Edit
+        </vaadin-button>
+        <vaadin-button id="followButton" class="postButton" on-click="followButtonClicked">
+         Follow User
+        </vaadin-button>
+        <vaadin-upload id="profileImageUpload"></vaadin-upload>
+        <vaadin-upload id="coverImageUpload"></vaadin-upload>
+       </div>
+      </div>
+     </div>
     </template>
 
     <script>
