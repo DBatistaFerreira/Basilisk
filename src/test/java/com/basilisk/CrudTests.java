@@ -1,10 +1,13 @@
 package com.basilisk;
 
+import com.basilisk.backend.models.Tweet;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.repositories.*;
 import com.basilisk.backend.services.*;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -130,5 +133,141 @@ public class CrudTests extends Tests {
 
         //Check if that user is null
         assertNull(retrievedUser);
+    }
+
+    @Test
+    public void createTweetTest() {
+        // Create current user
+        User user = new User();
+
+        // Initialize current user
+        user.setName("Tweetie Burd");
+        user.setUsername("heard_through_grapevine");
+        user.setPassword("chirpie1337");
+
+        // Save current user to the user repository
+        userRepository.save(user);
+
+        // Create tweet to be tweeted
+        Tweet tweet = new Tweet("Happy Daze!", user);
+
+        // Test create tweet in the tweet repository
+        tweetService.writeTweet(tweet);
+
+        // Verify that the tweet was successfully created in the repository by attempting to retrieve it
+        Tweet createdTweet = null;
+        try {
+            createdTweet = tweetRepository.getOne(tweet.getId());
+        } catch (JpaObjectRetrievalFailureException e) {
+            e.printStackTrace();
+        }
+
+        // Verify the retrieved created tweet from the repository is not null
+        assertNotNull(createdTweet);
+    }
+
+    @Test
+    public void deleteTweetTest() {
+        // Create current user
+        User user = new User();
+
+        // Initialize current user
+        user.setName("deletie Burd");
+        user.setUsername("picked_grapevine");
+        user.setPassword("silence81");
+
+        // Save current user to the user repository
+        userRepository.save(user);
+
+        // Create tweet to be tweeted
+        Tweet tweet = new Tweet("SILENCE FOOLS!", user);
+
+        // Create tweet in the tweet repository
+        tweetService.writeTweet(tweet);
+
+        // Test delete tweet from repository
+        tweetService.removeTweet(tweet);
+
+        // Verify that the tweet was successfully deleted from the repository by attempting to retrieve it
+        Tweet deletedTweet = null;
+        try {
+            deletedTweet = tweetRepository.getOne(tweet.getId());
+        } catch (JpaObjectRetrievalFailureException e) {
+            e.printStackTrace();
+        }
+
+        // Verify the retrieved deleted tweet from the repository is not there (null)
+        assertNull(deletedTweet);
+    }
+
+    @Test
+    public void retrieveTweetTest() {
+        // Create current user
+        User user = new User();
+
+        // Initialize current user
+        user.setName("Speedy Gonzales");
+        user.setUsername("speedy_gonesalad");
+        user.setPassword("riibariiba100");
+
+        // Save current user to the user repository
+        userRepository.save(user);
+
+        // Create tweet to be tweeted
+        Tweet tweet = new Tweet("catch me if you can!", user);
+
+        // Create tweet in the tweet repository
+        tweetService.writeTweet(tweet);
+
+        // Test retrieve tweet was successfully retrieved from the repository
+        Tweet retrievedTweet = null;
+        try {
+            retrievedTweet = tweetRepository.getOne(tweet.getId());
+        } catch (JpaObjectRetrievalFailureException e) {
+            e.printStackTrace();
+        }
+
+        // Verify the retrieved tweet from the repository is not null
+        assertNotNull(retrievedTweet);
+    }
+
+    @Test
+    public void updateTweetTest() {
+        // Create current user
+        User user = new User();
+
+        // Initialize current user
+        user.setName("Chenj Maeind");
+        user.setUsername("nevaMIND");
+        user.setPassword("notAnym0r3");
+
+        // Save current user to the user repository
+        userRepository.save(user);
+
+        // Create tweet to be tweeted
+        Tweet tweet = new Tweet("Hello World", user);
+
+        // Create tweet in the tweet repository
+        tweetService.writeTweet(tweet);
+
+        // Make a clone of the original tweet before updating for comparison
+        Tweet originalTweet = null;
+        try {
+            originalTweet = (Tweet) tweet.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        assertNotNull(originalTweet);
+
+        String updatedTweetText = "Goodbye World";
+
+        // Change the text of the tweet
+        tweet.setText(updatedTweetText);
+
+        // Test update tweet
+        tweetService.editTweet(tweet);
+
+        // Verify the updated tweet from the repository is different from the original tweet
+        assertNotEquals(originalTweet.getText(), tweet.getText());
     }
 }
