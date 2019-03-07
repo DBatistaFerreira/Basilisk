@@ -1,11 +1,11 @@
 package com.basilisk.backend.presenters;
 
+import com.basilisk.backend.models.Retweet;
 import com.basilisk.backend.models.Tweet;
 import com.basilisk.backend.models.User;
-import com.basilisk.backend.services.FollowService;
-import com.basilisk.backend.services.TweetService;
-import com.basilisk.backend.services.UserService;
+import com.basilisk.backend.services.*;
 import com.basilisk.frontend.components.TweetDisplayComponent;
+import com.basilisk.frontend.components.TweetDisplayComponent.TweetDisplayComponentByTimeStampComparator;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.server.StreamResource;
 import org.apache.log4j.Logger;
@@ -25,33 +25,49 @@ public class ProfilePresenter {
 
     private UserService userService;
     private TweetService tweetService;
+    private RetweetService retweetService; //Added this 2019-03-04 12:00 PM
     private FollowService followService;
+    private CommentService commentService;
     private TweetPresenter tweetPresenter;
+
     private static Logger LOGGER = Logger.getLogger(ProfilePresenter.class);
 
     @Autowired
-    public ProfilePresenter(UserService userService, TweetService tweetService, TweetPresenter tweetPresenter, FollowService followService) {
+    public ProfilePresenter(UserService userService, TweetService tweetService, RetweetService retweetService,
+                            TweetPresenter tweetPresenter, FollowService followService, CommentService commentService){
         this.userService = userService;
         this.tweetService = tweetService;
-        this.tweetPresenter = tweetPresenter;
+        this.retweetService = retweetService; //Added this 2019-03-04 12:00 PM
+        this.commentService = commentService;
         this.followService = followService;
+        this.tweetPresenter = tweetPresenter;
     }
 
-    public List<TweetDisplayComponent> getAllUserTweetsDisplayComponents(User user) {
+    public List<TweetDisplayComponent> getAllUserTweetDisplayComponents(User user) {
         List<Tweet> tweetList = tweetService.getAllTweetsByUser(user);
-        List<TweetDisplayComponent> tweetComponentDisplayList = new LinkedList<>();
+        List<TweetDisplayComponent> tweetDisplayComponentList = new LinkedList<>();
 
         for (Tweet tweet : tweetList) {
-            TweetDisplayComponent tweetDisplayComponent = new TweetDisplayComponent(tweetPresenter);
-            tweetDisplayComponent.setTweet(tweet);
-            tweetComponentDisplayList.add(tweetDisplayComponent);
+            TweetDisplayComponent tweetDisplayComponent = new TweetDisplayComponent(tweetPresenter, tweet);
+            tweetDisplayComponentList.add(tweetDisplayComponent);
         }
-        return tweetComponentDisplayList;
+
+        //Added 2019-03-04 at 12:30 PM
+        List<Retweet> retweetList = retweetService.getAllRetweetsByUser(user);
+
+        for (Retweet retweet : retweetList) {
+            TweetDisplayComponent tweetDisplayComponent = new TweetDisplayComponent(tweetPresenter, retweet); //I didn't change the name of the display component (cause the last one gets destroyed when last loop exits)
+            tweetDisplayComponentList.add(tweetDisplayComponent); //Add to the same list since it's overloaded anyway
+        }
+
+        //Sorting the tweet
+        tweetDisplayComponentList.sort(new TweetDisplayComponentByTimeStampComparator());
+        return tweetDisplayComponentList;
     }
 
     public User getUser(String username) {
         LOGGER.info("Retrieving user: " + username);
-        User user = userService.retrieveUserByUserName(username);
+        User user = userService.getUserByUsername(username);
         LOGGER.info("Retrieved user: " + username);
         return user;
     }

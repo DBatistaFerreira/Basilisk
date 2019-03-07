@@ -24,6 +24,10 @@ public class UserService {
         return retrieveUserByUsernameAndPassword(username, password);
     }
 
+    public User getUserByUsername(String userName) {
+        return retrieveUserByUsername(userName);
+    }
+
     public List<User> searchForUsers(String username) {
         return retrieveUserByUsernameContainingIgnoreCase(username);
     }
@@ -32,11 +36,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User retrieveUserByUserName(String username) {
-        return retrieveUserbyUsername(username);
-    }
-
-    public void registerNewUser(User user) {
+    public void createNewUser(User user) {
         createUser(user);
     }
 
@@ -44,17 +44,21 @@ public class UserService {
         updateUser(currentUser);
     }
 
+    public void removeUser(User user) {
+        deleteUser(user);
+    }
+
     // private CRUD Operations
     private void createUser(User user) {
         userRepository.save(user);
     }
 
-    private User retrieveUserbyUsername(String username) {
-        return userRepository.findByUsername(username);
+    private User retrieveUserByUsername(String username) {
+        return userRepository.findByUsernameIgnoreCase(username);
     }
 
     private User retrieveUserByUsernameAndPassword(String username, String password) {
-        return userRepository.findByUsernameAndPassword(username, password);
+        return userRepository.findByUsernameIgnoreCaseAndPassword(username, password);
     }
 
     private List<User> retrieveUserByUsernameContainingIgnoreCase(String searchTerm) {
@@ -68,4 +72,5 @@ public class UserService {
     private void deleteUser(User user) {
         userRepository.delete(user);
     }
+
 }

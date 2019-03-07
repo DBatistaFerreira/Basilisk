@@ -25,7 +25,6 @@ import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.templatemodel.TemplateModel;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -103,8 +102,7 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
 
         //Loading the tweets
         User userProfile = (User) VaadinSession.getCurrent().getAttribute(Constants.USER_PROFILE);
-        List<TweetDisplayComponent> tweetDisplayComponentList = profilePresenter.getAllUserTweetsDisplayComponents(userProfile);
-        Collections.reverse(tweetDisplayComponentList);
+        List<TweetDisplayComponent> tweetDisplayComponentList = profilePresenter.getAllUserTweetDisplayComponents(userProfile);
 
         //Setting up stats
         userNameLabel.getElement().setText(userProfile.getName() + " @" + userProfile.getUsername());
