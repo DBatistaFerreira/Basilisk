@@ -61,11 +61,8 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
     @Id("userBioTextArea")
     private TextArea userBioTextArea;
 
-    @Id("editButton")
+    @Id("editButtonBio")
     private Button editButton;
-
-    @Id("profileImageUpload")
-    private Upload profileImageUpload;
 
     @Id("coverImageUpload")
     private Upload coverImageUpload;
@@ -75,6 +72,8 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
 
     @Id("coverImage")
     private Image coverImage;
+    @Id("profileImageUpload")
+    private Upload profileImageUpload;
 
     public ProfileView(ProfilePresenter profilePresenter, TweetPresenter tweetPresenter) {
         this.profilePresenter = profilePresenter;
