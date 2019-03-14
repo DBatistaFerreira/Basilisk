@@ -53,14 +53,14 @@
             }
 
             .commentButton {
-                border-radius: 0px;
-                background: #314654;
-                color: whitesmoke;
-                margin-left: 10px;
+                 border-radius: 0px;
+                 background: #314654;
+                 color: whitesmoke;
+                 margin-left: 10px;
 
-                position: relative;
-                left: 450px;
-            }
+                 position: relative;
+                 left: 450px;
+             }
 
         </style>
         <div style="width: 100%; height: 100%;" class="userPost">
@@ -74,6 +74,7 @@
             <vaadin-vertical-layout id="commentSection">
                 <vaadin-text-area class="userCommentArea" id="commentMessage" placeholder="Write a comment..."></vaadin-text-area>
                 <vaadin-button class="commentButton" id="commentButton" on-click="commentButtonClicked">Comment</vaadin-button>
+                <vaadin-button class="commentButton" id="hideComments" on-click="">Hide/Reveal</vaadin-button>
             </vaadin-vertical-layout>
         </div>
     </template>
