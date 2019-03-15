@@ -120,11 +120,15 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
 
         //Add comments/text boxes to tweets if isCommentHidden set to false
         if (isCommentHidden == false) {
+            hideComments.setText("Hide Comments");
             List<Comment> tweetComments = tweetPresenter.getTweetComments(tweet);
             for (Comment comment : tweetComments) {
                 CommentDisplayComponent wComment = new CommentDisplayComponent(comment);
                 commentDisplay.add(wComment);
             }
+        }
+        else {
+            hideComments.setText("Show Comments");
         }
     }
 
@@ -185,6 +189,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         //tweet =
         if (isCommentHidden == true) {
             isCommentHidden = false;
+            hideComments.setText("Hide Comments");
             List<Comment> tweetComments = tweetPresenter.getTweetComments(tweet);
             for (Comment comment : tweetComments) {
                 CommentDisplayComponent wComment = new CommentDisplayComponent(comment);
@@ -194,6 +199,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         else
         {
             isCommentHidden = true;
+            hideComments.setText("Show Comments");
             commentDisplay.removeAll();
         }
     }
