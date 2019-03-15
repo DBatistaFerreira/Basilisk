@@ -124,13 +124,13 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         List<Comment> tweetComments = tweetPresenter.getTweetComments(tweet);
         if (tweetComments.size() > 0) {
             if (isCommentHidden == false) {
-                hideComments.setText(HIDE);
+                hideComments.setText(HIDE + " (" + tweetComments.size() + ")");
                 for (Comment comment : tweetComments) {
                     CommentDisplayComponent wComment = new CommentDisplayComponent(comment);
                     commentDisplay.add(wComment);
                 }
             } else {
-                hideComments.setText(SHOW);
+                hideComments.setText(SHOW + " (" + tweetComments.size() + ")");
             }
         }
         else
@@ -197,14 +197,14 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         if (tweetComments.size() > 0) {
             if (isCommentHidden == true) {
                 isCommentHidden = false;
-                hideComments.setText(HIDE);
+                hideComments.setText(HIDE + " (" + tweetComments.size() + ")");
                 for (Comment comment : tweetComments) {
                     CommentDisplayComponent wComment = new CommentDisplayComponent(comment);
                     commentDisplay.add(wComment);
                 }
             } else {
                 isCommentHidden = true;
-                hideComments.setText(SHOW);
+                hideComments.setText(SHOW + " (" + tweetComments.size() + ")");
                 commentDisplay.removeAll();
             }
         }
