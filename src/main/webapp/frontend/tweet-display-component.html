@@ -74,7 +74,8 @@
             <vaadin-vertical-layout id="commentSection">
                 <vaadin-text-area class="userCommentArea" id="commentMessage" placeholder="Write a comment..."></vaadin-text-area>
                 <vaadin-button class="commentButton" id="commentButton" on-click="commentButtonClicked">Comment</vaadin-button>
-                <vaadin-button class="commentButton" id="hideComments" on-click="">Hide/Reveal</vaadin-button>
+                <vaadin-button class="commentButton" id="hideComments" on-click="hideOrRevealClicked">Hide/Reveal</vaadin-button>
+                <vaadin-vertical-layout id="commentDisplay"></vaadin-vertical-layout>
             </vaadin-vertical-layout>
         </div>
     </template>

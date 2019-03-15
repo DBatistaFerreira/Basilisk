@@ -32,6 +32,8 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     private Button dislikeButton;
     @Id("commentButton")
     private Button commentButton;
+    @Id("hideComments")
+    private Button hideComments;
     @Id("retweetButton")
     private Button retweetButton;
     @Id("tweetMessage")
@@ -40,8 +42,11 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     private TextArea commentMessage;
     @Id("commentSection")
     private VerticalLayout commentSection;
+    @Id("commentDisplay")
+    private VerticalLayout commentDisplay;
     @Id("retweetLabel")
     private TextArea retweetLabel;
+
 
     private static final String LIKE = "Like";
     private static final String DISLIKE = "Dislike";
@@ -54,6 +59,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     private TweetPresenter tweetPresenter;
     private Tweet tweet;
     private boolean isRetweet;
+    private boolean isCommentHidden;
     private User retweetedBy;
     private Instant timeStamp;
 
@@ -66,6 +72,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         this.isRetweet = false;
         this.timeStamp = tweet.getCreationTime();
 
+        isCommentHidden = true;
         setTweet();
     }
 
@@ -77,6 +84,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         this.retweetedBy = retweet.getUser();
         this.timeStamp = retweet.getCreationTime();
 
+        isCommentHidden = true;
         setTweet();
     }
 
@@ -111,10 +119,12 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         }
 
         //Add comments/text boxes to tweets
-        List<Comment> tweetComments = tweetPresenter.getTweetComments(tweet);
-        for (Comment comment : tweetComments) {
-            CommentDisplayComponent wComment = new CommentDisplayComponent(comment);
-            commentSection.add(wComment);
+        if (isCommentHidden == false) {
+            List<Comment> tweetComments = tweetPresenter.getTweetComments(tweet);
+            for (Comment comment : tweetComments) {
+                CommentDisplayComponent wComment = new CommentDisplayComponent(comment);
+                commentDisplay.add(wComment);
+            }
         }
     }
 
@@ -167,6 +177,25 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         User currentUser = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
         tweetPresenter.createAndSaveComment(commentMessage.getValue(), tweet, currentUser);
         UI.getCurrent().getPage().reload();
+    }
+
+    @EventHandler
+    private void hideOrRevealClicked() {
+        // Called from the template click handler
+        //tweet =
+        if (isCommentHidden == true) {
+            isCommentHidden = false;
+            List<Comment> tweetComments = tweetPresenter.getTweetComments(tweet);
+            for (Comment comment : tweetComments) {
+                CommentDisplayComponent wComment = new CommentDisplayComponent(comment);
+                commentDisplay.add(wComment);
+            }
+        }
+        else
+        {
+            isCommentHidden = true;
+            commentDisplay.removeAll();
+        }
     }
 
     @EventHandler
