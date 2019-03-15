@@ -118,7 +118,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
             dislikeButton.setText(DISLIKE + " " + tweet.getDislikesList().size());
         }
 
-        //Add comments/text boxes to tweets
+        //Add comments/text boxes to tweets if isCommentHidden set to false
         if (isCommentHidden == false) {
             List<Comment> tweetComments = tweetPresenter.getTweetComments(tweet);
             for (Comment comment : tweetComments) {
