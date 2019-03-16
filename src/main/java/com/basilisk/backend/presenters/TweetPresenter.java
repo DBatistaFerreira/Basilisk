@@ -68,11 +68,31 @@ public class TweetPresenter {
         return true;
     }
 
+    public boolean deleteTweet(Tweet tweet) {
+        List<Retweet> retweetList = retweetService.getAllRetweetsByTweet(tweet);
+        List<Comment> commentList = commentService.getTweetComments(tweet);
+
+        for (Retweet retweet : retweetList) {
+            retweetService.removeRetweet(retweet);
+        }
+        for (Comment comment : commentList) {
+            commentService.removeComment(comment);
+        }
+        tweetService.removeTweet(tweet);
+        LOGGER.info("Tweet deletion success: " + tweet.getText() + " by @" + tweet.getUser().getUsername());
+        return true;
+    }
+
+    public boolean deleteRetweet(Retweet retweet) {
+        retweetService.removeRetweet(retweet);
+        LOGGER.info("Retweet deletion success: " + retweet.getTweet().getText() + " retweeted by @" + retweet.getUser().getUsername());
+        return true;
+    }
+
     public List<Comment> getTweetComments(Tweet tweet)
     {
         return commentService.getTweetComments(tweet);
     }
-
 
     public Tweet likesTweet(User user, Tweet tweet) {
         LOGGER.info("User " + user.getUsername() + " likes tweet " + tweet.getId());

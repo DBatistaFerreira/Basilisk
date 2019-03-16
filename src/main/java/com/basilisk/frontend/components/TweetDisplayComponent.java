@@ -34,6 +34,8 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     private Button commentButton;
     @Id("retweetButton")
     private Button retweetButton;
+    @Id("deleteButton")
+    private Button deleteButton;
     @Id("tweetMessage")
     private TextArea tweetMessage;
     @Id("commentMessage")
@@ -53,6 +55,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
 
     private TweetPresenter tweetPresenter;
     private Tweet tweet;
+    private Retweet retweet;
     private boolean isRetweet;
     private User retweetedBy;
     private Instant timeStamp;
@@ -73,6 +76,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     public TweetDisplayComponent(TweetPresenter tweetPresenter, Retweet retweet) {
         this.tweetPresenter = tweetPresenter;
         this.tweet = retweet.getTweet();
+        this.retweet = retweet;
         this.isRetweet = true;
         this.retweetedBy = retweet.getUser();
         this.timeStamp = retweet.getCreationTime();
@@ -91,9 +95,13 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
 
         if (isRetweet) {
             retweetLabel.setValue("Retweeted by " + retweetedBy.getUsername());
+            if (!currentUser.equals(retweetedBy))
+                deleteButton.setVisible(false);
         }
         else {
             retweetLabel.setVisible(false);
+            if (!currentUser.equals(tweet.getUser()))
+                deleteButton.setVisible(false);
         }
 
         if (tweet.getLikesList().contains(currentUser)) {
@@ -163,7 +171,6 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     @EventHandler
     private void commentButtonClicked() {
         // Called from the template click handler
-        //tweet =
         User currentUser = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
         tweetPresenter.createAndSaveComment(commentMessage.getValue(), tweet, currentUser);
         UI.getCurrent().getPage().reload();
@@ -174,6 +181,21 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         // Called from the template click handler
         User currentUser = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
         tweetPresenter.createAndSaveRetweet(tweet, currentUser);
+        UI.getCurrent().getPage().reload();
+    }
+
+    @EventHandler
+    private void deleteButtonClicked() {
+        // Called when the delete button is clicked
+        User currentUser = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
+        if (isRetweet) {
+            if (currentUser.equals(retweetedBy))
+                tweetPresenter.deleteRetweet(retweet);
+        }
+        else {
+            if (currentUser.equals(tweet.getUser()))
+                tweetPresenter.deleteTweet(tweet);
+        }
         UI.getCurrent().getPage().reload();
     }
 
