@@ -65,6 +65,9 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> impleme
 
         createUsernameTextField.setMaxLength(15);
         createUsernameTextField.setRequired(true);
+        //The pattern says: no whitespace at any character spot
+        createUsernameTextField.setPattern("\\S*");
+        createUsernameTextField.setPreventInvalidInput(true);
 
         createPasswordTextField.setMaxLength(15);
         createPasswordTextField.setRequired(true);
