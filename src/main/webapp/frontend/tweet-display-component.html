@@ -53,13 +53,20 @@
             }
 
             .commentButton {
-                border-radius: 0px;
-                background: #314654;
-                color: whitesmoke;
-                margin-left: 10px;
+                 border-radius: 0px;
+                 background: #314654;
+                 color: whitesmoke;
+                 margin-left: 10px;
 
-                position: relative;
-                left: 450px;
+                 position: absolute;
+                 left: 1025px;
+             }
+            .showOrHideCommentsButton{
+                border-radius: 0px;
+                background: whitesmoke;
+                color: #314654;
+                margin-left: 10px
+
             }
 
         </style>
@@ -74,7 +81,12 @@
             </vaadin-horizontal-layout>
             <vaadin-vertical-layout id="commentSection">
                 <vaadin-text-area class="userCommentArea" id="commentMessage" placeholder="Write a comment..."></vaadin-text-area>
-                <vaadin-button class="commentButton" id="commentButton" on-click="commentButtonClicked">Comment</vaadin-button>
+                <vaadin-horizontal-layout>
+                    <vaadin-button class="showOrHideCommentsButton" id="hideComments" on-click="hideCommentsClicked"></vaadin-button>
+                    <vaadin-button class="commentButton" id="commentButton" on-click="commentButtonClicked">Comment</vaadin-button>
+                </vaadin-horizontal-layout>
+                <vaadin-vertical-layout id="commentDisplay"></vaadin-vertical-layout>
+                <vaadin-button class="showOrHideCommentsButton" id="showComments" on-click="showCommentsClicked"></vaadin-button>
             </vaadin-vertical-layout>
         </div>
     </template>

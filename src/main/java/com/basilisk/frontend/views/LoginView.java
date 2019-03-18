@@ -110,9 +110,8 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> impleme
         if (!Objects.isNull(VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER))) {
             beforeEnterEvent.rerouteTo(HomeView.class);
             UI.getCurrent().navigate(Constants.HOME_ROUTE);
-        } else {
-            init();
         }
+        init();
     }
 
     public interface LoginViewModel extends TemplateModel {
