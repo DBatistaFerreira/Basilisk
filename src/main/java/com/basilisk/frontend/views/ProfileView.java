@@ -191,9 +191,8 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
         if (Objects.isNull(vaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER))) {
             beforeEnterEvent.rerouteTo(LoginView.class);
             UI.getCurrent().navigate("");
-        } else {
-            init();
         }
+        init();
     }
 
     @EventHandler

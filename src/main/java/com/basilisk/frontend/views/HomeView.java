@@ -57,9 +57,8 @@ public class HomeView extends PolymerTemplate<HomeView.HomeViewModel> implements
         if (Objects.isNull(vaadinSession.getAttribute(Constants.CURRENT_USER))) {
             beforeEnterEvent.rerouteTo(LoginView.class);
             UI.getCurrent().navigate("");
-        } else {
-            init();
         }
+        init();
     }
 
     public interface HomeViewModel extends TemplateModel {

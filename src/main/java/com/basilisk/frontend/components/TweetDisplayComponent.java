@@ -32,6 +32,10 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     private Button dislikeButton;
     @Id("commentButton")
     private Button commentButton;
+    @Id("showComments")
+    private Button showComments;
+    @Id("hideComments")
+    private Button hideComments;
     @Id("retweetButton")
     private Button retweetButton;
     @Id("tweetMessage")
@@ -40,13 +44,18 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     private TextArea commentMessage;
     @Id("commentSection")
     private VerticalLayout commentSection;
+    @Id("commentDisplay")
+    private VerticalLayout commentDisplay;
     @Id("retweetLabel")
     private TextArea retweetLabel;
+
 
     private static final String LIKE = "Like";
     private static final String DISLIKE = "Dislike";
     private static final String UN_LIKE = "Un-like";
     private static final String UN_DISLIKE = "Un-dislike";
+    private static final String SHOW = "Show Comments";
+    private static final String HIDE = "Hide Comments";
     private static final String BACKGROUND = "background";
     private static final String GREY = "Grey";
     private static final String HEX314654 = "#314654";
@@ -54,6 +63,10 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     private TweetPresenter tweetPresenter;
     private Tweet tweet;
     private boolean isRetweet;
+    private boolean isCommentHidden;
+    private boolean isCommentShown;
+    private int numberOfShownComments;
+    private int showCommentsClickedCounter;
     private User retweetedBy;
     private Instant timeStamp;
 
@@ -110,11 +123,21 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
             dislikeButton.setText(DISLIKE + " " + tweet.getDislikesList().size());
         }
 
-        //Add comments/text boxes to tweets
+        isCommentHidden = true;
+        isCommentShown = false;
+        numberOfShownComments = 0;
+        showCommentsClickedCounter = 1;
+
+        //Add comments/text boxes to tweets if isCommentHidden set to false
         List<Comment> tweetComments = tweetPresenter.getTweetComments(tweet);
-        for (Comment comment : tweetComments) {
-            CommentDisplayComponent wComment = new CommentDisplayComponent(comment);
-            commentSection.add(wComment);
+        if (tweetComments.size() > 0) {
+            showComments.setText(SHOW + " (" + tweetComments.size() + ")");
+            hideComments.setVisible(false);
+        }
+        else
+        {
+            showComments.setVisible(false);
+            hideComments.setVisible(false);
         }
     }
 
@@ -167,6 +190,55 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         User currentUser = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
         tweetPresenter.createAndSaveComment(commentMessage.getValue(), tweet, currentUser);
         UI.getCurrent().getPage().reload();
+    }
+
+    @EventHandler
+    private void showCommentsClicked() {
+        // Called from the template click handler
+        List<Comment> tweetComments = tweetPresenter.getTweetComments(tweet);
+        isCommentHidden = false;
+        isCommentShown = true;
+        for (;numberOfShownComments < tweetComments.size() && numberOfShownComments < 5 * showCommentsClickedCounter; ++numberOfShownComments) {
+            CommentDisplayComponent wComment = new CommentDisplayComponent(tweetComments.get(numberOfShownComments));
+            commentDisplay.add(wComment);
+        }
+
+        hideComments.setText(HIDE + " (" + numberOfShownComments + ")");
+        if (showCommentsClickedCounter == 1 && numberOfShownComments > 0) {
+            hideComments.setVisible(true);
+        }
+
+        if (tweetComments.size() - numberOfShownComments <= 0) {
+            showComments.setVisible(false);
+        }
+        else {
+            showComments.setText(SHOW + " (" + (tweetComments.size() - numberOfShownComments) + ")");
+            ++showCommentsClickedCounter;
+        }
+    }
+
+    @EventHandler
+    private void hideCommentsClicked() {
+        List<Comment> tweetComments = tweetPresenter.getTweetComments(tweet);
+        if (numberOfShownComments  > 0) {
+            if (isCommentShown == true) {
+                isCommentHidden = true;
+                isCommentShown = false;
+                hideComments.setText(HIDE + " (" + tweetComments.size() + ")");
+                commentDisplay.removeAll();
+
+                numberOfShownComments = 0;
+                showCommentsClickedCounter = 1;
+                hideComments.setVisible(false);
+
+                showComments.setVisible(true);
+                showComments.setText(SHOW + " (" + (tweetComments.size() - numberOfShownComments) + ")");
+            }
+        }
+        else
+        {
+            hideComments.setVisible(false);
+        }
     }
 
     @EventHandler
