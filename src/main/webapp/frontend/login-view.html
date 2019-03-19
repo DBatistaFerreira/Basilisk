@@ -159,30 +159,28 @@
                 </div>
             </div>
             <div class="login_wrapper" id="div3">
-                <iron-form class="login" id="form" allow-redirect>
-                    <form method="post" action="login">
-                        <h2 class="login_header" id="h21">Sign in</h2>
-                        <div class="login_layout" id="div4">
-                            <vaadin-label class="input_label"> Username</vaadin-label>
-                            <vaadin-text-field id="usernameTextField" name="username"
-                                               class="login_input_field" required></vaadin-text-field>
-                            <vaadin-label class="input_label"> Password</vaadin-label>
-                            <vaadin-password-field id="passwordTextField" name="password"
-                                                   class="login_input_field" required
-                                                   on-keydown="_onPasswordKeydown"></vaadin-password-field>
-                            <vaadin-button class="login_button" id="loginButton">
-                                Sign in
-                            </vaadin-button>
-                            <div class="invisible" id="error">
-                                <iron-icon icon="vaadin:exclamation-circle-o" class="error_icon"></iron-icon>
-                                <p class="error_text">
-                                    The username and password you entered do not match our records. Please double-check
-                                    and try again.
-                                </p>
-                            </div>
+                <form method="post" action="login">
+                    <h2 class="login_header" id="h21">Sign in</h2>
+                    <div class="login_layout" id="div4">
+                        <vaadin-label class="input_label"> Username</vaadin-label>
+                        <vaadin-text-field id="usernameTextField" name="username"
+                                           class="login_input_field" required></vaadin-text-field>
+                        <vaadin-label class="input_label"> Password</vaadin-label>
+                        <vaadin-password-field id="passwordTextField" name="password"
+                                               class="login_input_field" required
+                                               on-keydown="_onPasswordKeydown"></vaadin-password-field>
+                        <vaadin-button class="login_button" id="loginButton">
+                            Sign in
+                        </vaadin-button>
+                        <div class="invisible" id="error">
+                            <iron-icon icon="vaadin:exclamation-circle-o" class="error_icon"></iron-icon>
+                            <p class="error_text">
+                                The username and password you entered do not match our records. Please double-check
+                                and try again.
+                            </p>
                         </div>
-                    </form>
-                </iron-form>
+                    </div>
+                </form>
             </div>
         </div>
         <slot></slot>
