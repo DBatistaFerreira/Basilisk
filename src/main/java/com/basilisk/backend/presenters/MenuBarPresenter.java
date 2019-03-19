@@ -33,7 +33,7 @@ public class MenuBarPresenter {
         return userService.retrieveAllUsers();
     }
 
-    public List<User> getSelectedUsers(String name) {
+    public List<User> searchByUsername(String name) {
         return userService.searchForUsers(name);
     }
 }
