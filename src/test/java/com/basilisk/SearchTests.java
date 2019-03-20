@@ -42,8 +42,6 @@ public class SearchTests extends Tests {
         assertNotNull(allUsers);
 
         assertTrue(allUsers.contains(testUser));
-
-        userService.removeUser(testUser);
     }
 
     @Test
@@ -63,8 +61,6 @@ public class SearchTests extends Tests {
 
         // testUser won't be in the list otherwise
         assertFalse(menuBarPresenter.searchByUsername("asdfghjkl").contains(testUser));
-
-        userService.removeUser(testUser);
     }
 
 }
