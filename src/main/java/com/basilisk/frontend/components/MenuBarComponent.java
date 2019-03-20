@@ -49,7 +49,7 @@ public class MenuBarComponent extends PolymerTemplate<MenuBarComponent.MenuBarCo
 
         //Listener for when user presses enter on combo box
         searchComboBox.addCustomValueSetListener(event -> {
-            List<User> searchedUsers = menuBarPresenter.getSelectedUsers(event.getDetail());
+            List<User> searchedUsers = menuBarPresenter.searchByUsername(event.getDetail());
             searchedUsers.sort(new UserCompare());
             User user = searchedUsers.get(0);
             UI.getCurrent().navigate(Constants.PROFILE_ROUTE + user.getUsername());

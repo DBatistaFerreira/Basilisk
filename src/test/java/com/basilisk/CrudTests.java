@@ -193,7 +193,7 @@ public class CrudTests extends Tests {
         try {
             deletedTweet = tweetRepository.getOne(tweet.getId());
         } catch (JpaObjectRetrievalFailureException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         // Verify the retrieved deleted tweet from the repository is not there (null)
