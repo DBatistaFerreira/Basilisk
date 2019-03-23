@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -84,5 +87,25 @@ public class ProfileTests extends Tests {
 
         // Verify that the unfollowUser function worked by checking to see if the follow entry was deleted from the follow repository
         assertNull(followRepository.getByFollowerAndAndFollowed(currentUser, userToUnfollow));
+    }
+
+    @Test
+    public void uploadNewProfilePictureTest() {
+        User user = new User();
+        userRepository.save(user);
+        byte[] testBytes = {0, 1, 2};
+        InputStream targetStream = new ByteArrayInputStream(testBytes);
+        profilePresenter.uploadProfileImage(targetStream, user);
+        assertNotNull(userRepository.getOne(user.getId()).getProfilePicture());
+    }
+
+    @Test
+    public void uploadNewCoverPictureTest() {
+        User user = new User();
+        userRepository.save(user);
+        byte[] testBytes = {0, 1, 2};
+        InputStream targetStream = new ByteArrayInputStream(testBytes);
+        profilePresenter.uploadCoverImage(targetStream, user);
+        assertNotNull(userRepository.getOne(user.getId()).getCoverPicture());
     }
 }
