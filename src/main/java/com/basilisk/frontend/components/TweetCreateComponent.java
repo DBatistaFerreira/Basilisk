@@ -18,7 +18,7 @@ import com.vaadin.flow.templatemodel.TemplateModel;
 @HtmlImport("tweet-create-component.html")
 public class TweetCreateComponent extends PolymerTemplate<TweetCreateComponent.TweetCreateComponentModel> {
 
-    private static final int TWEET_MAX_LENGTH = 280;
+    private static final int TWEET_MAX_LENGTH = 250;
 
     @Id("createButton")
     private Button likeButton;
