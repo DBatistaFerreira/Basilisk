@@ -18,6 +18,8 @@ import com.vaadin.flow.templatemodel.TemplateModel;
 @HtmlImport("tweet-create-component.html")
 public class TweetCreateComponent extends PolymerTemplate<TweetCreateComponent.TweetCreateComponentModel> {
 
+    private static final int TWEET_MAX_LENGTH = 280;
+
     @Id("createButton")
     private Button likeButton;
     @Id("tweetMessage")
@@ -28,6 +30,7 @@ public class TweetCreateComponent extends PolymerTemplate<TweetCreateComponent.T
     public TweetCreateComponent(TweetPresenter tweetPresenter) {
         // You can initialise any data required for the connected UI components here.
         this.tweetPresenter = tweetPresenter;
+        tweetMessage.setMaxLength(TWEET_MAX_LENGTH);
     }
 
     @EventHandler
