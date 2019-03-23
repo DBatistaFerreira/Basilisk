@@ -9,6 +9,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 @Service
@@ -33,8 +36,8 @@ public class LoginPresenter {
 
     public boolean loginUser(String username, String password) {
         LOGGER.info("Login Attempt: Username = " + username);
-
-        User user = userService.login(username, password);
+        String hashedPassword = passwordHash(password);
+        User user = userService.login(username, hashedPassword);
         if (!Objects.isNull(user)) {
             LOGGER.info("Login Success : Username = " + username);
             return true;
@@ -42,8 +45,6 @@ public class LoginPresenter {
             LOGGER.info("Login Failure : Username = " + username);
             return false;
         }
-
-
     }
 
     public User getUser(String userName) {
@@ -60,7 +61,8 @@ public class LoginPresenter {
 
         User user = userService.getUserByUsername(username);
         if (Objects.isNull(user)) {
-            user = new User(name, username, password, "", null);
+            String hashedPasswordStr = passwordHash(password);
+            user = new User(name, username, hashedPasswordStr, "", null);
             userService.createNewUser(user);
             LOGGER.info("Signup Success : Username = " + username);
             return true;
@@ -68,6 +70,24 @@ public class LoginPresenter {
             LOGGER.info("Signup Failure : Username = " + username);
             return false;
         }
-
     }
+
+    public String passwordHash(String password) {
+
+        byte[] hashedPassword = null;
+
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+
+            hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        String hashedPasswordStr = new String(hashedPassword);
+
+        return hashedPasswordStr;
+    }
+
 }
