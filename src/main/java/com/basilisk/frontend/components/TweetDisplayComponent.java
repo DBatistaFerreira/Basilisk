@@ -110,8 +110,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
             retweetLabel.setValue("Retweeted by " + retweetedBy.getUsername());
             if (!currentUser.equals(retweetedBy))
                 deleteButton.setVisible(false);
-        }
-        else {
+        } else {
             retweetLabel.setVisible(false);
             if (!currentUser.equals(tweet.getUser()))
                 deleteButton.setVisible(false);
@@ -141,9 +140,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         if (tweetComments.size() > 0) {
             showComments.setText(SHOW + " (" + tweetComments.size() + ")");
             hideComments.setVisible(false);
-        }
-        else
-        {
+        } else {
             showComments.setVisible(false);
             hideComments.setVisible(false);
         }
@@ -205,7 +202,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         List<Comment> tweetComments = tweetPresenter.getTweetComments(tweet);
         isCommentHidden = false;
         isCommentShown = true;
-        for (;numberOfShownComments < tweetComments.size() && numberOfShownComments < 5 * showCommentsClickedCounter; ++numberOfShownComments) {
+        for (; numberOfShownComments < tweetComments.size() && numberOfShownComments < 5 * showCommentsClickedCounter; ++numberOfShownComments) {
             CommentDisplayComponent wComment = new CommentDisplayComponent(tweetComments.get(numberOfShownComments));
             commentDisplay.add(wComment);
         }
@@ -217,8 +214,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
 
         if (tweetComments.size() - numberOfShownComments <= 0) {
             showComments.setVisible(false);
-        }
-        else {
+        } else {
             showComments.setText(SHOW + " (" + (tweetComments.size() - numberOfShownComments) + ")");
             ++showCommentsClickedCounter;
         }
@@ -227,7 +223,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     @EventHandler
     private void hideCommentsClicked() {
         List<Comment> tweetComments = tweetPresenter.getTweetComments(tweet);
-        if (numberOfShownComments  > 0) {
+        if (numberOfShownComments > 0) {
             if (isCommentShown == true) {
                 isCommentHidden = true;
                 isCommentShown = false;
@@ -241,9 +237,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
                 showComments.setVisible(true);
                 showComments.setText(SHOW + " (" + (tweetComments.size() - numberOfShownComments) + ")");
             }
-        }
-        else
-        {
+        } else {
             hideComments.setVisible(false);
         }
     }
@@ -263,8 +257,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         if (isRetweet) {
             if (currentUser.equals(retweetedBy))
                 tweetPresenter.deleteRetweet(retweet);
-        }
-        else {
+        } else {
             if (currentUser.equals(tweet.getUser()))
                 tweetPresenter.deleteTweet(tweet);
         }
