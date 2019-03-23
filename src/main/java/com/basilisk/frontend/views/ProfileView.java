@@ -207,8 +207,10 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
         } else {
             //Save Mode
             editButton.setText("Edit");
+            String bio = Constants.cleanString(userBioTextArea.getValue());
+            userBioTextArea.setValue(bio);
             userBioTextArea.setReadOnly(true);
-            currentUser.setBiography(userBioTextArea.getValue());
+            currentUser.setBiography(bio);
             profilePresenter.saveBiography(currentUser);
 
         }
