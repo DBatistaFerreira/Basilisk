@@ -6,6 +6,38 @@
 <link rel="import" href="bower_components/vaadin-text-field/src/vaadin-password-field.html">
 <link rel="import" href="bower_components/vaadin-button/src/vaadin-button.html">
 
+<dom-module id="text-fields" theme-for="vaadin-text-field">
+    <template>
+        <style>
+
+            :host(.signup_input_field) [part="input-field"] {
+                border-bottom: 1px solid rgba(49, 70, 84, 0.9);;
+            }
+
+            :host(.signup_input_field) [part="label"] {
+                font-family: Helvetica;
+                font-weight: 600;
+            }
+
+            :host(.login_input_field) [part="input-field"] {
+                background-color: rgba(81, 226, 198, 0.1);
+                border-bottom: 1px solid whitesmoke
+            }
+
+            :host(.login_input_field) [part="label"] {
+                color: whitesmoke;
+                font-family: Helvetica;
+                font-weight: 600;
+            }
+
+            :host(.login_input_field:hover:not([readonly]):not([focused])) [part="label"] {
+                color: whitesmoke;
+            }
+
+        </style>
+    </template>
+</dom-module>
+
 <dom-module id="login-view">
     <template>
         <style include="shared-styles">
@@ -13,14 +45,13 @@
                 width: 100vw;
                 height: 100vh;
 
-                /*background-color: #e8e8e8;*/
-                background-image: url("images/login4-bg.jpg");
+                background-image: url("images/login7-bg.png");
                 background-position: center;
                 background-size: cover;
                 display: flex;
                 flex-direction: column;
                 color: whitesmoke;
-                font-family: Arial, Helvetica, sans-serif;
+                font-family: Helvetica, sans-serif;
 
                 justify-content: center;
 
@@ -31,28 +62,31 @@
                 display: flex;
                 flex-direction: row;
                 width: 900px;
-                height: 465px;
+                height: 495px;
             }
 
             .info {
                 float: left;
-                /*background: linear-gradient(to bottom right, #51e2c6 0%, #15cb92 107%);*/
-                background-color: rgba(81, 226, 198, 0.8);
+                background-color: rgba(81, 226, 198, 0.9);
                 width: 50%;
                 border-bottom-left-radius: 15px;
                 border-top-left-radius: 15px;
-                box-shadow: 5px 10px 18px #2c2f33;
+                box-shadow: 5px 10px 18px #1a1b1e;
             }
 
-            .input_label {
-                font-weight: 500;
-                font-size: var(--lumo-font-size-s);
-                font-family: var(--lumo-font-family)
+            .signup-icon {
+                background-image: url("images/signup-icon.png");
+                background-size: cover;
+                width: 50px;
+                height: 50px;
+                margin: 20px auto 10px;
             }
 
             .info_header {
                 color: #314654;
-                margin: 70px 70px 30px;
+                margin: 10px 70px 30px;
+                width: 100px;
+                border-bottom: 1.5px solid rgba(81, 226, 198, 0);
             }
 
             .signup_layout {
@@ -80,19 +114,25 @@
 
             .login_wrapper {
                 float: left;
-                /*background-color: #314654;*/
-                background-color: rgba(49, 70, 84, 0.9);
+                background-color: rgba(49, 70, 84, 0.95);
                 width: 50%;
                 border-bottom-right-radius: 15px;
                 border-top-right-radius: 15px;
-                box-shadow: 0px 10px 18px #2c2f33;
+                box-shadow: 0px 10px 18px #1a1b1e;
             }
 
-            .login {
+            .login-icon {
+                background-image: url("images/login-icon.png");
+                background-size: cover;
+                width: 50px;
+                height: 50px;
+                margin: 20px auto 10px;
             }
 
             .login_header {
-                margin: 70px 70px 30px;
+                margin: 10px 70px 30px;
+                width: 100px;
+                border-bottom: 1.5px solid rgba(81, 226, 198, 0);
             }
 
             .login_layout {
@@ -109,15 +149,14 @@
                 margin-top: var(--lumo-space-m);
                 width: 75%;
                 max-width: 75%;
-                background: rgba(81, 226, 198, 0.85);
-                color: whitesmoke;
+                background-color: rgba(81, 226, 198, 0.9);
+                color: #314654;
             }
 
             .login_input_field {
                 background: transparent;
                 border: none;
                 outline: none;
-                /*border-bottom: 1px solid white*/;
                 border-radius: 5px;
                 color: #fff;
             }
@@ -142,9 +181,18 @@
                 max-width: 35em;
             }
 
+            div.info:hover h2 {
+                border-bottom: 1.5px solid whitesmoke;
+            }
+
+            div.login_wrapper:hover h2 {
+                border-bottom: 1.5px solid rgba(81, 226, 198, 0.85);;
+            }
+
         </style>
         <div class="container" id="div">
             <div class="info" id="div1">
+                <div class="signup-icon"></div>
                 <h2 class="info_header" id="h2">Sign Up</h2>
                 <div class="signup_layout" id="div2">
                     <vaadin-text-field id="fullNameTextField" name="fullName" label="Full Name"
@@ -160,13 +208,12 @@
             </div>
             <div class="login_wrapper" id="div3">
                 <form method="post" action="login">
-                    <h2 class="login_header" id="h21">Sign in</h2>
+                    <div class="login-icon"></div>
+                    <h2 class="login_header" id="h21">Sign In</h2>
                     <div class="login_layout" id="div4">
-                        <vaadin-label class="input_label"> Username</vaadin-label>
-                        <vaadin-text-field id="usernameTextField" name="username"
+                        <vaadin-text-field id="usernameTextField" name="username" label="Username"
                                            class="login_input_field" required></vaadin-text-field>
-                        <vaadin-label class="input_label"> Password</vaadin-label>
-                        <vaadin-password-field id="passwordTextField" name="password"
+                        <vaadin-password-field id="passwordTextField" name="password" label="Password"
                                                class="login_input_field" required
                                                on-keydown="_onPasswordKeydown"></vaadin-password-field>
                         <vaadin-button class="login_button" id="loginButton">
