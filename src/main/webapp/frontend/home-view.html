@@ -4,8 +4,11 @@
 <dom-module id="home-view">
     <template>
         <style include="shared-styles">
-            :host {
+            .container {
+                background: linear-gradient(to bottom right, #96eddc 0%, #5bdab2 107%);
+                overflow: auto;
                 display: block;
+
             }
 
             .tweetLayout {
@@ -13,11 +16,26 @@
                 display: flex;
                 justify-content: center;
             }
-        </style>
-        <menu-bar-component></menu-bar-component>
-        <vaadin-vertical-layout id="tweetLayout" class="tweetLayout">
 
-        </vaadin-vertical-layout>
+            .Popup {
+                max-width: 150px;
+                border-radius: 15px;
+                border-style: solid;
+                border-color: #314654;
+
+                font-family: Helvetica;
+                font-weight: 600;
+                background: linear-gradient(to bottom right, #51e2c6 0%, #15cb92 107%);
+            }
+        </style>
+        <div class="container" style="width: 100%; height: 100%;">
+            <menu-bar-component></menu-bar-component>
+            <vaadin-vertical-layout id="tweetLayout" class="tweetLayout">
+                <vaadin-text-area id="popUp" class ="Popup" readonly="true" visible="false">
+                </vaadin-text-area>
+
+            </vaadin-vertical-layout>
+        </div>
 
     </template>
 

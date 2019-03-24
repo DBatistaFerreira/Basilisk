@@ -12,6 +12,7 @@ import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
+import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
@@ -28,6 +29,8 @@ import java.util.Objects;
 public class HomeView extends PolymerTemplate<HomeView.HomeViewModel> implements BeforeEnterObserver {
 
     private HomePresenter homePresenter;
+    @Id("popUp")
+    private TextArea popUp;
     @Id("tweetLayout")
     private VerticalLayout tweetLayout;
 
@@ -44,10 +47,16 @@ public class HomeView extends PolymerTemplate<HomeView.HomeViewModel> implements
         // Get all tweets of user and user's followings
         User userHome = (User) VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER);
         List<TweetDisplayComponent> tweetDisplayComponentList = homePresenter.getAllHomePageTweetDisplayComponents(userHome);
-
-        // Displaying tweets on page
-        for (TweetDisplayComponent tweetDisplayComponent : tweetDisplayComponentList) {
-            tweetLayout.add(tweetDisplayComponent);
+        if (tweetDisplayComponentList.size() > 0) {
+            // Displaying tweets on page
+            for (TweetDisplayComponent tweetDisplayComponent : tweetDisplayComponentList) {
+                tweetLayout.add(tweetDisplayComponent);
+            }
+        }
+        else
+        {
+            popUp.setValue("Friendly Advice: Follow more users! (◕‿◕✿)");
+            popUp.setVisible(true);
         }
     }
 
