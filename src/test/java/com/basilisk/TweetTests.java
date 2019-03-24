@@ -180,7 +180,7 @@ public class TweetTests extends Tests {
         //Create new user
         userService.createNewUser(user);
 
-        //Create new user2
+        //Create second new user
         userService.createNewUser(user2);
 
         tweetPresenter.createAndSaveTweet("test", user);
@@ -207,7 +207,7 @@ public class TweetTests extends Tests {
         //Create new user
         userService.createNewUser(user);
 
-        //Create new user2
+        //Create second new year
         userService.createNewUser(user2);
 
         tweetPresenter.createAndSaveTweet("test", user);
