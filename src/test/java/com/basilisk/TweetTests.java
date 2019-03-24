@@ -3,6 +3,7 @@ package com.basilisk;
 import com.basilisk.backend.models.Tweet;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.presenters.TweetPresenter;
+import com.basilisk.backend.services.RetweetService;
 import com.basilisk.backend.services.TweetService;
 import com.basilisk.backend.services.UserService;
 import org.junit.jupiter.api.BeforeAll;
@@ -20,6 +21,9 @@ public class TweetTests extends Tests {
 
     @Autowired
     private TweetService tweetService;
+
+    @Autowired
+    private RetweetService retweetService;
 
     @Autowired
     private TweetPresenter tweetPresenter;
@@ -160,4 +164,58 @@ public class TweetTests extends Tests {
 
         assertFalse(tweetPresenter.createAndSaveTweet("", user));
     }
+
+    @Test
+    public void ensureTweetDeletionDeletesAllCommentsAndRetweets() {
+        User user = new User();
+        user.setName("TestName");
+        user.setPassword("TestPass");
+        user.setUsername("TestUsername");
+
+        User user2 = new User();
+        user.setName("TestName2");
+        user.setPassword("TestPass2");
+        user.setUsername("TestUsername2");
+
+        //Create new user
+        userService.createNewUser(user);
+
+        //Create new user2
+        userService.createNewUser(user2);
+
+        tweetPresenter.createAndSaveTweet("test", user);
+        tweetPresenter.createAndSaveRetweet(tweetService.getAllTweetsByUser(user).get(0), user2);
+
+        tweetPresenter.deleteTweet(tweetService.getAllTweetsByUser(user).get(0));
+
+        assertTrue(tweetService.getAllTweetsByUser(user).size() == 0);
+        assertTrue(retweetService.getAllRetweetsByUser(user2).size() == 0);
+    }
+
+    @Test
+    public void ensureRetweetDeletionDoesntDeleteOriginalTweet() {
+        User user = new User();
+        user.setName("TestName");
+        user.setPassword("TestPass");
+        user.setUsername("TestUsername");
+
+        User user2 = new User();
+        user.setName("TestName2");
+        user.setPassword("TestPass2");
+        user.setUsername("TestUsername2");
+
+        //Create new user
+        userService.createNewUser(user);
+
+        //Create new user2
+        userService.createNewUser(user2);
+
+        tweetPresenter.createAndSaveTweet("test", user);
+        tweetPresenter.createAndSaveRetweet(tweetService.getAllTweetsByUser(user).get(0), user2);
+
+        tweetPresenter.deleteRetweet(retweetService.getAllRetweetsByUser(user2).get(0));
+
+        assertNotNull(tweetService.getAllTweetsByUser(user).get(0));
+    }
 }
+
