@@ -12,8 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 public class ProfileTests extends Tests {
@@ -107,5 +106,34 @@ public class ProfileTests extends Tests {
         InputStream targetStream = new ByteArrayInputStream(testBytes);
         profilePresenter.uploadCoverImage(targetStream, user);
         assertNotNull(userRepository.getOne(user.getId()).getCoverPicture());
+    }
+
+    @Test
+    public void emptyBioTest() {
+        User user = new User();
+        user.setName("TestName");
+        user.setPassword("TestPass");
+        user.setUsername("TestUsername");
+
+        //Saving biography
+        profilePresenter.saveBiography(user);
+
+        //Test setting bio to empty
+        assertEquals(user.getBiography(), userRepository.getOne(user.getId()).getBiography());
+    }
+
+    @Test
+    public void nonEmptyBioTest() {
+        User user = new User();
+        user.setName("TestName");
+        user.setPassword("TestPass");
+        user.setUsername("TestUsername");
+        user.setBiography("test");
+
+        //Saving biography
+        profilePresenter.saveBiography(user);
+
+        //Test setting bio
+        assertEquals(user.getBiography(), userRepository.getOne(user.getId()).getBiography());
     }
 }
