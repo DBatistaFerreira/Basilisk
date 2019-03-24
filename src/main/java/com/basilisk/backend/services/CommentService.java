@@ -20,18 +20,15 @@ public class CommentService {
     }
 
     // Public Service methods
-    public void writeComment(Comment comment)
-    {
+    public void writeComment(Comment comment) {
         createComment(comment);
     }
 
-    public void editComment(Comment comment)
-    {
+    public void editComment(Comment comment) {
         updateComment(comment);
     }
 
-    public Comment getCommentById(long id)
-    {
+    public Comment getCommentById(long id) {
         return retrieveComment(id);
     }
 

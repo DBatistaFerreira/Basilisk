@@ -21,7 +21,7 @@ public class MenuBarPresenter {
 
     @Autowired
     public MenuBarPresenter(UserService userService, TweetService tweetService, RetweetService retweetService,
-                            FollowService followService, CommentService commentService){
+                            FollowService followService, CommentService commentService) {
         this.userService = userService;
         this.userService = userService;
         this.tweetService = tweetService;

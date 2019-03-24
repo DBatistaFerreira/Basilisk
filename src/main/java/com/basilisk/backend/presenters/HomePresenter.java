@@ -27,7 +27,7 @@ public class HomePresenter {
 
     @Autowired
     public HomePresenter(UserService userService, TweetService tweetService, RetweetService retweetService,
-                         FollowService followService, CommentService commentService, TweetPresenter tweetPresenter){
+                         FollowService followService, CommentService commentService, TweetPresenter tweetPresenter) {
         this.userService = userService;
         this.tweetService = tweetService;
         this.retweetService = retweetService;
