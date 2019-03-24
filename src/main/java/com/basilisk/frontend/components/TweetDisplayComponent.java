@@ -10,22 +10,31 @@ import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.html.Anchor;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.polymertemplate.EventHandler;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.templatemodel.TemplateModel;
 
+import java.io.ByteArrayInputStream;
 import java.time.Instant;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @Tag("tweet-display-component")
 @HtmlImport("tweet-display-component.html")
 public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent.TweetDisplayComponentModel> {
 
+    @Id("UserLink")
+    private Anchor UserLink;
+    @Id("profileImage")
+    private Image profileImage;
     @Id("likeButton")
     private Button likeButton;
     @Id("dislikeButton")
@@ -102,6 +111,17 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     }
 
     private void setTweet() {
+        byte[] profileImageData = tweet.getUser().getProfilePicture();
+        if (Objects.isNull(profileImageData)) {
+            profileImage.setSrc("frontend/defaultProfileImage.jpg");
+        } else {
+            StreamResource profilePictureResource = new StreamResource(tweet.getUser().getUsername() + ".jpg", () -> new ByteArrayInputStream(profileImageData));
+            profileImage.setSrc(profilePictureResource);
+        }
+
+        UserLink.setText(tweet.getUser().getName() + " (@" + tweet.getUser().getUsername() + ")");
+        UserLink.setHref(Constants.PROFILE_ROUTE + tweet.getUser().getUsername());
+
         tweetMessage.setValue(tweet.getText() + "\n-" + tweet.getUser().getUsername());
         VaadinSession vaadinSession = VaadinSession.getCurrent();
         User currentUser = (User) vaadinSession.getAttribute(Constants.CURRENT_USER);
