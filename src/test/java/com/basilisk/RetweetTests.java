@@ -1,15 +1,18 @@
 package com.basilisk;
 
+import com.basilisk.backend.models.Retweet;
 import com.basilisk.backend.models.Tweet;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.presenters.TweetPresenter;
+import com.basilisk.backend.services.RetweetService;
 import com.basilisk.backend.services.UserService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Transactional
 public class RetweetTests extends Tests {
@@ -19,6 +22,9 @@ public class RetweetTests extends Tests {
 
     @Autowired
     public TweetPresenter tweetPresenter;
+
+    @Autowired
+    public RetweetService retweetService;
 
     @BeforeAll
     public static void setUp() {
@@ -47,8 +53,12 @@ public class RetweetTests extends Tests {
         Tweet tweet = new Tweet("Retweet test 1", user1);
 
         // retweet the tweet
-        assertTrue(tweetPresenter.createAndSaveRetweet(tweet, user2));
+        long retweetID = tweetPresenter.createAndSaveRetweet(tweet, user2);
 
+        // validate
+        Retweet retweet = retweetService.getRetweetById(retweetID);
+        assertNotNull(retweet);
+        assertEquals(retweet.getUser(), user2);
     }
 
     @Test
@@ -66,7 +76,12 @@ public class RetweetTests extends Tests {
         Tweet tweet = new Tweet("Retweet test 2", user);
 
         // retweet the tweet
-        assertTrue(tweetPresenter.createAndSaveRetweet(tweet, user));
+        long retweetID = tweetPresenter.createAndSaveRetweet(tweet, user);
+
+        // validate
+        Retweet retweet = retweetService.getRetweetById(retweetID);
+        assertNotNull(retweet);
+        assertEquals(retweet.getUser(), user);
     }
 
 }

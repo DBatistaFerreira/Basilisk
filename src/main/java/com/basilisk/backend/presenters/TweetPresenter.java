@@ -61,11 +61,11 @@ public class TweetPresenter {
         }
     }
 
-    public boolean createAndSaveRetweet(Tweet tweet, User currentUser) {
+    public long createAndSaveRetweet(Tweet tweet, User currentUser) {
         Retweet retweet = new Retweet(currentUser, tweet);
-        LOGGER.info("Retweet creation success: " + tweet.getText() + " retweeted by @" + currentUser.getUsername());
         retweetService.postRetweet(retweet);
-        return true;
+        LOGGER.info("Retweet creation success: " + tweet.getText() + " retweeted by @" + currentUser.getUsername());
+        return retweet.getId();
     }
 
     public boolean deleteTweet(Tweet tweet) {
