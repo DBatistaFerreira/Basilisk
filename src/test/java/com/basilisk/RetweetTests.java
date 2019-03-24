@@ -5,6 +5,7 @@ import com.basilisk.backend.models.Tweet;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.presenters.TweetPresenter;
 import com.basilisk.backend.services.RetweetService;
+import com.basilisk.backend.services.TweetService;
 import com.basilisk.backend.services.UserService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,9 @@ public class RetweetTests extends Tests {
 
     @Autowired
     public TweetPresenter tweetPresenter;
+
+    @Autowired
+    public TweetService tweetService;
 
     @Autowired
     public RetweetService retweetService;
@@ -50,7 +54,8 @@ public class RetweetTests extends Tests {
         userService.createNewUser(user2);
 
         // create tweet
-        Tweet tweet = new Tweet("Retweet test 1", user1);
+        tweetPresenter.createAndSaveTweet("Retweet test 1", user1);
+        Tweet tweet = tweetService.getAllTweetsByUser(user1).get(0);
 
         // retweet the tweet
         long retweetID = tweetPresenter.createAndSaveRetweet(tweet, user2);
@@ -73,7 +78,8 @@ public class RetweetTests extends Tests {
         userService.createNewUser(user);
 
         // create tweet
-        Tweet tweet = new Tweet("Retweet test 2", user);
+        tweetPresenter.createAndSaveTweet("Retweet test 2", user);
+        Tweet tweet = tweetService.getAllTweetsByUser(user).get(0);
 
         // retweet the tweet
         long retweetID = tweetPresenter.createAndSaveRetweet(tweet, user);
