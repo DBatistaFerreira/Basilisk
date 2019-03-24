@@ -10,7 +10,7 @@
     <template>
         <style include="shared-styles">
             :host {
-                display: block;
+                display: flex;
             }
 
             .userCommentArea {
@@ -24,15 +24,21 @@
                 position: relative;
                 right: 15px;
             }
+
             .link {
                 color: #314654;
                 font-size: large;
+                font-family: Helvetica;
+                font-weight: 600;
 
                 position: relative;
                 top: 5px;
             }
 
             .profilePic {
+                border-radius: 22.5px;
+                border-style: solid;
+                border-color: #314654;
                 clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
 
                 position: relative;
