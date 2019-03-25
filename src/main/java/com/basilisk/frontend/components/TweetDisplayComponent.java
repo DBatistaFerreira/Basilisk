@@ -230,7 +230,7 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         hideComments.setText(HIDE + " (" + numberOfShownComments + ")");
         if (showCommentsClickedCounter == 1 && numberOfShownComments > 0) {
             hideComments.setVisible(true);
-            commentButton.getStyle().set("left", "273px");
+            commentButton.getStyle().set("left", "283px");
         }
 
         if (tweetComments.size() - numberOfShownComments <= 0) {
