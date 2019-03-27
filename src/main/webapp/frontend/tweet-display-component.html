@@ -71,12 +71,22 @@
                 width: 100%;
                 height: 55%;
                 color: black;
+                border: solid;
+                border-radius: 15px;
+                border-width: 3px;
+                border-color: #314654;
+                padding: 0px;
+                margin: 20px;
             }
 
             .retweetLabel {
-                width: 100%;
-                height: 20%;
-                font-size: small;
+                display: block;
+                height: 15%;
+                font-family: Helvetica;
+                font-size: 14px;
+                font-weight: bold;
+                border-bottom-style: solid;
+                border-bottom-color: #314654;
             }
 
             .postButton {
@@ -102,28 +112,35 @@
                 background: #314654;
                 color: whitesmoke;
                 margin-left: 10px;
-
-                position: relative;
-                left: 450px;
             }
             .showOrHideCommentsButton{
                 border-radius: 0px;
                 background: whitesmoke;
                 color: #314654;
-                margin-left: 10px
+                margin-left: 10px;
 
                 position: relative;
                 right: 5px;
             }
 
+            .commentButton {
+                margin-left: auto;
+            }
+
+            .commentButtons {
+                width: 100%;
+            }
+
         </style>
         <div style="width: 100%; height: 100%;" class="userPost">
+            <label class="retweetLabel" id="retweetLabel" readonly> </label>
             <vaadin-horizontal-layout>
                 <img class="profilePic" id="profileImage" alt="profilePicture" style="width: 40px; height: 40px;">
                 <a style="text-decoration:none;" class="link" id="UserLink"></a>
             </vaadin-horizontal-layout>
-            <vaadin-text-area class="retweetLabel" id="retweetLabel" readonly></vaadin-text-area>
-            <vaadin-text-area class="userPostArea" id="tweetMessage" readonly></vaadin-text-area>
+            <vaadin-horizontal-layout>
+                <vaadin-text-area class="userPostArea" id="tweetMessage" maxlength="285" readonly></vaadin-text-area>
+            </vaadin-horizontal-layout>
             <vaadin-horizontal-layout>
                 <vaadin-button class="postButton" id="likeButton" on-click="likeButtonClicked"></vaadin-button>
                 <vaadin-button class="postButton" id="dislikeButton" on-click="dislikeButtonClicked"></vaadin-button>
@@ -132,12 +149,13 @@
             </vaadin-horizontal-layout>
             <vaadin-vertical-layout id="commentSection">
                 <vaadin-text-area class="userCommentArea" id="commentMessage" placeholder="Write a comment..."></vaadin-text-area>
-                <vaadin-horizontal-layout>
+                <vaadin-horizontal-layout class="commentButtons">
                     <vaadin-button class="showOrHideCommentsButton" id="hideComments" on-click="hideCommentsClicked"></vaadin-button>
+                    <vaadin-button class="showOrHideCommentsButton" id="showComments"
+                                   on-click="showCommentsClicked"></vaadin-button>
                     <vaadin-button class="commentButton" id="commentButton" on-click="commentButtonClicked">Comment</vaadin-button>
                 </vaadin-horizontal-layout>
                 <vaadin-vertical-layout id="commentDisplay"></vaadin-vertical-layout>
-                <vaadin-button class="showOrHideCommentsButton" id="showComments" on-click="showCommentsClicked"></vaadin-button>
             </vaadin-vertical-layout>
         </div>
     </template>

@@ -17,6 +17,7 @@ import com.vaadin.flow.component.polymertemplate.EventHandler;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.templatemodel.TemplateModel;
@@ -58,14 +59,14 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     @Id("commentDisplay")
     private VerticalLayout commentDisplay;
     @Id("retweetLabel")
-    private TextArea retweetLabel;
-
+    private Element retweetLabel;
 
     private static final String LIKE = "Like";
     private static final String DISLIKE = "Dislike";
     private static final String UN_LIKE = "Un-like";
     private static final String UN_DISLIKE = "Un-dislike";
     private static final String SHOW = "Show Comments";
+    private static final String SHOW_MORE = "Show More Comments";
     private static final String HIDE = "Hide Comments";
     private static final String BACKGROUND = "background";
     private static final String GREY = "Grey";
@@ -122,12 +123,12 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         UserLink.setText(tweet.getUser().getName() + " (@" + tweet.getUser().getUsername() + ")");
         UserLink.setHref(Constants.PROFILE_ROUTE + tweet.getUser().getUsername());
 
-        tweetMessage.setValue(tweet.getText() + "\n-" + tweet.getUser().getUsername());
+        tweetMessage.setValue(tweet.getText());
         VaadinSession vaadinSession = VaadinSession.getCurrent();
         User currentUser = (User) vaadinSession.getAttribute(Constants.CURRENT_USER);
 
         if (isRetweet) {
-            retweetLabel.setValue("Retweeted by " + retweetedBy.getUsername());
+            retweetLabel.setText("Retweeted by " + retweetedBy.getName() + " (@" + retweetedBy.getUsername() + ")");
             if (!currentUser.equals(retweetedBy))
                 deleteButton.setVisible(false);
         } else {
@@ -230,13 +231,12 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         hideComments.setText(HIDE + " (" + numberOfShownComments + ")");
         if (showCommentsClickedCounter == 1 && numberOfShownComments > 0) {
             hideComments.setVisible(true);
-            commentButton.getStyle().set("left", "283px");
         }
 
         if (tweetComments.size() - numberOfShownComments <= 0) {
             showComments.setVisible(false);
         } else {
-            showComments.setText(SHOW + " (" + (tweetComments.size() - numberOfShownComments) + ")");
+            showComments.setText(SHOW_MORE + " (" + (tweetComments.size() - numberOfShownComments) + ")");
             ++showCommentsClickedCounter;
         }
     }
@@ -254,7 +254,6 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
                 numberOfShownComments = 0;
                 showCommentsClickedCounter = 1;
                 hideComments.setVisible(false);
-                commentButton.getStyle().set("left", "450px");
 
                 showComments.setVisible(true);
                 showComments.setText(SHOW + " (" + (tweetComments.size() - numberOfShownComments) + ")");
