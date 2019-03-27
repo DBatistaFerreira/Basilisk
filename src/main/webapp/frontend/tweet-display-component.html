@@ -6,11 +6,53 @@
 <link rel="import" href="bower_components/vaadin-ordered-layout/src/vaadin-horizontal-layout.html">
 <link rel="import" href="bower_components/vaadin-ordered-layout/src/vaadin-vertical-layout.html">
 
+<dom-module id="text-area-font" theme-for="vaadin-text-area">
+    <template>
+        <style>
+            [part="value"] {
+                font-family: Helvetica;
+            }
+        </style>
+    </template>
+</dom-module>
+
+<dom-module id="button-font" theme-for="vaadin-button">
+    <template>
+        <style>
+            :host {
+                font-family: Helvetica;
+            }
+        </style>
+    </template>
+</dom-module>
+
 <dom-module id="tweet-display-component">
     <template>
         <style include="shared-styles">
             :host {
                 display: block;
+            }
+
+            .link {
+                color: #314654;
+                font-size: large;
+                font-family: Helvetica;
+                font-weight: 600;
+
+                position: relative;
+                left: 15px;
+                top: 5px;
+            }
+
+            .profilePic {
+                clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+                border-radius: 22.5px;
+                border-style: solid;
+                border-color: #314654;
+
+                position: relative;
+                top: 2.5px;
+                left: 5px;
             }
 
             .userPost {
@@ -42,6 +84,9 @@
                 background: #314654;
                 color: whitesmoke;
                 margin-left: 10px;
+
+                position relative;
+                left: 5px;
             }
 
             .userCommentArea {
@@ -53,24 +98,30 @@
             }
 
             .commentButton {
-                 border-radius: 0px;
-                 background: #314654;
-                 color: whitesmoke;
-                 margin-left: 10px;
+                border-radius: 0px;
+                background: #314654;
+                color: whitesmoke;
+                margin-left: 10px;
 
-                 position: relative;
-                 left: 450px;
-             }
+                position: relative;
+                left: 450px;
+            }
             .showOrHideCommentsButton{
                 border-radius: 0px;
                 background: whitesmoke;
                 color: #314654;
                 margin-left: 10px
 
+                position: relative;
+                right: 5px;
             }
 
         </style>
         <div style="width: 100%; height: 100%;" class="userPost">
+            <vaadin-horizontal-layout>
+                <img class="profilePic" id="profileImage" alt="profilePicture" style="width: 40px; height: 40px;">
+                <a style="text-decoration:none;" class="link" id="UserLink"></a>
+            </vaadin-horizontal-layout>
             <vaadin-text-area class="retweetLabel" id="retweetLabel" readonly></vaadin-text-area>
             <vaadin-text-area class="userPostArea" id="tweetMessage" readonly></vaadin-text-area>
             <vaadin-horizontal-layout>

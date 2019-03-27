@@ -5,6 +5,26 @@
 <link rel="import" href="bower_components/vaadin-button/src/vaadin-button.html">
 <link rel="import" href="bower_components/vaadin-ordered-layout/src/vaadin-horizontal-layout.html">
 
+<dom-module id="text-area-font" theme-for="vaadin-text-area">
+    <template>
+        <style>
+            [part="value"] {
+                font-family: Helvetica;
+            }
+        </style>
+    </template>
+</dom-module>
+
+<dom-module id="button-font" theme-for="vaadin-button">
+    <template>
+        <style>
+            :host {
+                font-family: Helvetica;
+            }
+        </style>
+    </template>
+</dom-module>
+
 <dom-module id="tweet-create-component">
     <template>
         <style include="shared-styles">

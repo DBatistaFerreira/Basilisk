@@ -3,12 +3,14 @@ package com.basilisk;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.presenters.LoginPresenter;
 import com.basilisk.backend.repositories.UserRepository;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Transactional
 public class LoginTests extends Tests {
@@ -29,7 +31,8 @@ public class LoginTests extends Tests {
         //Create a user in the DB
         User user = new User();
         user.setName("TestName");
-        user.setPassword("TestPass");
+        String hashedPassword = loginPresenter.passwordHash("TestPass");
+        user.setPassword(hashedPassword);
         user.setUsername("TestUser");
 
         userRepository.save(user);
@@ -40,7 +43,8 @@ public class LoginTests extends Tests {
 
     @Test
     public void badLoginTest() {
-        boolean isLoggedIn = loginPresenter.loginUser("TestBadUser", "TestPass");
+        String hashedPassword = loginPresenter.passwordHash("TestPass");
+        boolean isLoggedIn = loginPresenter.loginUser("TestBadUser", hashedPassword);
         assertFalse(isLoggedIn);
     }
 
@@ -52,21 +56,24 @@ public class LoginTests extends Tests {
 
     @Test
     public void successfulSignUp() {
-        loginPresenter.signupUser("TestName", "TestUser", "TestPass");
+        String hashedPassword = loginPresenter.passwordHash("TestPass");
+        loginPresenter.signupUser("TestName", "TestUser", hashedPassword);
         User user = userRepository.findByUsernameIgnoreCase("TestUser");
         assertNotNull(user);
     }
 
     @Test
     public void userAlreadyExistsSignUp() {
-        loginPresenter.signupUser("TestName", "TestUser", "TestPass");
-        boolean isSignedUp = loginPresenter.signupUser("TestName", "TestUser", "TestPass");
+        String hashedPassword = loginPresenter.passwordHash("TestPass");
+        loginPresenter.signupUser("TestName", "TestUser", hashedPassword);
+        boolean isSignedUp = loginPresenter.signupUser("TestName", "TestUser", hashedPassword);
         assertFalse(isSignedUp);
     }
 
     @Test
     public void emptySignUp() {
-        boolean isSignedUp = loginPresenter.signupUser("", "", "TestPass");
+        String hashedPassword = loginPresenter.passwordHash("TestPass");
+        boolean isSignedUp = loginPresenter.signupUser("", "", hashedPassword);
         assertFalse(isSignedUp);
     }
 }
