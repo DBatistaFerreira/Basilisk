@@ -6,6 +6,16 @@
 <link rel="import" href="bower_components/vaadin-ordered-layout/src/vaadin-horizontal-layout.html">
 <link rel="import" href="bower_components/vaadin-ordered-layout/src/vaadin-vertical-layout.html">
 
+<dom-module id="text-area-font" theme-for="vaadin-text-area">
+    <template>
+        <style>
+            [part="value"] {
+                font-family: Helvetica;
+            }
+        </style>
+    </template>
+</dom-module>
+
 <dom-module id="comment-display-component">
     <template>
         <style include="shared-styles">
