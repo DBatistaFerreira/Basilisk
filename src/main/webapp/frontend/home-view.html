@@ -1,6 +1,63 @@
 <link rel="import" href="bower_components/polymer/polymer.html">
 <link rel="import" href="menu-bar-component.html">
 
+<dom-module id="text-area-font" theme-for="vaadin-text-area">
+    <template>
+        <style>
+            [part="value"] {
+                font-family: Helvetica;
+                font-weight: Bold;
+                font-size: 14px;
+            }
+        </style>
+    </template>
+</dom-module>
+
+<dom-module id="button-font" theme-for="vaadin-button">
+    <template>
+        <style>
+            :host {
+                font-family: Helvetica;
+                font-weight: Bold;
+                font-size: 14px;
+            }
+        </style>
+    </template>
+</dom-module>
+
+
+<dom-module id="text-fields" theme-for="vaadin-text-field">
+    <template>
+        <style>
+
+            :host(.signup_input_field) [part="input-field"] {
+                border-bottom: 1px solid rgba(49, 70, 84, 0.9);;
+            }
+
+            :host(.signup_input_field) [part="label"] {
+                font-family: Helvetica;
+                font-weight: 600;
+            }
+
+            :host(.login_input_field) [part="input-field"] {
+                background-color: rgba(81, 226, 198, 0.1);
+                border-bottom: 1px solid whitesmoke
+            }
+
+            :host(.login_input_field) [part="label"] {
+                color: whitesmoke;
+                font-family: Helvetica;
+                font-weight: 600;
+            }
+
+            :host(.login_input_field:hover:not([readonly]):not([focused])) [part="label"] {
+                color: whitesmoke;
+            }
+
+        </style>
+    </template>
+</dom-module>
+
 <dom-module id="home-view">
     <template>
         <style include="shared-styles">

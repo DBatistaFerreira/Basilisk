@@ -33,7 +33,7 @@ import java.util.Objects;
 public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent.TweetDisplayComponentModel> {
 
     @Id("UserLink")
-    private Anchor UserLink;
+    private Anchor userLink;
     @Id("profileImage")
     private Image profileImage;
     @Id("likeButton")
@@ -60,6 +60,10 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     private VerticalLayout commentDisplay;
     @Id("retweetLabel")
     private Element retweetLabel;
+    @Id("profileImageComment")
+    private Image personCommentingImage;
+    @Id("userLinkCommenting")
+    private Anchor personCommentingLink;
 
     private static final String LIKE = "Like";
     private static final String DISLIKE = "Dislike";
@@ -120,8 +124,8 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
             profileImage.setSrc(profilePictureResource);
         }
 
-        UserLink.setText(tweet.getUser().getName() + " (@" + tweet.getUser().getUsername() + ")");
-        UserLink.setHref(Constants.PROFILE_ROUTE + tweet.getUser().getUsername());
+        userLink.setText(tweet.getUser().getName() + " (@" + tweet.getUser().getUsername() + ")");
+        userLink.setHref(Constants.PROFILE_ROUTE + tweet.getUser().getUsername());
 
         tweetMessage.setValue(tweet.getText());
         VaadinSession vaadinSession = VaadinSession.getCurrent();
@@ -150,6 +154,17 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         } else {
             dislikeButton.setText(DISLIKE + " " + tweet.getDislikesList().size());
         }
+
+        //User commenting information set up
+        byte[] profileImageDataOfCommenter = currentUser.getProfilePicture();
+        StreamResource personCommentingResource = new StreamResource(currentUser.getUsername() + ".jpg", () -> new ByteArrayInputStream(profileImageDataOfCommenter));
+        if (Objects.isNull(profileImageDataOfCommenter)) {
+            personCommentingImage.setSrc("frontend/defaultProfileImage.jpg");
+        } else {
+            personCommentingImage.setSrc(personCommentingResource);
+        }
+        personCommentingLink.setText(currentUser.getName() + " (@" + currentUser.getUsername() + ")");
+        personCommentingLink.setHref(Constants.PROFILE_ROUTE + currentUser.getUsername());
 
         isCommentHidden = true;
         isCommentShown = false;

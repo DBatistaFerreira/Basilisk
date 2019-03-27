@@ -6,6 +6,31 @@
 <link rel="import" href="bower_components/vaadin-text-field/src/vaadin-password-field.html">
 <link rel="import" href="bower_components/vaadin-button/src/vaadin-button.html">
 
+<dom-module id="text-area-font" theme-for="vaadin-text-area">
+    <template>
+        <style>
+            [part="value"] {
+                font-family: Helvetica;
+                font-weight: Bold;
+                font-size: 14px;
+            }
+        </style>
+    </template>
+</dom-module>
+
+<dom-module id="button-font" theme-for="vaadin-button">
+    <template>
+        <style>
+            :host {
+                font-family: Helvetica;
+                font-weight: Bold;
+                font-size: 14px;
+            }
+        </style>
+    </template>
+</dom-module>
+
+
 <dom-module id="text-fields" theme-for="vaadin-text-field">
     <template>
         <style>
