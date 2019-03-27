@@ -4,70 +4,70 @@
 <link rel="import" href="menu-bar-component.html">
 
 <dom-module id="text-area-font" theme-for="vaadin-text-area">
- <template>
-  <style>
-   [part="value"] {
-    font-family: Helvetica;
-    font-weight: Bold;
-    font-size: 14px;
-   }
-  </style>
- </template>
+    <template>
+        <style>
+            [part="value"] {
+                font-family: Helvetica;
+                font-weight: Bold;
+                font-size: 14px;
+            }
+        </style>
+    </template>
 </dom-module>
 
 <dom-module id="button-font" theme-for="vaadin-button">
- <template>
-  <style>
-   :host {
-    font-family: Helvetica;
-    font-weight: Bold;
-    font-size: 14px;
-   }
-  </style>
- </template>
+    <template>
+        <style>
+            :host {
+                font-family: Helvetica;
+                font-weight: Bold;
+                font-size: 14px;
+            }
+        </style>
+    </template>
 </dom-module>
 
 
 <dom-module id="text-fields" theme-for="vaadin-text-field">
- <template>
-  <style>
+    <template>
+        <style>
 
-   :host(.signup_input_field) [part="input-field"] {
-    border-bottom: 1px solid rgba(49, 70, 84, 0.9);;
-   }
+            :host(.signup_input_field) [part="input-field"] {
+                border-bottom: 1px solid rgba(49, 70, 84, 0.9);;
+            }
 
-   :host(.signup_input_field) [part="label"] {
-    font-family: Helvetica;
-    font-weight: 600;
-   }
+            :host(.signup_input_field) [part="label"] {
+                font-family: Helvetica;
+                font-weight: 600;
+            }
 
-   :host(.login_input_field) [part="input-field"] {
-    background-color: rgba(81, 226, 198, 0.1);
-    border-bottom: 1px solid whitesmoke
-   }
+            :host(.login_input_field) [part="input-field"] {
+                background-color: rgba(81, 226, 198, 0.1);
+                border-bottom: 1px solid whitesmoke
+            }
 
-   :host(.login_input_field) [part="label"] {
-    color: whitesmoke;
-    font-family: Helvetica;
-    font-weight: 600;
-   }
+            :host(.login_input_field) [part="label"] {
+                color: whitesmoke;
+                font-family: Helvetica;
+                font-weight: 600;
+            }
 
-   :host(.login_input_field:hover:not([readonly]):not([focused])) [part="label"] {
-    color: whitesmoke;
-   }
+            :host(.login_input_field:hover:not([readonly]):not([focused])) [part="label"] {
+                color: whitesmoke;
+            }
 
-  </style>
- </template>
+        </style>
+    </template>
 </dom-module>
 
 
 <dom-module id="profile-view">
     <template>
-     <style include="shared-styles">
+        <style include="shared-styles">
             .container {
-             background: linear-gradient(to bottom right, #96eddc 0%, #5bdab2 107%);
-             display: block;
-             overflow: auto;
+                background: linear-gradient(to bottom right, #96eddc 0%, #5bdab2 107%);
+                display: block;
+                overflow: auto;
 
             }
 
@@ -93,17 +93,15 @@
                 position: relative;
                 bottom: 120px;
                 clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
-
             }
 
             .userBio {
-
                 position: relative;
                 top: 95px;
                 background: whitesmoke;
                 border-style: solid;
-             border-width: 3px;
-             border-radius: 5px;
+                border-width: 3px;
+                border-radius: 5px;
                 /*border-color: linear-gradient(to bottom right, #51e2c6 0%, #15cb92 107%);*/
                 width: 180px;
                 height: 330px
@@ -111,26 +109,35 @@
 
             .userBioArea {
                 width: 180px;
-                height: 250px
+                height: 250px;
+                border-top: 3px solid;
+                border-bottom: 3px solid;
+                border-left: none;
+                border-right: none;
+                border-color: #314654;
+                padding: 0px;
             }
 
             .userBioAreaTitle {
-             color: #314654;
-             margin: 5px;
-             font-family: Helvetica;
-
+                color: #314654;
+                margin: 30%;
+                font-family: Helvetica;
+                font-weight: Bold;
+                font-size: 14px;
             }
 
             .mainContent {
                 display: block;
                 margin-left: auto;
                 margin-right: auto;
-
             }
 
             .userStats {
+                font-family: Helvetica;
+                font-weight: Bold;
+                font-size: 20px;
                 display: flex;
-             justify-content: space-evenly;
+                justify-content: space-evenly;
                 color: whitesmoke;
                 position: relative;
                 bottom: 78%;
@@ -138,10 +145,11 @@
                 width: 650px;
                 height: 40px;
                 background: linear-gradient(to bottom right, #314654 0%, #28343d 107%);
+                padding-top: 12px;
             }
 
             #editButtonBio {
-             margin: 5px;
+                margin: 5px;
             }
 
             #tweetFeed {
@@ -154,51 +162,51 @@
 
             }
 
-            .userPostArea {
-                width: 100%;
-                height: 55%;
-                color: black;
-            }
-
             .postButton {
-                border-radius: 0px;
                 background: #314654;
                 color: whitesmoke;
             }
 
+            #profileImageUpload {
+                margin-top: 30px;
+            }
+
+            #coverImageUpload {
+                margin-top: 10px;
+            }
 
         </style>
-     <div class="container" style="width: 100%; height: 100%;">
-      <div id="div1" style="width: 100%; height:50px;">
-       <menu-bar-component></menu-bar-component>
-      </div>
-      <div style="width: 850px; height: 315px;" class="coverPic">
-       <img id="coverImage" alt="coverPicture" style="width: 850px; height: 315px;">
-       <div class="profilePic" style="width: 200px; height: 200px;">
-        <img id="profileImage" alt="profilePicture" style="width: 200px; height: 200px;">
-       </div>
-       <div class="userStats">
-        <label id="userNameLabel" class="userName"></label>
-        <label id="followersLabel" class="userFollowers"></label>
-        <label id="followingLabel" class="usersFollowing"></label>
-       </div>
-      </div>
-      <div style="width: 850px; height: 315px" class="mainContent">
-       <div id="tweetFeed"></div>
-       <div class="userBio">
-        <span class="userBioAreaTitle">About me </span>
-        <vaadin-text-area id="userBioTextArea" class="userBioArea"></vaadin-text-area>
-        <vaadin-button id="editButtonBio" on-click="editButtonClicked" class="postButton">
-         Edit
-        </vaadin-button>
-        <vaadin-button id="followButton" class="postButton" on-click="followButtonClicked">
-         Follow User
-        </vaadin-button>
-        <vaadin-upload id="profileImageUpload"></vaadin-upload>
-        <vaadin-upload id="coverImageUpload"></vaadin-upload>
-       </div>
-      </div>
-     </div>
+        <div class="container" style="width: 100%; height: 100%;">
+            <div id="div1" style="width: 100%; height:50px;">
+                <menu-bar-component></menu-bar-component>
+            </div>
+            <div style="width: 850px; height: 315px;" class="coverPic">
+                <img id="coverImage" alt="coverPicture" style="width: 850px; height: 315px;">
+                <div class="profilePic" style="width: 200px; height: 200px;">
+                    <img id="profileImage" alt="profilePicture" style="width: 200px; height: 200px;">
+                </div>
+                <div class="userStats">
+                    <label id="userNameLabel" class="userName"></label>
+                    <label id="followersLabel" class="userFollowers"></label>
+                    <label id="followingLabel" class="usersFollowing"></label>
+                </div>
+            </div>
+            <div style="width: 850px; height: 315px" class="mainContent">
+                <div id="tweetFeed"></div>
+                <div class="userBio" align="center">
+                    <span class="userBioAreaTitle">About Me </span>
+                    <vaadin-text-area id="userBioTextArea" class="userBioArea"></vaadin-text-area>
+                    <vaadin-button id="editButtonBio" on-click="editButtonClicked" class="postButton">
+                        Edit About Me
+                    </vaadin-button>
+                    <vaadin-button id="followButton" class="postButton" on-click="followButtonClicked">
+                        Follow User
+                    </vaadin-button>
+                    <vaadin-upload class="uploadImage" id="profileImageUpload"></vaadin-upload>
+                    <vaadin-upload class="uploadImage" id="coverImageUpload"></vaadin-upload>
+                </div>
+            </div>
+        </div>
     </template>
 
     <script>
