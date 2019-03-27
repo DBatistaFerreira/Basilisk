@@ -1,10 +1,70 @@
 <link rel="import" href="bower_components/polymer/polymer.html">
 <link rel="import" href="menu-bar-component.html">
 
+<dom-module id="text-area-font" theme-for="vaadin-text-area">
+    <template>
+        <style>
+            [part="value"] {
+                font-family: Helvetica;
+                font-weight: Bold;
+                font-size: 14px;
+            }
+        </style>
+    </template>
+</dom-module>
+
+<dom-module id="button-font" theme-for="vaadin-button">
+    <template>
+        <style>
+            :host {
+                font-family: Helvetica;
+                font-weight: Bold;
+                font-size: 14px;
+            }
+        </style>
+    </template>
+</dom-module>
+
+
+<dom-module id="text-fields" theme-for="vaadin-text-field">
+    <template>
+        <style>
+
+            :host(.signup_input_field) [part="input-field"] {
+                border-bottom: 1px solid rgba(49, 70, 84, 0.9);;
+            }
+
+            :host(.signup_input_field) [part="label"] {
+                font-family: Helvetica;
+                font-weight: 600;
+            }
+
+            :host(.login_input_field) [part="input-field"] {
+                background-color: rgba(81, 226, 198, 0.1);
+                border-bottom: 1px solid whitesmoke
+            }
+
+            :host(.login_input_field) [part="label"] {
+                color: whitesmoke;
+                font-family: Helvetica;
+                font-weight: 600;
+            }
+
+            :host(.login_input_field:hover:not([readonly]):not([focused])) [part="label"] {
+                color: whitesmoke;
+            }
+
+        </style>
+    </template>
+</dom-module>
+
 <dom-module id="home-view">
     <template>
         <style include="shared-styles">
-            :host {
+            .container {
+                background: rgb(63, 83, 96);
+                background: linear-gradient(90deg, rgba(63, 83, 96, 1) 0%, rgba(89, 242, 213, 1) 28%, rgba(236, 246, 244, 1) 39%, rgba(236, 246, 244, 1) 63%, rgba(95, 244, 215, 1) 73%, rgba(63, 83, 96, 1) 100%);
+                overflow: auto;
                 display: block;
             }
 
@@ -13,11 +73,26 @@
                 display: flex;
                 justify-content: center;
             }
-        </style>
-        <menu-bar-component></menu-bar-component>
-        <vaadin-vertical-layout id="tweetLayout" class="tweetLayout">
 
-        </vaadin-vertical-layout>
+            .popup {
+                max-width: 150px;
+                border-radius: 15px;
+                border-style: solid;
+                border-color: #314654;
+
+                font-family: Helvetica;
+                font-weight: 600;
+                background: #96eddc;
+            }
+        </style>
+        <div class="container" style="width: 100%; height: 100%;">
+            <menu-bar-component></menu-bar-component>
+            <vaadin-vertical-layout id="tweetLayout" class="tweetLayout">
+                <vaadin-text-area id="popUp" class="popup" readonly="true" visible="false">
+                </vaadin-text-area>
+
+            </vaadin-vertical-layout>
+        </div>
 
     </template>
 

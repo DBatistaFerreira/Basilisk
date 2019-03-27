@@ -11,6 +11,8 @@
         <style>
             [part="value"] {
                 font-family: Helvetica;
+                font-weight: Bold;
+                font-size: 14px;
             }
         </style>
     </template>
@@ -21,7 +23,42 @@
         <style>
             :host {
                 font-family: Helvetica;
+                font-weight: Bold;
+                font-size: 14px;
             }
+        </style>
+    </template>
+</dom-module>
+
+
+<dom-module id="text-fields" theme-for="vaadin-text-field">
+    <template>
+        <style>
+
+            :host(.signup_input_field) [part="input-field"] {
+                border-bottom: 1px solid rgba(49, 70, 84, 0.9);;
+            }
+
+            :host(.signup_input_field) [part="label"] {
+                font-family: Helvetica;
+                font-weight: 600;
+            }
+
+            :host(.login_input_field) [part="input-field"] {
+                background-color: rgba(81, 226, 198, 0.1);
+                border-bottom: 1px solid whitesmoke
+            }
+
+            :host(.login_input_field) [part="label"] {
+                color: whitesmoke;
+                font-family: Helvetica;
+                font-weight: 600;
+            }
+
+            :host(.login_input_field:hover:not([readonly]):not([focused])) [part="label"] {
+                color: whitesmoke;
+            }
+
         </style>
     </template>
 </dom-module>
@@ -32,6 +69,7 @@
             :host {
                 display: block;
             }
+
             .link {
                 color: #314654;
                 font-size: large;
@@ -70,16 +108,30 @@
                 width: 100%;
                 height: 55%;
                 color: black;
+                border: solid;
+                border-radius: 15px;
+                border-width: 3px;
+                border-color: #314654;
+                padding: 0px;
+                margin-left: 20px;
+                margin-right: 20px;
+                margin-top: 20px;
+                margin-bottom: 0px;
             }
 
             .retweetLabel {
-                width: 100%;
-                height: 20%;
-                font-size: small;
+                display: block;
+                height: 15%;
+                font-family: Helvetica;
+                font-size: 14px;
+                font-weight: bold;
+                border-bottom-style: solid;
+                border-bottom-color: #314654;
+                padding-left: 5px;
+                color: darkgray;
             }
 
             .postButton {
-                border-radius: 0px;
                 background: #314654;
                 color: whitesmoke;
                 margin-left: 10px;
@@ -89,54 +141,103 @@
             }
 
             .userCommentArea {
-                min-width: 563px;
-                max-width: 563px;
+                width: 90%;
+                left: 500px;
                 border-radius: 15px;
                 border-style: solid;
                 border-color: #314654;
+                padding: 0;
+                margins: 0;
             }
 
             .commentButton {
-                border-radius: 0px;
                 background: #314654;
                 color: whitesmoke;
                 margin-left: 10px;
-
-                position: relative;
-                left: 450px;
             }
-            .showOrHideCommentsButton{
+
+            .showOrHideCommentsButton {
                 border-radius: 0px;
                 background: whitesmoke;
                 color: #314654;
-                margin-left: 10px
+                margin-left: 10px;
 
                 position: relative;
                 right: 5px;
             }
 
+            .commentButton {
+                margin-left: auto;
+            }
+
+            .commentButtons {
+                width: 100%;
+                padding-right: 10px;
+            }
+
+            .buttonsLayout {
+                padding: 5px;
+            }
+
+            .userInformationLayout {
+                margin-left: 5px;
+                margin-top: 5px;
+            }
+
+            .commentDisplayLayout {
+                width: 100%;
+                display: block;
+            }
+
+            .commentSectionLayout {
+                width: 100%;
+                display: block;
+            }
+
+            .commentAreaLayout {
+                width: 100%;
+                display: block;
+                margin-left: 40px;
+            }
+
+
         </style>
         <div style="width: 100%; height: 100%;" class="userPost">
-            <vaadin-horizontal-layout>
+            <label class="retweetLabel" id="retweetLabel" readonly> </label>
+            <vaadin-horizontal-layout class="userInformationLayout">
                 <img class="profilePic" id="profileImage" alt="profilePicture" style="width: 40px; height: 40px;">
                 <a style="text-decoration:none;" class="link" id="UserLink"></a>
             </vaadin-horizontal-layout>
-            <vaadin-text-area class="retweetLabel" id="retweetLabel" readonly></vaadin-text-area>
-            <vaadin-text-area class="userPostArea" id="tweetMessage" readonly></vaadin-text-area>
             <vaadin-horizontal-layout>
+                <vaadin-text-area class="userPostArea" id="tweetMessage" maxlength="285" readonly></vaadin-text-area>
+            </vaadin-horizontal-layout>
+            <vaadin-horizontal-layout class="buttonsLayout">
                 <vaadin-button class="postButton" id="likeButton" on-click="likeButtonClicked"></vaadin-button>
                 <vaadin-button class="postButton" id="dislikeButton" on-click="dislikeButtonClicked"></vaadin-button>
-                <vaadin-button class="postButton" id="retweetButton" on-click="retweetButtonClicked">Retweet</vaadin-button>
-                <vaadin-button class="postButton" id="deleteButton" on-click="deleteButtonClicked">Delete</vaadin-button>
+                <vaadin-button class="postButton" id="retweetButton" on-click="retweetButtonClicked">Retweet
+                </vaadin-button>
+                <vaadin-button class="postButton" id="deleteButton" on-click="deleteButtonClicked">Delete
+                </vaadin-button>
             </vaadin-horizontal-layout>
-            <vaadin-vertical-layout id="commentSection">
-                <vaadin-text-area class="userCommentArea" id="commentMessage" placeholder="Write a comment..."></vaadin-text-area>
+            <vaadin-vertical-layout class="commentSectionLayout" id="commentSection">
                 <vaadin-horizontal-layout>
-                    <vaadin-button class="showOrHideCommentsButton" id="hideComments" on-click="hideCommentsClicked"></vaadin-button>
-                    <vaadin-button class="commentButton" id="commentButton" on-click="commentButtonClicked">Comment</vaadin-button>
+                    <img class="profilePic" id="profileImageComment" alt="profilePictureCommenter"
+                         style="width: 40px; height: 40px;">
+                    <a style="text-decoration:none;" class="link" id="userLinkCommenting"></a>
                 </vaadin-horizontal-layout>
-                <vaadin-vertical-layout id="commentDisplay"></vaadin-vertical-layout>
-                <vaadin-button class="showOrHideCommentsButton" id="showComments" on-click="showCommentsClicked"></vaadin-button>
+                <vaadin-horizontal-layout class="commentAreaLayout">
+                    <vaadin-text-area class="userCommentArea" maxlength="255" id="commentMessage"
+                                      placeholder="Write a comment..."></vaadin-text-area>
+                </vaadin-horizontal-layout>
+                <vaadin-horizontal-layout class="commentButtons">
+                    <vaadin-button class="showOrHideCommentsButton" id="hideComments"
+                                   on-click="hideCommentsClicked"></vaadin-button>
+                    <vaadin-button class="showOrHideCommentsButton" id="showComments"
+                                   on-click="showCommentsClicked"></vaadin-button>
+                    <vaadin-button class="commentButton" id="commentButton" on-click="commentButtonClicked">Comment
+                    </vaadin-button>
+                </vaadin-horizontal-layout>
+                <vaadin-vertical-layout class="commentDisplayLayout" id="commentDisplay"></vaadin-vertical-layout>
             </vaadin-vertical-layout>
         </div>
     </template>

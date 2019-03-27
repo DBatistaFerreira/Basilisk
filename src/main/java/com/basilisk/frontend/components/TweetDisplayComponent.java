@@ -17,6 +17,7 @@ import com.vaadin.flow.component.polymertemplate.EventHandler;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.templatemodel.TemplateModel;
@@ -32,7 +33,7 @@ import java.util.Objects;
 public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent.TweetDisplayComponentModel> {
 
     @Id("UserLink")
-    private Anchor UserLink;
+    private Anchor userLink;
     @Id("profileImage")
     private Image profileImage;
     @Id("likeButton")
@@ -58,14 +59,18 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
     @Id("commentDisplay")
     private VerticalLayout commentDisplay;
     @Id("retweetLabel")
-    private TextArea retweetLabel;
-
+    private Element retweetLabel;
+    @Id("profileImageComment")
+    private Image personCommentingImage;
+    @Id("userLinkCommenting")
+    private Anchor personCommentingLink;
 
     private static final String LIKE = "Like";
     private static final String DISLIKE = "Dislike";
     private static final String UN_LIKE = "Un-like";
     private static final String UN_DISLIKE = "Un-dislike";
     private static final String SHOW = "Show Comments";
+    private static final String SHOW_MORE = "Show More Comments";
     private static final String HIDE = "Hide Comments";
     private static final String BACKGROUND = "background";
     private static final String GREY = "Grey";
@@ -119,15 +124,15 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
             profileImage.setSrc(profilePictureResource);
         }
 
-        UserLink.setText(tweet.getUser().getName() + " (@" + tweet.getUser().getUsername() + ")");
-        UserLink.setHref(Constants.PROFILE_ROUTE + tweet.getUser().getUsername());
+        userLink.setText(tweet.getUser().getName() + " (@" + tweet.getUser().getUsername() + ")");
+        userLink.setHref(Constants.PROFILE_ROUTE + tweet.getUser().getUsername());
 
-        tweetMessage.setValue(tweet.getText() + "\n-" + tweet.getUser().getUsername());
+        tweetMessage.setValue(tweet.getText());
         VaadinSession vaadinSession = VaadinSession.getCurrent();
         User currentUser = (User) vaadinSession.getAttribute(Constants.CURRENT_USER);
 
         if (isRetweet) {
-            retweetLabel.setValue("Retweeted by " + retweetedBy.getUsername());
+            retweetLabel.setText("Retweeted by " + retweetedBy.getName() + " (@" + retweetedBy.getUsername() + ")");
             if (!currentUser.equals(retweetedBy))
                 deleteButton.setVisible(false);
         } else {
@@ -149,6 +154,17 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         } else {
             dislikeButton.setText(DISLIKE + " " + tweet.getDislikesList().size());
         }
+
+        //User commenting information set up
+        byte[] profileImageDataOfCommenter = currentUser.getProfilePicture();
+        StreamResource personCommentingResource = new StreamResource(currentUser.getUsername() + ".jpg", () -> new ByteArrayInputStream(profileImageDataOfCommenter));
+        if (Objects.isNull(profileImageDataOfCommenter)) {
+            personCommentingImage.setSrc("frontend/defaultProfileImage.jpg");
+        } else {
+            personCommentingImage.setSrc(personCommentingResource);
+        }
+        personCommentingLink.setText(currentUser.getName() + " (@" + currentUser.getUsername() + ")");
+        personCommentingLink.setHref(Constants.PROFILE_ROUTE + currentUser.getUsername());
 
         isCommentHidden = true;
         isCommentShown = false;
@@ -230,13 +246,12 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
         hideComments.setText(HIDE + " (" + numberOfShownComments + ")");
         if (showCommentsClickedCounter == 1 && numberOfShownComments > 0) {
             hideComments.setVisible(true);
-            commentButton.getStyle().set("left", "283px");
         }
 
         if (tweetComments.size() - numberOfShownComments <= 0) {
             showComments.setVisible(false);
         } else {
-            showComments.setText(SHOW + " (" + (tweetComments.size() - numberOfShownComments) + ")");
+            showComments.setText(SHOW_MORE + " (" + (tweetComments.size() - numberOfShownComments) + ")");
             ++showCommentsClickedCounter;
         }
     }
@@ -254,7 +269,6 @@ public class TweetDisplayComponent extends PolymerTemplate<TweetDisplayComponent
                 numberOfShownComments = 0;
                 showCommentsClickedCounter = 1;
                 hideComments.setVisible(false);
-                commentButton.getStyle().set("left", "450px");
 
                 showComments.setVisible(true);
                 showComments.setText(SHOW + " (" + (tweetComments.size() - numberOfShownComments) + ")");
