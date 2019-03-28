@@ -21,7 +21,7 @@ public class MenuBarPresenter {
 
     @Autowired
     public MenuBarPresenter(UserService userService, TweetService tweetService, RetweetService retweetService,
-                            FollowService followService, CommentService commentService){
+                            FollowService followService, CommentService commentService) {
         this.userService = userService;
         this.userService = userService;
         this.tweetService = tweetService;
@@ -33,7 +33,7 @@ public class MenuBarPresenter {
         return userService.retrieveAllUsers();
     }
 
-    public List<User> getSelectedUsers(String name) {
+    public List<User> searchByUsername(String name) {
         return userService.searchForUsers(name);
     }
 }

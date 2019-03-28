@@ -28,13 +28,17 @@ public class TweetService {
         updateTweet(tweet);
     }
 
-    public void removeTweet(Tweet tweet) { deleteTweet(tweet); }
+    public void removeTweet(Tweet tweet) {
+        deleteTweet(tweet);
+    }
 
     public Tweet getTweetById(long id) {
         return retrieveTweet(id);
     }
 
-    public List<Tweet> getAllTweetsByUser(User user) { return retrieveAllTweets(user); }
+    public List<Tweet> getAllTweetsByUser(User user) {
+        return retrieveAllTweets(user);
+    }
 
     //CRUD OPERATIONS
     private void createTweet(Tweet tweet) {
@@ -53,5 +57,7 @@ public class TweetService {
         return tweetRepository.getOne(id);
     }
 
-    private List<Tweet> retrieveAllTweets(User user) { return tweetRepository.getAllByUser(user); }
+    private List<Tweet> retrieveAllTweets(User user) {
+        return tweetRepository.getAllByUser(user);
+    }
 }

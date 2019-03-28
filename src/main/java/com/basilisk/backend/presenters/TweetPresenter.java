@@ -2,6 +2,7 @@
 
 package com.basilisk.backend.presenters;
 
+import com.basilisk.Constants;
 import com.basilisk.backend.models.Comment;
 import com.basilisk.backend.models.Retweet;
 import com.basilisk.backend.models.Tweet;
@@ -26,7 +27,7 @@ public class TweetPresenter {
     private static Logger LOGGER = Logger.getLogger(ProfilePresenter.class);
 
     public TweetPresenter(UserService userService, TweetService tweetService, FollowService followService,
-                          RetweetService retweetService, CommentService commentService){
+                          RetweetService retweetService, CommentService commentService) {
         this.followService = followService;
         this.userService = userService;
         this.tweetService = tweetService;
@@ -36,6 +37,7 @@ public class TweetPresenter {
 
     public boolean createAndSaveTweet(String tweetText, User currentUser) {
         if (!tweetText.isEmpty()) {
+            tweetText = Constants.cleanString(tweetText);
             Tweet tweet = new Tweet(tweetText, currentUser);
             LOGGER.info("Tweet creation success: " + tweetText);
             tweetService.writeTweet(tweet);
@@ -46,33 +48,51 @@ public class TweetPresenter {
         }
     }
 
-    public boolean createAndSaveComment(String commentText, Tweet tweet, User currentUser)
-    {
+    public boolean createAndSaveComment(String commentText, Tweet tweet, User currentUser) {
         if (!commentText.isEmpty()) {
+            commentText = Constants.cleanString(commentText);
             Comment comment = new Comment(commentText, currentUser, tweet);
             LOGGER.info("Comment creation success: " + commentText);
             LOGGER.info("Comment: " + comment.getText() + comment.getUser().toString() + comment.getTweet().toString());
             commentService.writeComment(comment);
             return true;
-        } else
-        {
+        } else {
             LOGGER.info("Comment creation failure " + commentText);
             return false;
         }
     }
 
-    public boolean createAndSaveRetweet(Tweet tweet, User currentUser) {
+    public long createAndSaveRetweet(Tweet tweet, User currentUser) {
         Retweet retweet = new Retweet(currentUser, tweet);
-        LOGGER.info("Retweet creation success: " + tweet.getText() + " retweeted by @" + currentUser.getUsername());
         retweetService.postRetweet(retweet);
+        LOGGER.info("Retweet creation success: " + tweet.getText() + " retweeted by @" + currentUser.getUsername());
+        return retweet.getId();
+    }
+
+    public boolean deleteTweet(Tweet tweet) {
+        List<Retweet> retweetList = retweetService.getAllRetweetsByTweet(tweet);
+        List<Comment> commentList = commentService.getTweetComments(tweet);
+
+        for (Retweet retweet : retweetList) {
+            retweetService.removeRetweet(retweet);
+        }
+        for (Comment comment : commentList) {
+            commentService.removeComment(comment);
+        }
+        tweetService.removeTweet(tweet);
+        LOGGER.info("Tweet deletion success: " + tweet.getText() + " by @" + tweet.getUser().getUsername());
         return true;
     }
 
-    public List<Comment> getTweetComments(Tweet tweet)
-    {
-        return commentService.getTweetComments(tweet);
+    public boolean deleteRetweet(Retweet retweet) {
+        retweetService.removeRetweet(retweet);
+        LOGGER.info("Retweet deletion success: " + retweet.getTweet().getText() + " retweeted by @" + retweet.getUser().getUsername());
+        return true;
     }
 
+    public List<Comment> getTweetComments(Tweet tweet) {
+        return commentService.getTweetComments(tweet);
+    }
 
     public Tweet likesTweet(User user, Tweet tweet) {
         LOGGER.info("User " + user.getUsername() + " likes tweet " + tweet.getId());

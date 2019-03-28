@@ -191,8 +191,9 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
         if (Objects.isNull(vaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER))) {
             beforeEnterEvent.rerouteTo(LoginView.class);
             UI.getCurrent().navigate("");
+        } else {
+            init();
         }
-        init();
     }
 
     @EventHandler
@@ -206,8 +207,10 @@ public class ProfileView extends PolymerTemplate<ProfileView.ProfileViewModel> i
         } else {
             //Save Mode
             editButton.setText("Edit");
+            String bio = Constants.cleanString(userBioTextArea.getValue());
+            userBioTextArea.setValue(bio);
             userBioTextArea.setReadOnly(true);
-            currentUser.setBiography(userBioTextArea.getValue());
+            currentUser.setBiography(bio);
             profilePresenter.saveBiography(currentUser);
 
         }

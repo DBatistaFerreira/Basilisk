@@ -22,20 +22,20 @@ public class FollowService {
     // Public Service methods
 
     // Returns the followings of a user.
-    public List<User> getAllUserFollowings(User user){
+    public List<User> getAllUserFollowings(User user) {
         return followRepository.getAllByFollower(user).stream().map(Follow::getFollowed).collect(Collectors.toList());
     }
 
     // Returns the followers of a user.
-    public List<User> getAllUserFollowers(User user){
+    public List<User> getAllUserFollowers(User user) {
         return followRepository.getAllByFollowed(user).stream().map(Follow::getFollower).collect(Collectors.toList());
     }
 
-    public void follow(User follower, User followed){
+    public void follow(User follower, User followed) {
         createFollow(new Follow(follower, followed));
     }
 
-    public void unfollow(User follower, User followed){
+    public void unfollow(User follower, User followed) {
         deleteFollow(retrieveFollowByFollowerAndFollowed(follower, followed));
     }
 

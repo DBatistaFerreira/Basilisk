@@ -45,6 +45,11 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> impleme
 
     public void init() {
         VaadinSession.getCurrent().setAttribute("currentPage", "login");
+
+        //The pattern says: no whitespace at any character spot
+        usernameTextField.setPattern("\\S*");
+        usernameTextField.setPreventInvalidInput(true);
+
         loginButton.addClickListener(buttonClickEvent -> {
             String userName = usernameTextField.getValue(); // Valid value: Admin
             String password = passwordTextField.getValue(); // Valid value: password
@@ -65,6 +70,9 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> impleme
 
         createUsernameTextField.setMaxLength(15);
         createUsernameTextField.setRequired(true);
+        //The pattern says: no whitespace at any character spot
+        createUsernameTextField.setPattern("\\S*");
+        createUsernameTextField.setPreventInvalidInput(true);
 
         createPasswordTextField.setMaxLength(15);
         createPasswordTextField.setRequired(true);
@@ -110,8 +118,9 @@ public class LoginView extends PolymerTemplate<LoginView.LoginViewModel> impleme
         if (!Objects.isNull(VaadinSession.getCurrent().getAttribute(Constants.CURRENT_USER))) {
             beforeEnterEvent.rerouteTo(HomeView.class);
             UI.getCurrent().navigate(Constants.HOME_ROUTE);
+        } else {
+            init();
         }
-        init();
     }
 
     public interface LoginViewModel extends TemplateModel {

@@ -1,6 +1,7 @@
 package com.basilisk.backend.services;
 
 import com.basilisk.backend.models.Retweet;
+import com.basilisk.backend.models.Tweet;
 import com.basilisk.backend.models.User;
 import com.basilisk.backend.repositories.RetweetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,25 @@ public class RetweetService {
     }
 
     // Public Service methods
-    public void postRetweet(Retweet retweet) { createRetweet(retweet); }
+    public void postRetweet(Retweet retweet) {
+        createRetweet(retweet);
+    }
 
-    public void removeRetweet(Retweet retweet) { deleteRetweet(retweet); }
+    public void removeRetweet(Retweet retweet) {
+        deleteRetweet(retweet);
+    }
 
-    public Retweet getRetweetById(long id) { return retrieveRetweet(id); }
+    public Retweet getRetweetById(long id) {
+        return retrieveRetweet(id);
+    }
 
-    public List<Retweet> getAllRetweetsByUser(User user) { return retrieveAllRetweets(user); }
+    public List<Retweet> getAllRetweetsByUser(User user) {
+        return retrieveAllRetweets(user);
+    }
+
+    public List<Retweet> getAllRetweetsByTweet(Tweet tweet) {
+        return retrieveAllRetweetsByTweet(tweet);
+    }
 
     // private CRUD Operations
     private void createRetweet(Retweet retweet) {
@@ -45,6 +58,12 @@ public class RetweetService {
         return retweetRepository.getOne(id);
     }
 
-    private List<Retweet> retrieveAllRetweets(User user) { return retweetRepository.getAllByUser(user); }
+    private List<Retweet> retrieveAllRetweets(User user) {
+        return retweetRepository.getAllByUser(user);
+    }
+
+    private List<Retweet> retrieveAllRetweetsByTweet(Tweet tweet) {
+        return retweetRepository.getAllByTweet(tweet);
+    }
 
 }
